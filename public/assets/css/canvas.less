@@ -1,0 +1,66 @@
+// Highcharts theme
+// Docs here - https://highcharts.com/docs/chart-design-and-style/style-by-css
+
+// Chart colors
+@chart-blue: #E8F3FC;
+@chart-yellow: #F1F6CE;
+@chart-green: #CFE1CB;
+
+// Mixins
+.chart-series-base(@color) {
+    @color-darken: darken(@color, 20%);
+
+    .highcharts-area {
+        fill: @color;
+        fill-opacity: .5;
+        stroke: @color-darken;
+        stroke-width: 1;
+    }
+
+    .highcharts-tracker {
+        stroke: @color-darken;
+        stroke-width: 1;
+    }
+
+    &.highcharts-markers {
+        path {
+            fill: @color-darken;
+        }
+    }
+}
+
+// Chart bg-color
+.highcharts-series {
+    .chart-series-base(@chart-blue);
+
+    // Second chart
+    ._highcharts-theme-yellow &,
+    &&-1 {
+        .chart-series-base(@chart-yellow);
+    }
+
+    // Third chart
+    ._highcharts-theme-green &,
+    &&-2 {
+        .chart-series-base(@chart-green);
+    }
+
+    &-hover {
+        .highcharts-halo {
+            fill-opacity: 0;
+        }
+    }
+}
+.highcharts-button {
+    &.highcharts-reset-zoom {
+        & rect.highcharts-button-box {
+            height: 22px;
+        }
+
+        & text {
+            // .font-nt-regular;
+            font-size: 14px;
+            transform: translateY(-4px);
+        }
+    }
+}
