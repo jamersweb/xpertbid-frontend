@@ -11,7 +11,7 @@ export default function BrowseCategories() {
       try {
         // Make API request to fetch categories
         const response = await axios.get("http://127.0.0.1:8000/api/get-category");
-        console.log(response.data.categories);
+       // console.log(response.data.categories);
         setCategories(response.data.categories || []); // Update categories state
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -59,7 +59,7 @@ export default function BrowseCategories() {
                 </div>
                 <div className="cate-title">
                   <h2>
-                  <Link href={`/category/${cat.id}`}>{cat.name}</Link>
+                  <Link href={`/category/${cat.name}`}>{cat.name}</Link>
                   </h2>
                 </div>
                 <div className="cate-lisitng">
@@ -86,7 +86,7 @@ export default function BrowseCategories() {
                 </div>
                 <div className="cate-title">
                   <h2>
-                    <a href="#">{cat.name}</a>
+                  <Link href={`/category/${cat.name}`}>{cat.name}</Link>
                   </h2>
                 </div>
                 <div className="cate-lisitng">

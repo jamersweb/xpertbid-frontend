@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
-import { signIn, useSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
+
 const LoginModal = ({ isOpen, onClose }) =>  {
 
   const [currentStep, setCurrentStep] = useState('loginStep'); // 'loginStep', 'loginStep2', ...
@@ -12,8 +13,10 @@ const LoginModal = ({ isOpen, onClose }) =>  {
   const [otp, setOtp] = useState('');
   const [generatedOtp, setGeneratedOtp] = useState(null);
   const [otpTimeLeft, setOtpTimeLeft] = useState(60);
-  const { data: session } = useSession(); // Access session data
+  const { data: session } = useSession();
+ // const { data: session } = useSession(); // Access session data
  
+
 
  
 
@@ -28,10 +31,14 @@ const LoginModal = ({ isOpen, onClose }) =>  {
         password,
         redirect: false, // Prevent NextAuth from redirecting by default
       });
-
+      
+      //console.log(result);
+      //localStorage.setItem("token", result.data.token);
       if (result?.error) {
         setErrorMessage(result.error); // Display error from NextAuth
       } else {
+       
+        //localStorage.setItem("token", session.user.token);
         setErrorMessage(""); // Clear any previous errors
         onClose(); // Close the modal on successful login
       }
@@ -39,8 +46,9 @@ const LoginModal = ({ isOpen, onClose }) =>  {
       setErrorMessage("An unexpected error occurred. Please try again.");
       console.error("Error during login:", error);
     }
+    
   };
-  
+
 
   const handleContinueWithPhone = () => {
     setCurrentStep('loginStep2');

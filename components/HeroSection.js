@@ -1,4 +1,5 @@
 // components/HeroSection.js
+import Link from "next/link";
 export default function HeroSection() {
     return (
       <section className="hero-section">
@@ -9,7 +10,10 @@ export default function HeroSection() {
               <h1 className="hero-sec">Electronics & Gadgets</h1>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
               <div className="hero-sec-btn">
-                <a href="/marketplace.html" className="explore-more">Explore More</a>
+                <Link className="explore-more" href={"/marketplace"}>
+                  Explore More
+                </Link>
+                
                 <a href="#" className="sellnow">Sell Now</a>
               </div>
               <div className="happy-clients">

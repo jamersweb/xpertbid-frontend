@@ -37,7 +37,7 @@ a.logo {
     background-color: #EDEDED;
     padding: 10px;
     border-radius: 8px;
-    width: 45%;
+    width: 20%;
     margin-right: 40px;
 }
 
@@ -216,7 +216,7 @@ button.navbar-toggler.desktop {
 
 #notificationPopup,
 #userProfileSettingPopup {
-    display: none;
+    /* display: none; */
     /* Hidden by default */
 }
 
@@ -1284,6 +1284,8 @@ input#priceRange {
     font-size: 14px;
     font-weight: 500;
     font-family: "Poppins", sans-serif;
+    padding: 0 2px;
+    text-transform: uppercase;
 }
 
 .mkt-page-plc-hdig .page-link.active {
@@ -1355,7 +1357,7 @@ input#priceRange {
     margin-right: 10px;
 }
 
-.product-copy-and-view a {
+.product-copy-and-view a,.product-copy-and-view button {
     padding: 10px;
     border-radius: 6px;
     background-color: #EDEDED;
@@ -1364,6 +1366,7 @@ input#priceRange {
     font-size: 16px;
     font-weight: 500;
     text-decoration: none;
+    border: none transparent;
 }
 
 .product-images-parent img {
@@ -1546,7 +1549,7 @@ section.product-image-and-brief {
     text-align: end;
     margin-bottom: 0;
 }
-
+.amount{color:#000;text-decoration: none;}
 .currency-and-price {
     display: flex;
     justify-content: space-between;
@@ -1555,6 +1558,7 @@ section.product-image-and-brief {
     border-radius: 10px;
     margin-bottom: 20px;
     border: 1px solid #C2C3CB;
+    width: 100%;
 }
 
 .currency-and-price p {
@@ -2830,7 +2834,7 @@ section.product-image-and-brief {
 }
 
 .notification-popup {
-    display: none;
+    /* display: none; */
     /* Initially hidden */
     position: absolute;
     top: 100%;
@@ -3095,7 +3099,7 @@ section.product-image-and-brief {
 }
 
 .user-profile-setting-popup {
-    display: none;
+    /* display: none; */
     /* Initially hidden */
     position: absolute;
     top: 100%;
@@ -3397,8 +3401,8 @@ section.product-image-and-brief {
 }
 
 #business-info {
-    display: none;
-    opacity: 0;
+    /* display: none;
+    opacity: 0; */
     transition: opacity 0.5s ease;
 }
 
@@ -3420,8 +3424,8 @@ section.product-image-and-brief {
 
 /* Base hidden state */
 .profile {
-    opacity: 0;
-    display: none;
+    /* opacity: 0;
+    display: none; */
     transition: opacity 0.2s ease;
     /* Smooth fade effect */
 }
@@ -6111,7 +6115,7 @@ tbody tr {
     }
 
     .notification-popup {
-        display: none;
+        /* display: none; */
         position: absolute;
         top: 100%;
         right: 0;

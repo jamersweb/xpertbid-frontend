@@ -1,3 +1,5 @@
+import Link from "next/link";
+import CountdownTimer from "./countdown";
 export default function DisplayProducts({ products }) {
     return (
         <div className="row makt-parent">
@@ -10,15 +12,11 @@ export default function DisplayProducts({ products }) {
                     src={`http://127.0.0.1:8000${product.image}`}
                     alt={product.name}
                   />
-                  {/* <div className="counter">
-                    <span className="hour">{product.timeRemaining.hours}h</span>
-                    <span className="minutes">{product.timeRemaining.minutes}m</span>
-                    <span className="seconds">{product.timeRemaining.seconds}s</span>
-                  </div> */}
+                  <CountdownTimer startDate={product.start_date} endDate={product.end_date} />
                 </div>
                 <div className="mkt-body">
                   <div className="mkt-pro-head">
-                    <h3>{product.name}</h3>
+                    <h3>{product.title}</h3>
                   </div>
                   <div className="mkt-detail">
                     <div className="mkt-crt-bid">
@@ -29,7 +27,7 @@ export default function DisplayProducts({ products }) {
                       </div>
                     </div>
                     <div className="mkt-bid-btn">
-                      <a href={`/product/${product.id}`}>Place Bid</a>
+                      <Link href={`/product/${product.id}`}>Place Bid</Link>
                     </div>
                   </div>
                 </div>

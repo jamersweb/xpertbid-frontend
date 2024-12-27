@@ -1,4 +1,5 @@
 // pages/index.js
+import { useState, useEffect } from "react";
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import HeroSection from '@/components/HeroSection'
@@ -10,6 +11,20 @@ import StartSelling from '@/components/StartSelling'
 
 
 export default function Home({ countries }) {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+  
+      const fetchProducts = async () => {
+        const response = await fetch("http://127.0.0.1:8000/api/get-products");
+        const data = await response.json();
+        //console.log(data);
+        setProducts(data.product || []);
+        
+      };
+  
+      
+      fetchProducts();
+    }, []);
   return (
     <>
       <Header />
@@ -17,7 +32,7 @@ export default function Home({ countries }) {
       <FeaturedProducts />
       <BrowseCategories />
       <TopBid />
-      <MarketplaceSection />
+      <MarketplaceSection  products={products} />
       <StartSelling />
       <Footer />
     </>

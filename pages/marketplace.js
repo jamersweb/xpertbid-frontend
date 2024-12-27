@@ -22,7 +22,7 @@ export default function Marketplace() {
     const fetchProducts = async () => {
       const response = await fetch("http://127.0.0.1:8000/api/get-products");
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       setProducts(data.product || []);
       setFilteredProducts(data.product || []); // Default to all products
     };

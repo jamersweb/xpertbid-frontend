@@ -10,7 +10,7 @@ export default function StartSelling() {
                 <h2>Stat selling today!</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 <div className="selling-btns">
-                  <a href="/marketplace.html" className="exp-more">Explore More</a>
+                  <a href="/marketplace" className="exp-more">Explore More</a>
                   <a href="#" className="start-sell-now">Sell Now</a>
                 </div>
               </div>

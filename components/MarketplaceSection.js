@@ -1,11 +1,8 @@
 // components/MarketplaceSection.js
-
-export default function MarketplaceSection() {
-    const products = Array(6).fill({
-      title: "GUNNAR ANDER",
-      currentBid: 175,
-      timeLeft: { hour: "08h", min: "09m", sec: "22s" }
-    });
+import Link from "next/link";
+import CountdownTimer from "./countdown";
+export default function MarketplaceSection({ products }) {
+   
   
     return (
       <section className="marketplace">
@@ -14,37 +11,41 @@ export default function MarketplaceSection() {
             <h2>Explore Marketplace</h2>
           </div>
           <div className="row makt-parent">
-            {products.map((prod, i) => (
-              <div className="col-lg-4 col-md-6 mkt-child" key={i}>
+            {products.length > 0 ? (
+              products.map((product) => (
+              <div className="col-lg-4 col-md-6 mkt-child" key={product.id}>
                 <div className="market-card">
                   <div className="mkt-img">
-                    <img src="/assets/images/hero-prodcut1.jpg" alt="" />
-                    <div className="counter">
-                      <span className="hour">{prod.timeLeft.hour}</span>
-                      <span className="minutes">{prod.timeLeft.min}</span>
-                      <span className="seconds">{prod.timeLeft.sec}</span>
-                    </div>
+                  <img
+                    src={`http://127.0.0.1:8000${product.image}`}
+                    alt={product.name}
+                  />
+                  <CountdownTimer startDate={product.start_date} endDate={product.end_date} />
+
                   </div>
                   <div className="mkt-body">
                     <div className="mkt-pro-head">
-                      <h3>{prod.title}</h3>
+                      <h3>{product.title}</h3>
                     </div>
                     <div className="mkt-detail">
                       <div className="mkt-crt-bid">
                         <span className="crnt-bid">Current Bid</span>
                         <div className="mkt-bid-price">
                           <i className="fa-solid fa-dollar-sign"></i>
-                          <span className="price">{prod.currentBid}</span> USD
+                          <span className="price">{product.currentBid}</span> USD
                         </div>
                       </div>
                       <div className="mkt-bid-btn">
-                        <a href={`/product/${prod.title}`}>Place Bid</a>
+                        <Link href={`/product/${product.id}`}>Place Bid</Link>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <p>No products found.</p>
+          )}
           </div>
         </div>
       </section>

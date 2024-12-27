@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import axiosInstance from "../../../utils/api";
+//import axiosInstance from "../../../utils/api";
 
 export default NextAuth({
   providers: [
@@ -10,20 +10,31 @@ export default NextAuth({
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
+       async authorize(credentials) {
         try {
-          const response = await axiosInstance.post("http://127.0.0.1:8000/api/login", {
-            email: credentials.email,
-            password: credentials.password,
+          const res = await fetch("http://127.0.0.1:8000/api/login", {
+            method: "POST",
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password,
+            }),
+            headers: { "Content-Type": "application/json" },
           });
+          
+          const data = await res.json();
+        
+          if (res.ok && data.token) {
+            
+            // Attach user details and token
+            //localStorage.setItem("token", data.token);
+            return { ...data.user, token: data.token }; // Pass token to session
 
-          if (response.status === 200 && response.data.token && response.data.user) {
-            return { id: response.data.user.id, name: response.data.user.name, email: response.data.user.email };
           }
-          return null;
+
+          throw new Error(data.message || "Login failed");
         } catch (error) {
-          console.error("Error in credentials authorization:", error);
-          return null;
+          console.error("Authorization error:", error);
+          throw new Error("Invalid credentials");
         }
       },
     }),
@@ -34,12 +45,16 @@ export default NextAuth({
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
+        token.token = user.token;
       }
+      //console.log(user.token);
       return token;
     },
     async session({ session, token }) {
-      session.user = { id: token.id, name: token.name, email: token.email };
+      session.user = { id: token.id, name: token.name, email: token.email,token:token.token };
+     // localStorage.setItem("token", result.data.token);
       return session;
     },
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });

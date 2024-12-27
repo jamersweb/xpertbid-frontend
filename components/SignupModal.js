@@ -33,8 +33,9 @@ const SignupModal = ({ isOpen, onClose }) => {
   };
 
   const registerWithEmail = async () => {
+    
     try {
-      const response = await axiosInstance.post(
+      const response = await axios.post(
         `http://127.0.0.1:8000/api/register`,
         {
           name: formData.name,
@@ -42,12 +43,13 @@ const SignupModal = ({ isOpen, onClose }) => {
           password: formData.password,
         }
       );
+      
       localStorage.setItem("user", JSON.stringify(newUser)); // Save user to localStorage
       const newUser = { name: formData.name, email: formData.email };
       onSignup(newUser); // Notify parent of the new user
       setSuccessMessage("Registration successful! Please check your email to verify your account.");
       handleStepChange("success");
-      
+      onClose();
     } catch (error) {
       if (error.response?.status === 422) {
         const apiErrors = error.response.data.errors; // Extract validation errors from the API response
@@ -82,11 +84,13 @@ const SignupModal = ({ isOpen, onClose }) => {
     }
   };
 
+  if (!isOpen) return null;
+
   return (
     <div
       id="SignupModal"
       className="modal signupModal"
-      style={{ display: isOpen ? "block" : "none" }}
+      style={{ display: isOpen ? "flex" : "none" }}
     >
       <div className="signupmodal-content">
         <span className="close-btn" id="closeModal" onClick={closeHandler}>

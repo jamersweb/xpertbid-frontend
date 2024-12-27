@@ -1,4 +1,32 @@
-const ProductHeader = ({ views, link }) => (
+import { useEffect } from "react";
+import axios from "axios";
+import CopyLink from "../components/CopyLink";
+const ProductHeader = ({ views, link, productId }) => {
+  // Increment views on component mount
+  useEffect(() => {
+    const incrementViews = async () => {
+      try {
+        await axios.get(`http://127.0.0.1:8000/api/product/${productId}/increment-views`);
+      } catch (error) {
+        console.error("Error incrementing views:", error);
+      }
+    };
+    console.log(productId);
+    if (productId) {
+      incrementViews();
+    }
+  }, [productId]);
+
+  // Copy Link Functionality
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(link).then(() => {
+      alert("Link copied to clipboard!");
+    }).catch((err) => {
+      console.error("Failed to copy link:", err);
+    });
+  };
+
+  return (
     <section className="prodcut-detail-links">
       <div className="container-fluid">
         <div className="row">
@@ -7,7 +35,7 @@ const ProductHeader = ({ views, link }) => (
               <a href="./marketplace.html">
                 <i className="fa-solid fa-chevron-left"></i>
               </a>
-              <h3>Product Detail</h3>
+              <h3></h3>
             </div>
           </div>
           <div className="col-md-6">
@@ -16,13 +44,15 @@ const ProductHeader = ({ views, link }) => (
                 <i className="fa-solid fa-eye"></i>
                 {views}
               </span>
-              <a href={link}>
-                <i className="fa-solid fa-link"></i>Copy Link
-              </a>
+              
+              <button onClick={handleCopyLink} className="copy-link-button">
+                <i className="fa-solid fa-link"></i> Copy Link
+              </button>
             </div>
           </div>
         </div>
       </div>
     </section>
   );
-  export default ProductHeader;  
+};
+export default ProductHeader;  
