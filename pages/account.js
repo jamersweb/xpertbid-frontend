@@ -59,7 +59,7 @@ const AccountSettings = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://127.0.0.1:8000/api/account-settings", {
+        const response = await axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/account-settings", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         setProfile(response.data.profile);
@@ -100,7 +100,7 @@ const AccountSettings = () => {
       }
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/user/update",
+        "https://violet-meerkat-830212.hostingersite.com/public/api/user/update",
         formData,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -120,7 +120,7 @@ const AccountSettings = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/address/update",
+        "https://violet-meerkat-830212.hostingersite.com/public/api/address/update",
         address,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -139,7 +139,7 @@ const AccountSettings = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/notifications/update",
+        "https://violet-meerkat-830212.hostingersite.com/public/api/notifications/update",
         notifications,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -162,7 +162,7 @@ const AccountSettings = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/password/update",
+        "https://violet-meerkat-830212.hostingersite.com/public/api/password/update",
         passwordData,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

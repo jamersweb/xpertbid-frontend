@@ -11,7 +11,7 @@ export default function FeaturedProducts() {
       
   
       const fetchProducts = async (product) => {
-        const response = await fetch("http://127.0.0.1:8000/api/get-featured");
+        const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/get-featured");
         const data = await response.json();
         //console.log(product);
         setProducts(data.product || []);

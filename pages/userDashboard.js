@@ -11,7 +11,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/dashboard");
+        const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/dashboard");
         const data = await response.json();
         setDashboardData({
           listings: data.listings || 0,
@@ -30,7 +30,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/listings");
+        const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/listings");
         const data = await response.json();
         setListings(data.listings);
       } catch (error) {

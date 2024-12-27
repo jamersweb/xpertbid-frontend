@@ -8,7 +8,7 @@ const InvoiceTable = () => {
     // Fetch invoices from API
     const fetchInvoices = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/invoices");
+        const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/invoices");
         const data = await response.json();
         setInvoices(data.invoices);
       } catch (error) {

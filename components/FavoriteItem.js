@@ -33,7 +33,7 @@ const FavoriteItem = ({ item }) => {
 
   const removeFavorite = async (itemId) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/favorites/${itemId}`, {
+      await axios.delete(`https://violet-meerkat-830212.hostingersite.com/public/api/favorites/${itemId}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },

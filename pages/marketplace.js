@@ -14,13 +14,13 @@ export default function Marketplace() {
   // Fetch categories and products on component mount
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/get-category");
+      const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/get-category");
       const data = await response.json();
       setCategories(data.categories || []);
     };
 
     const fetchProducts = async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/get-products");
+      const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/get-products");
       const data = await response.json();
       //console.log(data);
       setProducts(data.product || []);

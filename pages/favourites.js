@@ -27,7 +27,7 @@ const FavoritesPage = () => {
         if (!userToken) {
           return;
         }
-        const response = await axios.get('http://127.0.0.1:8000/api/favorites', {
+        const response = await axios.get('https://violet-meerkat-830212.hostingersite.com/public/api/favorites', {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
@@ -49,7 +49,7 @@ const FavoritesPage = () => {
         if (!userToken) {
           return;
         }
-        const response = await axios.get('http://127.0.0.1:8000/api/favorites', {
+        const response = await axios.get('https://violet-meerkat-830212.hostingersite.com/public/api/favorites', {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },

@@ -17,7 +17,7 @@ const BiddingTabs = () => {
     const fetchAuctions = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/auctions?status=${activeTab}`
+          `https://violet-meerkat-830212.hostingersite.com/public/api/auctions?status=${activeTab}`
         );
         const data = await response.json();
         setAuctions(data.auctions);

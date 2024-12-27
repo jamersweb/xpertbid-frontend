@@ -23,7 +23,7 @@ const TransactionHistory = () => {
       try {
         
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/wallet/transactions",
+          "https://violet-meerkat-830212.hostingersite.com/public/api/wallet/transactions",
           {
             headers: {
               Authorization: `Bearer ${session.user.token}`,

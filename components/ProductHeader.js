@@ -6,7 +6,7 @@ const ProductHeader = ({ views, link, productId }) => {
   useEffect(() => {
     const incrementViews = async () => {
       try {
-        await axios.get(`http://127.0.0.1:8000/api/product/${productId}/increment-views`);
+        await axios.get(`https://violet-meerkat-830212.hostingersite.com/public/api/product/${productId}/increment-views`);
       } catch (error) {
         console.error("Error incrementing views:", error);
       }

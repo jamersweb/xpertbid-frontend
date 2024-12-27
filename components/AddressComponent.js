@@ -19,7 +19,7 @@ const AddressComponent = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/countries");
+        const response = await axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/countries");
         setCountries(response.data);
       } catch (error) {
         console.error("Error fetching countries:", error);
@@ -28,7 +28,7 @@ const AddressComponent = () => {
 
     const fetchAddress = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user/address");
+        const response = await axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/user/address");
         setFormData(response.data);
       } catch (error) {
         console.error("Error fetching address:", error);
@@ -49,7 +49,7 @@ const AddressComponent = () => {
 
   const handleSaveAddress = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/user/address", formData);
+      const response = await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/user/address", formData);
       alert("Address saved successfully!");
     } catch (error) {
       console.error("Error saving address:", error);

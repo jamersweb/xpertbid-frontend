@@ -31,7 +31,7 @@ const IdentityVerification = () => {
     formData.append("birthDate", birthDate);
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/identity-verification", formData, {
+      await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/identity-verification", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("Identity verification details saved successfully.");

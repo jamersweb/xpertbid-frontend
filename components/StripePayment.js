@@ -21,7 +21,7 @@ const CheckoutForm = ({token},user) => {
             setLoading(true);
 
             // Call Laravel API to create payment intent
-            const { data } = await axios.post('http://127.0.0.1:8000/api/stripe-payment',
+            const { data } = await axios.post('https://violet-meerkat-830212.hostingersite.com/public/api/stripe-payment',
              { amount },
              {
                headers: {

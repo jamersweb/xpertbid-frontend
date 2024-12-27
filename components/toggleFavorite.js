@@ -18,7 +18,7 @@ const FavoriteIcon = ({ auctionId, isFavorite }) => {
     //console.log(auctionId)
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/favorites/add",
+        "https://violet-meerkat-830212.hostingersite.com/public/api/favorites/add",
         { auction_id: auctionId, user_id: session.user.id },
         {
           headers: {
@@ -37,7 +37,7 @@ const FavoriteIcon = ({ auctionId, isFavorite }) => {
     //console.log(auctionId)
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/favorites/check",
+        "https://violet-meerkat-830212.hostingersite.com/public/api/favorites/check",
         { auction_id: auctionId, user_id: session.user.id },
         {
           headers: {

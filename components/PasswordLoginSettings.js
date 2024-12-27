@@ -36,7 +36,7 @@ const PasswordLoginSettings = () => {
         contactEmail,
       };
 
-      await axios.post("http://127.0.0.1:8000/api/user/save-login", payload);
+      await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/user/save-login", payload);
       alert("Login information updated successfully!");
     } catch (error) {
       console.error("Error saving login information:", error);
@@ -57,7 +57,7 @@ const PasswordLoginSettings = () => {
         newPassword,
       };
 
-      await axios.post("http://127.0.0.1:8000/api/user/change-password", payload);
+      await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/user/change-password", payload);
       alert("Password changed successfully!");
     } catch (error) {
       console.error("Error changing password:", error);

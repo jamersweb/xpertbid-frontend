@@ -12,7 +12,7 @@ const WalletBalance = () => {
       //console.log('get',getSession());
       //console.log('session',session.user.token);
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/wallet", {
+        const response = await axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/wallet", {
           headers: { Authorization: `Bearer ${session.user.token}`,'Cache-Control': 'no-store' },
         });
         setBalance(response.data.balance);

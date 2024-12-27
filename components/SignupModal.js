@@ -36,7 +36,7 @@ const SignupModal = ({ isOpen, onClose }) => {
     
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/register`,
+        `https://violet-meerkat-830212.hostingersite.com/public/api/register`,
         {
           name: formData.name,
           email: formData.email,

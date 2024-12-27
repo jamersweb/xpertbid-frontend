@@ -18,7 +18,7 @@ const NotificationSettings = () => {
   useEffect(() => {
     const fetchNotificationSettings = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user/notifications");
+        const response = await axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/user/notifications");
         setPreferences(response.data);
       } catch (error) {
         console.error("Error fetching notification settings:", error);
@@ -49,7 +49,7 @@ const NotificationSettings = () => {
 
   const saveNotificationSettings = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/user/notifications", preferences);
+      const response = await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/user/notifications", preferences);
       alert("Notification settings saved successfully!");
     } catch (error) {
       console.error("Error saving notification settings:", error);

@@ -15,7 +15,7 @@ const DashboardMenu = () => {
     const handleLogout = async () => {
       try {
         // Revoke token on the backend
-        await axios.post("http://127.0.0.1:8000/api/logout");
+        await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/logout");
     
         // Sign out from NextAuth
         signOut({ callbackUrl: "/" });

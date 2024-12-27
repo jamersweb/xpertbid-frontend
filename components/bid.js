@@ -13,7 +13,7 @@ const BidPage = ({product}) => {
 
   const fetchHighestBid = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/highest-bid/${product.id}`);
+      const response = await axios.get(`https://violet-meerkat-830212.hostingersite.com/public/api/highest-bid/${product.id}`);
       if (response.data.success) {
         setHighestBid(response.data.highest_bid);
         setHighestBidder(response.data.user || "Anonymous");
@@ -50,7 +50,7 @@ const BidPage = ({product}) => {
   const handlePlaceBid = async () => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/bids",
+        "https://violet-meerkat-830212.hostingersite.com/public/api/bids",
         { auction_id: auctionId, bid_amount: bidAmount },
         { headers: { Authorization: `Bearer ${session.user.token}` } }
       );

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       //console.log(session);
       // Forward the request to the Laravel backend
       const laravelResponse = await axios.post(
-        "http://127.0.0.1:8000/api/paypal-payment",
+        "https://violet-meerkat-830212.hostingersite.com/public/api/paypal-payment",
         { amount },
         {
           headers: {

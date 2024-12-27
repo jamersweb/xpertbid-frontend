@@ -14,7 +14,7 @@ export default function BrowseCategories() {
     const fetchCategories = async () => {
       try {
         // Make API request to fetch categories
-        const response = await axios.get(`http://127.0.0.1:8000/api/get-category-product/${id}`);
+        const response = await axios.get(`https://violet-meerkat-830212.hostingersite.com/public/api/get-category-product/${id}`);
         //console.log(response.data.categories);
         setCategories(response.data.product || []); // Update categories state
       } catch (err) {

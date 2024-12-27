@@ -28,7 +28,7 @@ const ProductPage = () => {
 
         // Fetch product details
         const productResponse = await axios.get(
-          `http://127.0.0.1:8000/api/product/${productId}`
+          `https://violet-meerkat-830212.hostingersite.com/public/api/product/${productId}`
         );
         const productData = productResponse.data;
         setProduct(productData.product.product[0]);

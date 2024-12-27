@@ -12,7 +12,7 @@ export default NextAuth({
       },
        async authorize(credentials) {
         try {
-          const res = await fetch("http://127.0.0.1:8000/api/login", {
+          const res = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/login", {
             method: "POST",
             body: JSON.stringify({
               email: credentials.email,
