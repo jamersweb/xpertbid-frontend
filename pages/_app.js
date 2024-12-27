@@ -29,11 +29,11 @@ const AuthWrapper = ({ children }) => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-   // return <div>Loading...</div>;
+    return <div>Loading...</div>;
   }
 
   if (!session) {
-    return <div>Please log in to access this page.</div>;
+   // return <div>Please log in to access this page.</div>;
   }
 
   return <>{children}</>;

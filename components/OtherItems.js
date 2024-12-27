@@ -24,7 +24,7 @@ const OtherItems = ({ items }) => (
                     {items[0].map((item, index) => (
                       <SwiperSlide key={index}>
                         <div className="pro-image">
-                          <img src={`http://127.0.0.1:8000${item.image}`} alt={item.title} />
+                          <img src={`https://violet-meerkat-830212.hostingersite.com/public/${item.image}`} alt={item.title} />
                           <CountdownTimer startDate={item.start_date} endDate={item.end_date} />
                         </div>
                         <div className="pro-title">

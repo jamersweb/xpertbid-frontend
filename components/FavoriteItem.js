@@ -49,7 +49,7 @@ const FavoriteItem = ({ item }) => {
     <div className="col-lg-4 col-md-6 mkt-child">
       <div className="market-card">
         <div className="mkt-img">
-          <img src={`http://127.0.0.1:8000${item.image}`}
+          <img src={`https://violet-meerkat-830212.hostingersite.com/public/${item.image}`}
  alt={item.name} />
           <CountdownTimer startDate={item.start_date} endDate={item.end_date} />
 

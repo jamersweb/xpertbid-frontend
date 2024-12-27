@@ -47,7 +47,7 @@ export default function FeaturedProducts() {
                     <SwiperSlide key={index}>
                       <div className="pro-image">
                   <img
-                    src={`http://127.0.0.1:8000${product.image}`}
+                    src={`https://violet-meerkat-830212.hostingersite.com/public/${product.image}`}
                     alt={product.name}
                   />
                     <CountdownTimer startDate={product.start_date} endDate={product.end_date} />

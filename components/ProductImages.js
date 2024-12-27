@@ -32,7 +32,7 @@ const ProductImages = ({ albumImages }) => {
                             <SwiperSlide key={index}>
                               <div className="pro-image">
                                 <img
-                                  src={`http://127.0.0.1:8000${image}`}
+                                  src={`https://violet-meerkat-830212.hostingersite.com/public/${image}`}
                                   alt={`Album Slide ${index}`}
                                 />
                               </div>
@@ -56,7 +56,7 @@ const ProductImages = ({ albumImages }) => {
                         <SwiperSlide key={index}>
                           <div className="pro-image">
                             <img
-                              src={`http://127.0.0.1:8000${image}`}
+                              src={`https://violet-meerkat-830212.hostingersite.com/public/${image}`}
                               alt={`Album Slide ${index}`}
                             />
                           </div>
@@ -72,7 +72,7 @@ const ProductImages = ({ albumImages }) => {
                           <div className="swiper-slide" key={index}>
                             <div className="pro-image">
                               <img
-                                src={`http://127.0.0.1:8000${image}`}
+                                src={`https://violet-meerkat-830212.hostingersite.com/public/${image}`}
                                 alt={`Album Slide ${index}`}
                               />
                             </div>

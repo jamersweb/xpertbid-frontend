@@ -9,7 +9,7 @@ const ProductDetails = ({product}) => {
           <div className="owned">
             <img
               className="customer-profile"
-              src={`http://127.0.0.1:8000${product[1].profile}`}
+              src={`https://violet-meerkat-830212.hostingersite.com/public/${product[1].profile}`}
               alt={product[1].name}
             />
             <div className="customer-name">

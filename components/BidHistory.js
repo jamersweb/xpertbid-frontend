@@ -8,7 +8,7 @@
           <div className="history-user parent" key={bid.id}>
             <div className="history-user-profile">
               <img
-                src={`http://127.0.0.1:8000${bid.userImage}`}
+                src={`https://violet-meerkat-830212.hostingersite.com/public/${bid.userImage}`}
                 alt={bid.userName}
                 className="user-profile-history"
               />
