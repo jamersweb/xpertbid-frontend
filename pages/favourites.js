@@ -63,7 +63,7 @@ const FavoritesPage = () => {
 
     checkFavorites();
   }, []);
-  checkFavorites();
+ // checkFavorites();
 
   if (loading) {
     return <p>Loading favorites...</p>;
