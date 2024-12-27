@@ -32,9 +32,6 @@ const AuthWrapper = ({ children }) => {
     return <div>Loading...</div>;
   }
 
-  if (!session) {
-    return <div>Please log in to access this page.</div>;
-  }
 
   return <>{children}</>;
 };
