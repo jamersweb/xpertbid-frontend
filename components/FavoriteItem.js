@@ -1,12 +1,12 @@
 // components/FavoriteItem.js
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { useSession } from "next-auth/react";
+import React, { useEffect } from 'react';
+//import { useSession } from "next-auth/react";
 import CountdownTimer from './countdown';
 const FavoriteItem = ({ item }) => {
-    const [timeLeft, setTimeLeft] = useState(item.timeLeft);
-    const { data: session } = useSession();
-    const userToken = session?.user?.token; // Assumes token is part of session data
+    //const [timeLeft, setTimeLeft] = useState(item.timeLeft);
+   // const { data: session } = useSession();
+    //const userToken = session?.user?.token; // Assumes token is part of session data
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,18 +31,18 @@ const FavoriteItem = ({ item }) => {
     return () => clearInterval(interval);
   }, [item.auctionEndTime]);
 
-  const removeFavorite = async (itemId) => {
-    try {
-      await axios.delete(`https://violet-meerkat-830212.hostingersite.com/public/api/favorites/${itemId}`, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
-      setFavorites(favorites.filter((item) => item.id !== itemId));
-    } catch (error) {
-      console.error('Error removing favorite item:', error);
-    }
-  };
+  // const removeFavorite = async (itemId) => {
+  //   try {
+  //     await axios.delete(`https://violet-meerkat-830212.hostingersite.com/public/api/favorites/${itemId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${userToken}`,
+  //       },
+  //     });
+  //     setFavorites(favorites.filter((item) => item.id !== itemId));
+  //   } catch (error) {
+  //     console.error('Error removing favorite item:', error);
+  //   }
+  // };
   
   
   return (

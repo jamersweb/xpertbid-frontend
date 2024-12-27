@@ -9,7 +9,6 @@ const PayPalPayment = ({token} ) => {
       const [amount, setAmount] = useState("");
     const handleAmountChange = (e) => {
         setAmount(e.target.value);
-        const pay = e.target.value;
     };
     //const price = amounts;
     const handleApprove = async (data) => {

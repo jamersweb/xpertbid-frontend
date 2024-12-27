@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 const WalletBalance = () => {
   const [balance, setBalance] = useState(0);
   const { data: session } = useSession();

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const stripePromise = loadStripe('pk_test_fKZAzAVqh3g3fg7ruTOEFwE600oylgtoVu');
 
-const CheckoutForm = ({token},user) => {
+const CheckoutForm = ({token}) => {
     const stripe = useStripe();
     const elements = useElements();
     const [amount, setAmount] = useState('');

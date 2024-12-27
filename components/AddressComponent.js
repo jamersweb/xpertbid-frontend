@@ -50,7 +50,7 @@ const AddressComponent = () => {
   const handleSaveAddress = async () => {
     try {
       const response = await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/user/address", formData);
-      alert("Address saved successfully!");
+      alert("Address saved successfully!",response);
     } catch (error) {
       console.error("Error saving address:", error);
       alert("Failed to save address.");

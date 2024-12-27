@@ -9,7 +9,7 @@ const CountdownTimer = ({ startDate, endDate }) => {
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const now = new Date();
+      const now = new Date(startDate);
       const end = new Date(endDate);
 
       // If the countdown has ended
@@ -34,7 +34,7 @@ const CountdownTimer = ({ startDate, endDate }) => {
 
     // Cleanup on component unmount
     return () => clearInterval(timer);
-  }, [endDate]);
+  }, [startDate,endDate]);
 
   return (
     <div className="counter">

@@ -50,7 +50,7 @@ const NotificationSettings = () => {
   const saveNotificationSettings = async () => {
     try {
       const response = await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/user/notifications", preferences);
-      alert("Notification settings saved successfully!");
+      alert("Notification settings saved successfully!", response);
     } catch (error) {
       console.error("Error saving notification settings:", error);
       alert("Failed to save notification settings.");
@@ -67,7 +67,7 @@ const NotificationSettings = () => {
       </div>
       <p className="mb-5">
         Manage your notification preferences to stay updated on auction wins, bids, and important updates. Customize how
-        and when you'd like to receive alerts.
+        and when you like to receive alerts.
       </p>
 
       <div className="notify-setting-inner-box">
@@ -105,7 +105,7 @@ const NotificationSettings = () => {
 
       <div className="notify-setting-inner-box">
         <h4>Bidding</h4>
-        <p>We'll remind you about items you've bid on or that you are following, by email and push notifications in our app.</p>
+        <p>We will remind you about items you have bid on or that you are following, by email and push notifications in our app.</p>
         <div className="nofify-form-1">
           {Object.entries(preferences.biddingConditions).map(([key, value], index) => (
             <div className="col-12 notify-child" key={index}>
@@ -118,7 +118,7 @@ const NotificationSettings = () => {
               />
               <div className="label-and-info">
                 <label htmlFor={key}>
-                  {key === "outbid" && "Let me know when I'm outbid"}
+                  {key === "outbid" && "Let me know when Im outbid"}
                   {key === "republished" && "Let me know when items are republished"}
                   {key === "oneDayReminder" && "Remind me 1 day before bidding closes"}
                   {key === "oneHourReminder" && "Remind me 1 hour before bidding closes"}

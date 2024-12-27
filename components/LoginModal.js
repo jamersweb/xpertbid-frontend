@@ -1,6 +1,6 @@
 
-import { useState, useEffect } from 'react';
-import { getSession, signIn, useSession } from "next-auth/react";
+import { useState } from 'react';
+import { signIn } from "next-auth/react";
 
 const LoginModal = ({ isOpen, onClose }) =>  {
 
@@ -12,8 +12,7 @@ const LoginModal = ({ isOpen, onClose }) =>  {
   const [errorMessage, setErrorMessage] = useState('');
   const [otp, setOtp] = useState('');
   const [generatedOtp, setGeneratedOtp] = useState(null);
-  const [otpTimeLeft, setOtpTimeLeft] = useState(60);
-  const { data: session } = useSession();
+  //const [otpTimeLeft, setOtpTimeLeft] = useState(60);
  // const { data: session } = useSession(); // Access session data
  
 

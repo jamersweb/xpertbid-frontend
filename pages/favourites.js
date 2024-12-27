@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FavoriteItem from '../components/FavoriteItem';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { useSession } from "next-auth/react";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -11,7 +11,7 @@ const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
   const userToken = session?.user?.token; // Assumes token is part of session data
-  const router = useRouter();
+  //const router = useRouter();
 
   // Check if user is authenticated
   // useEffect(() => {

@@ -6,36 +6,12 @@ import PayPalPayment from '../components/paypal';
 const AddMoneyModal = ({ isOpen, onClose }) => {
   const { data: session } = useSession();
   const [selectedMethod, setSelectedMethod] = useState("");
-  const [amount, setAmount] = useState("");
-  const [loading, setLoading] = useState(false);
   const userToken = session?.user?.token;
-  const handleAmountChange = (e) => {
-    setAmount(e.target.value);
-    //const pay = e.target.value;
-};
+
 const closeHandler = () => {
     onClose();
   };
-  const handlePayment = async () => {
-    try {
-      setLoading(true);
-      const userToken = session?.user?.token; // Assumes token is part of session data
-    
-      if (!userToken) {
-        alert("Please log in to continue.");
-        return;
-      }
 
-      
-      alert(response.data.message || "Payment Successful");
-      onClose();
-    } catch (error) {
-      console.error("Error processing payment:", error);
-      alert("Payment failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     

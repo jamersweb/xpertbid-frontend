@@ -3,13 +3,13 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 
 const BidPage = ({product}) => {
-  const [auctionId, setAuctionId] = useState(product.id);
+  //const [auctionId, setAuctionId] = useState(product.id);
   const [bidAmount, setBidAmount] = useState("");
   const [message, setMessage] = useState("");
   const { data: session } = useSession();
   //console.log('rage',product);
   const [highestBid, setHighestBid] = useState(0);
-  const [highestBidder, setHighestBidder] = useState("Anonymous");
+  //const [highestBidder, setHighestBidder] = useState("Anonymous");
 
   const fetchHighestBid = async () => {
     try {
@@ -33,7 +33,7 @@ const BidPage = ({product}) => {
     }, 5000);
 
     return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [product.id]);
+  }, [fetchHighestBid,product.id]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

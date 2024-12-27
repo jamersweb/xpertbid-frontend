@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import axios from "axios";
-import CopyLink from "../components/CopyLink";
 const ProductHeader = ({ views, link, productId }) => {
   // Increment views on component mount
   useEffect(() => {

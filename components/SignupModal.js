@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const SignupModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
+  // Always declare hooks unconditionally
   const [activeStep, setActiveStep] = useState("step1");
   const [formData, setFormData] = useState({
     name: "",
@@ -33,7 +32,6 @@ const SignupModal = ({ isOpen, onClose }) => {
   };
 
   const registerWithEmail = async () => {
-    
     try {
       const response = await axios.post(
         `https://violet-meerkat-830212.hostingersite.com/public/api/register`,
@@ -43,20 +41,18 @@ const SignupModal = ({ isOpen, onClose }) => {
           password: formData.password,
         }
       );
-      
-      localStorage.setItem("user", JSON.stringify(newUser)); // Save user to localStorage
+
       const newUser = { name: formData.name, email: formData.email };
-      onSignup(newUser); // Notify parent of the new user
-      setSuccessMessage("Registration successful! Please check your email to verify your account.");
+      localStorage.setItem("user", JSON.stringify(newUser)); // Save user to localStorage
+      setSuccessMessage("Registration successful! Please check your email to verify your account.",response);
       handleStepChange("success");
-      onClose();
     } catch (error) {
       if (error.response?.status === 422) {
-        const apiErrors = error.response.data.errors; // Extract validation errors from the API response
+        const apiErrors = error.response.data.errors; // Extract validation errors
         const formattedErrors = Object.values(apiErrors)
           .flat()
-          .join(", "); // Combine all error messages into one string if needed
-        setErrorMessage(formattedErrors); // Show a combined message
+          .join(", "); // Combine all error messages
+        setErrorMessage(formattedErrors);
       } else {
         setErrorMessage(
           error.response?.data?.message || "An unexpected error occurred. Please try again."
@@ -75,7 +71,7 @@ const SignupModal = ({ isOpen, onClose }) => {
         }
       );
 
-      setSuccessMessage("Registration successful! Please verify the OTP sent to your phone.");
+      setSuccessMessage("Registration successful! Please verify the OTP sent to your phone.",response);
       handleStepChange("otpVerification");
     } catch (error) {
       setErrorMessage(
@@ -84,8 +80,7 @@ const SignupModal = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!isOpen) return null;
-
+  // Render conditionally based on `isOpen`
   return (
     <div
       id="SignupModal"
@@ -175,7 +170,13 @@ const SignupModal = ({ isOpen, onClose }) => {
               value={formData.name}
               onChange={handleInputChange}
             />
-            <select id="countryCode" value={formData.countryCode} onChange={handleInputChange}>
+            <select
+              id="countryCode"
+              value={formData.countryCode}
+              onChange={(e) =>
+                setFormData((prevData) => ({ ...prevData, countryCode: e.target.value }))
+              }
+            >
               <option value="+1">+1 USA</option>
               <option value="+44">+44 UK</option>
               <option value="+91">+91 India</option>
@@ -205,18 +206,6 @@ const SignupModal = ({ isOpen, onClose }) => {
             <button className="form-button-1" onClick={closeHandler}>
               Close
             </button>
-          </div>
-        )}
-
-        {/* Step 3: OTP Verification */}
-        {activeStep === "otpVerification" && (
-          <div id="otpVerification" className="form-step">
-            <div className="d-flex justify-content-center step-heading-and-back">
-              <h3>Verify OTP</h3>
-            </div>
-            <p>Please enter the OTP sent to your phone.</p>
-            <input type="text" id="otp" placeholder="Enter OTP" />
-            <button className="form-button-1">Verify</button>
           </div>
         )}
       </div>

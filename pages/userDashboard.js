@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DashboardRecord from "../components/DashboardRecord";
-
+import ListingCard from "../components/ListingCard";
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({
     listings: 0,
@@ -75,7 +75,7 @@ const Dashboard = () => {
     </div>
     <section className="listing">
     <div className="container-fluid dashboard-listing">
-    <ListingsHeader />
+    
     {listings.length > 0 ? (
         listings.map((listing) => <ListingCard key={listing.id} listing={listing} />)
     ) : (

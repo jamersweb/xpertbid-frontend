@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import axios from 'axios';
+// import  axios from 'axios';
 import TransactionHistory from '../components/transcations';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import WalletBalance from '../components/walletDisplay';
 import AddMoneyModal from '../components/payment_method';
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 const WalletPage = () => {
-  const [amount, setAmount] = useState('');
-  const [balance, setBalance] = useState(0);
-  const { data: session } = useSession();
+  //const [amount, setAmount] = useState('');
+  //const [balance, setBalance] = useState(0);
+  //const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const router = useRouter();
-  const { status, message } = router.query;
+ // const router = useRouter();
+  //const { status, message } = router.query;
 
   const openModal = () => {
     //alert('sdf');
@@ -24,16 +24,16 @@ const WalletPage = () => {
     setIsModalOpen(false);
   };
 
-  const fetchBalance = async () => {
-    const response = await axios.get('/api/wallet');
-    setBalance(response.data.balance);
-  };
+//   const fetchBalance = async () => {
+//     const response = await axios.get('/api/wallet');
+//     setBalance(response.data.balance);
+//   };
 
-  const handleStripePayment = async () => {
-    const stripeToken = 'YOUR_STRIPE_TOKEN'; // Get Stripe token from client-side
-    await axios.post('/api/stripe-payment', { amount, stripeToken });
-    fetchBalance();
-  };
+//   const handleStripePayment = async () => {
+//     const stripeToken = 'YOUR_STRIPE_TOKEN'; // Get Stripe token from client-side
+//     await axios.post('/api/stripe-payment', { amount, stripeToken });
+//     fetchBalance();
+//   };
 
   return (
     <>

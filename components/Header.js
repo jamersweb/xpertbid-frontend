@@ -1,5 +1,5 @@
 // components/Header.js
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import { signOut,useSession } from "next-auth/react";
@@ -11,17 +11,17 @@ export default function Header() {
   // ensure that is handled either here or via refs.
   // For now, we assume the JS from script.js handles it.
   const [activeModal, setActiveModal] = useState(null);
-  const [user, setUser] = useState(null);
+ // const [user, setUser] = useState(null);
   const { data: session } = useSession();
    const [isNotificationOpen, setNotificationOpen] = useState(false);
     const [isUserSettingsOpen, setUserSettingsOpen] = useState(false);
-    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+//    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   
     // Handlers for toggling menus
     const toggleNotificationPopup = () => setNotificationOpen(!isNotificationOpen);
     const toggleUserSettingPopup = () => setUserSettingsOpen(!isUserSettingsOpen);
     const openMobileMenu = () => setMobileMenuOpen(true);
-    const closeMobileMenu = () => setMobileMenuOpen(false);
+    //const closeMobileMenu = () => setMobileMenuOpen(false);
 
   const handleOpenModal = (modal) => {
     setActiveModal(modal); // Set "signup" or "signin"

@@ -9,8 +9,10 @@ const FavoriteIcon = ({ auctionId, isFavorite }) => {
     try {
       const response = await toggleFavorite(auctionId);
       setFavorite(!favorite); // Toggle favorite state
+      return response;
       //alert(response.message); // Show success message
     } catch (error) {
+      return error;
       //alert("An error occurred while updating favorites.");
     }
   };

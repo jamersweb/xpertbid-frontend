@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import axios from "axios";
+//import axios from "axios";
 const DashboardMenu = () => {
   const [isNotificationOpen, setNotificationOpen] = useState(false);
   const [isUserSettingsOpen, setUserSettingsOpen] = useState(false);
@@ -12,18 +12,18 @@ const DashboardMenu = () => {
   const openMobileMenu = () => setMobileMenuOpen(true);
   const closeMobileMenu = () => setMobileMenuOpen(false);
   
-    const handleLogout = async () => {
-      try {
-        // Revoke token on the backend
-        await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/logout");
+    // const handleLogout = async () => {
+    //   try {
+    //     // Revoke token on the backend
+    //     await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/logout");
     
-        // Sign out from NextAuth
-        signOut({ callbackUrl: "/" });
-      } catch (error) {
-        signOut({ callbackUrl: "/" });
-        console.error("Error during logout:", error);
-      }
-    };
+    //     // Sign out from NextAuth
+    //     signOut({ callbackUrl: "/" });
+    //   } catch (error) {
+    //     signOut({ callbackUrl: "/" });
+    //     console.error("Error during logout:", error);
+    //   }
+    // };
 
   return (
     <header>

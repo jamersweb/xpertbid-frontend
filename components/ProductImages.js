@@ -1,13 +1,13 @@
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-const ProductImages = ({ mainImage, albumImages }) => {
+const ProductImages = ({ albumImages }) => {
   // Parse the album JSON string
   const parsedAlbum = JSON.parse(albumImages.replace(/\\/g, '')); // Replace escape characters and parse
   const [thumbsSwiper, setThumbsSwiper] = useState(null);

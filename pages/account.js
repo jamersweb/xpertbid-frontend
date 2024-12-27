@@ -6,10 +6,14 @@ import AddressComponent from "../components/AddressComponent";
 import PasswordLoginSettings from "../components/PasswordLoginSettings";
 import NotificationSettings from "../components/NotificationSettings";
 import IdentityVerification from "../components/IdentityVerification";
+import { useSession } from "next-auth/react";
+
 const AccountSettings = () => {
   const [activeSection, setActiveSection] = useState("profile");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+//  const [message, setMessage] = useState("");
+  const { data: session } = useSession();
+  const userToken = session?.user?.token; // Assumes token is part of session data
 
   // Profile Data
   const [profile, setProfile] = useState({
@@ -18,41 +22,41 @@ const AccountSettings = () => {
     fullName: "",
     country: "",
   });
-  const [businessInfo, setBusinessInfo] = useState({
-    companyName: "",
-    vatNumber: "",
-  });
+  // const [businessInfo, setBusinessInfo] = useState({
+  //   companyName: "",
+  //   vatNumber: "",
+  // });
   const [profilePicture, setProfilePicture] = useState(null);
 
   // Address Data
-  const [address, setAddress] = useState({
-    street1: "",
-    street2: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    contactNumber: "",
-    otherNumber: "",
-  });
+  // const [address, setAddress] = useState({
+  //   street1: "",
+  //   street2: "",
+  //   city: "",
+  //   state: "",
+  //   postalCode: "",
+  //   contactNumber: "",
+  //   otherNumber: "",
+  // });
 
   // Notification Settings
-  const [notifications, setNotifications] = useState({
-    newsletters: true,
-    outbidAlerts: true,
-    republishedAlerts: false,
-    reminders: {
-      oneDay: true,
-      oneHour: true,
-      fifteenMinutes: false,
-    },
-  });
+  // const [notifications, setNotifications] = useState({
+  //   newsletters: true,
+  //   outbidAlerts: true,
+  //   republishedAlerts: false,
+  //   reminders: {
+  //     oneDay: true,
+  //     oneHour: true,
+  //     fifteenMinutes: false,
+  //   },
+  // });
 
   // Password & Login Data
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+  // const [passwordData, setPasswordData] = useState({
+  //   currentPassword: "",
+  //   newPassword: "",
+  //   confirmPassword: "",
+  // });
 
   // Fetch data on load
   useEffect(() => {
@@ -60,7 +64,7 @@ const AccountSettings = () => {
       try {
         setLoading(true);
         const response = await axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/account-settings", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${userToken}` },
         });
         setProfile(response.data.profile);
         setAddress(response.data.address);
@@ -103,7 +107,7 @@ const AccountSettings = () => {
         "https://violet-meerkat-830212.hostingersite.com/public/api/user/update",
         formData,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${userToken}` },
         }
       );
 
@@ -116,66 +120,66 @@ const AccountSettings = () => {
     }
   };
 
-  const saveAddress = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        "https://violet-meerkat-830212.hostingersite.com/public/api/address/update",
-        address,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-      setMessage(response.data.message || "Address updated successfully!");
-    } catch (error) {
-      console.error("Error updating address:", error);
-      setMessage("An error occurred while updating your address.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const saveAddress = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.post(
+  //       "https://violet-meerkat-830212.hostingersite.com/public/api/address/update",
+  //       address,
+  //       {
+  //         headers: { Authorization: `Bearer ${userToken}` },
+  //       }
+  //     );
+  //     setMessage(response.data.message || "Address updated successfully!");
+  //   } catch (error) {
+  //     console.error("Error updating address:", error);
+  //     setMessage("An error occurred while updating your address.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const saveNotifications = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        "https://violet-meerkat-830212.hostingersite.com/public/api/notifications/update",
-        notifications,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-      setMessage(response.data.message || "Notification settings updated!");
-    } catch (error) {
-      console.error("Error updating notifications:", error);
-      setMessage("An error occurred while updating notifications.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const saveNotifications = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.post(
+  //       "https://violet-meerkat-830212.hostingersite.com/public/api/notifications/update",
+  //       notifications,
+  //       {
+  //         headers: { Authorization: `Bearer ${userToken}` },
+  //       }
+  //     );
+  //     setMessage(response.data.message || "Notification settings updated!");
+  //   } catch (error) {
+  //     console.error("Error updating notifications:", error);
+  //     setMessage("An error occurred while updating notifications.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const savePassword = async () => {
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setMessage("New password and confirm password do not match.");
-      return;
-    }
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        "https://violet-meerkat-830212.hostingersite.com/public/api/password/update",
-        passwordData,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-      setMessage(response.data.message || "Password updated successfully!");
-    } catch (error) {
-      console.error("Error updating password:", error);
-      setMessage("An error occurred while updating your password.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const savePassword = async () => {
+  //   if (passwordData.newPassword !== passwordData.confirmPassword) {
+  //     setMessage("New password and confirm password do not match.");
+  //     return;
+  //   }
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.post(
+  //       "https://violet-meerkat-830212.hostingersite.com/public/api/password/update",
+  //       passwordData,
+  //       {
+  //         headers: { Authorization: `Bearer ${userToken}` },
+  //       }
+  //     );
+  //     setMessage(response.data.message || "Password updated successfully!");
+  //   } catch (error) {
+  //     console.error("Error updating password:", error);
+  //     setMessage("An error occurred while updating your password.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   
   return (

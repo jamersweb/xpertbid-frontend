@@ -10,7 +10,7 @@ export default function FeaturedProducts() {
   useEffect(() => {
       
   
-      const fetchProducts = async (product) => {
+      const fetchProducts = async () => {
         const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/get-featured");
         const data = await response.json();
         //console.log(product);

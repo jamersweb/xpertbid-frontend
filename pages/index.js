@@ -10,7 +10,7 @@ import MarketplaceSection from '@/components/MarketplaceSection'
 import StartSelling from '@/components/StartSelling'
 
 
-export default function Home({ countries }) {
+export default function Home() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
   
