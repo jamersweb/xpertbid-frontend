@@ -97,19 +97,19 @@ export default function Header() {
                     <>
                       
 
-                            <ul class="navbar-nav dashboard-nav"
+                            <ul className="navbar-nav dashboard-nav"
                                 id="navbarDesktop">
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="#">Dashboard</a>
+                                <li className="nav-item ">
+                                    <a className="nav-link" href="#">Dashboard</a>
                                 </li>
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="#">Explore</a>
+                                <li className="nav-item ">
+                                    <a className="nav-link" href="#">Explore</a>
                                 </li>
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="#">Bidings</a>
+                                <li className="nav-item ">
+                                    <a className="nav-link" href="#">Bidings</a>
                                 </li>
-                                <li class="nav-item activemenu">
-                                    <a class="nav-link" href="#">My Listings</a>
+                                <li className="nav-item activemenu">
+                                    <a className="nav-link" href="#">My Listings</a>
                                 </li>
                             </ul>
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CountdownTimer from "./countdown";
+
 export default function DisplayProducts({ products }) {
     return (
         <div className="row makt-parent">

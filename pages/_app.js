@@ -18,7 +18,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
       
       <SessionProvider session={session}>
       <AuthWrapper>
-        <Component {...pageProps} />
+          <Component {...pageProps} />
       </AuthWrapper>
     </SessionProvider>
       
@@ -29,7 +29,7 @@ const AuthWrapper = ({ children }) => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+   // return <div>Loading...</div>;
   }
 
   if (!session) {

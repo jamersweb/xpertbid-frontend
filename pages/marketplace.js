@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
-import Footer from '@/components/Footer'
+import Footer from '@/components/Footer';
+import { Oval } from "react-loader-spinner"; // Import the loader
 import Filter from "../components/Filter";
 import DisplayProducts from "../components/DisplayProducts";
 
@@ -9,6 +10,8 @@ export default function Marketplace() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+
   const itemsPerPage = 6; // Number of products per page
 
   // Fetch categories and products on component mount
@@ -24,6 +27,7 @@ export default function Marketplace() {
       const data = await response.json();
       //console.log(data);
       setProducts(data.product || []);
+      setLoading(false); // Set loading to false after fetching
       setFilteredProducts(data.product || []); // Default to all products
     };
 
@@ -111,8 +115,29 @@ export default function Marketplace() {
                 </nav>
                 </div>
                 {/* Display Products */}
+                {loading ? (
+                  <div className="loader-container">
+                  <Oval 
+                    height={80}
+                    width={80}
+                    color="#3498db"
+                    secondaryColor="#f3f3f3"
+                    ariaLabel="loading-indicator"
+                  />
+                </div>
+              ) : (
                 <DisplayProducts products={currentProducts} />
-              
+
+              )}
+
+              <style jsx>{`
+                .loader-container {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 100vh;
+                }
+              `}</style>
             </div>
           </div>
         </div>

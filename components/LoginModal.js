@@ -121,7 +121,7 @@ const LoginModal = ({ isOpen, onClose }) =>  {
         {currentStep === 'loginStep2' && (
           <div id="loginStep2" className="login-form-step">
             <div className="d-flex justify-content-center step-heading-and-back">
-              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep')}><i class="fa-solid fa-chevron-left"></i></button>
+              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep')}><i className="fa-solid fa-chevron-left"></i></button>
               <h3>Login</h3>
             </div>
            
@@ -145,7 +145,7 @@ const LoginModal = ({ isOpen, onClose }) =>  {
         {currentStep === 'loginStep3' && (
           <div id="loginStep3" className="login-form-step">
             <div className="d-flex justify-content-center step-heading-and-back">
-              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep2')}><i class="fa-solid fa-chevron-left"></i></button>
+              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep2')}><i className="fa-solid fa-chevron-left"></i></button>
               <h3>Validating</h3>
             </div>
             <p>Validating your phone number...</p>
@@ -155,7 +155,7 @@ const LoginModal = ({ isOpen, onClose }) =>  {
         {currentStep === 'loginStep4' && (
           <div id="loginStep4" className="login-form-step">
             <div className="d-flex justify-content-center step-heading-and-back">
-              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep3')}><i class="fa-solid fa-chevron-left"></i></button>
+              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep3')}><i className="fa-solid fa-chevron-left"></i></button>
               <h3>Login with Phone</h3>
             </div>
             
@@ -191,7 +191,7 @@ const LoginModal = ({ isOpen, onClose }) =>  {
         {currentStep === 'loginEmail' && (
           <div id="loginEmail" className="login-form-step">
             <div className="d-flex justify-content-center step-heading-and-back">
-              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep')}><i class="fa-solid fa-chevron-left"></i></button>
+              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep')}><i className="fa-solid fa-chevron-left"></i></button>
                           
               <h3>Login with Email</h3>
             </div>

@@ -82,7 +82,7 @@ const WalletPage = () => {
                             <div className="save-cards">
                                 <div className="heading">
                                     <h3>Save Cards</h3>
-                                    <button class="add-new-method-btn"
+                                    <button className="add-new-method-btn"
                                         id="addNewMethodBtn">Add
                                         New</button>
                                 </div>
@@ -91,7 +91,7 @@ const WalletPage = () => {
                                     <div className="card-img-bar">
                                         <img
                                             src="./assets/images/card-icon3.svg"
-                                             class="card-icon" />
+                                             className="card-icon" />
                                         <img
                                             src="./assets/images/card-icon2.svg"
                                              className="bar-icon" />
@@ -125,7 +125,7 @@ const WalletPage = () => {
                                                 <div className="col-6">
                                                     <p className="label">card
                                                         Holder</p>
-                                                    <p class="holder-name">Name
+                                                    <p className="holder-name">Name
                                                         Here</p>
                                                 </div>
                                                 <div
@@ -171,7 +171,7 @@ const WalletPage = () => {
                             <h3>Add Payment Method</h3>
                         </div>
                         <form action>
-                            <div class="col-12 form-child">
+                            <div className="col-12 form-child">
                                 <label for>Select Payment Method</label>
                                 <select name id>
                                     <option value="paypal">Paypal</option>
@@ -327,7 +327,7 @@ const WalletPage = () => {
                             </form>
                         </div>
                         <div className="send-request-btn">
-                            <button class="w-100 button-style-2"
+                            <button className="w-100 button-style-2"
                                 id="sendRequest">Add New Payment
                                 Method</button>
                         </div>

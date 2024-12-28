@@ -6,7 +6,9 @@ const Categories = () => {
     return(
         <>
         <Header />
+        
         <BrowseCategories />
+    
         <Footer />
         </>
     );
