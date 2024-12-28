@@ -100,16 +100,16 @@ export default function Header() {
                             <ul className="navbar-nav dashboard-nav"
                                 id="navbarDesktop">
                                 <li className="nav-item ">
-                                    <a className="nav-link" href="#">Dashboard</a>
+                                    <Link className="nav-link" href="#">Dashboard</Link>
                                 </li>
                                 <li className="nav-item ">
-                                    <a className="nav-link" href="#">Explore</a>
+                                    <Link className="nav-link" href="#">Explore</Link>
                                 </li>
                                 <li className="nav-item ">
-                                    <a className="nav-link" href="#">Bidings</a>
+                                    <Link className="nav-link" href="#">Bidings</Link>
                                 </li>
                                 <li className="nav-item activemenu">
-                                    <a className="nav-link" href="#">My Listings</a>
+                                    <Link className="nav-link" href="#">My Listings</Link>
                                 </li>
                             </ul>
 
@@ -215,7 +215,7 @@ export default function Header() {
                                   </Link>
                                   </li>
                                   <li>
-                                  <button onClick={() => handleLogout()}>
+                                  <button className="transparent-button" onClick={() => handleLogout()} >
                                     <img src="/assets/images/logout.svg" alt="Logout" /> Log Out
                                     </button>
                                   </li>

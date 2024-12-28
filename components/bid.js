@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 
 const BidPage = ({product}) => {
-  //const [auctionId, setAuctionId] = useState(product.id);
+  const [auctionId] = useState(product.id);
   const [bidAmount, setBidAmount] = useState("");
   const [message, setMessage] = useState("");
   const { data: session } = useSession();
@@ -16,7 +16,7 @@ const BidPage = ({product}) => {
       const response = await axios.get(`https://violet-meerkat-830212.hostingersite.com/public/api/highest-bid/${product.id}`);
       if (response.data.success) {
         setHighestBid(response.data.highest_bid);
-        setHighestBidder(response.data.user || "Anonymous");
+       // setHighestBidder(response.data.user || "Anonymous");
       }
     } catch (error) {
       console.error("Error fetching the highest bid:", error);

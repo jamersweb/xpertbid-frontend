@@ -17,7 +17,8 @@
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
   }
-  
+  .transparent-button{background-color: #fff;
+    border: none transparent;}
   /* Safari */
   @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }

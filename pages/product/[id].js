@@ -8,6 +8,7 @@ import ProductImages from "../../components/ProductImages";
 import ProductDetails from "../../components/ProductDetails";
 import BidHistory from "../../components/BidHistory";
 import OtherItems from "../../components/OtherItems";
+import { Oval } from "react-loader-spinner"; // Import the loader
 
 const ProductPage = () => {
   const router = useRouter();
@@ -45,17 +46,25 @@ const ProductPage = () => {
     fetchProductDetails();
   }, [productId]);
 
-  if (loading) {
-    return <p>Loading product details...</p>;
-  }
 
-  if (!product) {
-    return <p>Product not found.</p>;
-  }
+  
   //console.log('rage',owner);
   return (
     <>
       <Header />
+      {loading ? (
+        // Show loader while loading
+        <div className="loader-container">
+          <Oval 
+            height={80}
+            width={80}
+            color="#3498db"
+            secondaryColor="#f3f3f3"
+            ariaLabel="loading-indicator"
+          />
+        </div>
+      ) : (
+        <>
       <ProductHeader views={product.views || 0} link={`http://localhost:3000/product/${product.id}`} productId={product.id}/>
       <section className="product-image-and-brief">
         <div className="container-fluid">
@@ -114,6 +123,17 @@ const ProductPage = () => {
           
       </section>
       <OtherItems items={relatedItems} />
+      </>
+    )}
+
+    <style jsx>{`
+      .loader-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+    `}</style>
       <Footer />
     </>
   );
