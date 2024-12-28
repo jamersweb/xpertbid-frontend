@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import DashboardRecord from "../components/DashboardRecord";
 import ListingCard from "../components/ListingCard";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({
     listings: 0,
@@ -42,6 +44,7 @@ const Dashboard = () => {
   }, []);
   return (
     <>
+    <Header />
     <section className="dashboard-records">
       <div className="container-fluid">
         <div className="row">
@@ -69,12 +72,12 @@ const Dashboard = () => {
         </div>
       </div>
     </section>
-    <div className="listing-main-heading">
+    <div className="container listing-main-heading">
       <h2>My Listings</h2>
       <button className="button-style-3">See all</button>
     </div>
     <section className="listing">
-    <div className="container-fluid dashboard-listing">
+    <div className="container dashboard-listing">
     
     {listings.length > 0 ? (
         listings.map((listing) => <ListingCard key={listing.id} listing={listing} />)
@@ -83,6 +86,7 @@ const Dashboard = () => {
     )}
     </div>
     </section>
+    <Footer />
     </>
   );
 };

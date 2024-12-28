@@ -38,8 +38,8 @@ export default function FeaturedProducts() {
                     spaceBetween={30}
                     loop
                     breakpoints={{
-                      640: { slidesPerView: 2 },
-                      1024: { slidesPerView: 3 },
+                      640: { slidesPerView: 1 },
+                      1024: { slidesPerView: 1 },
                       1367: { slidesPerView: 3 },
                     }}
                   >
@@ -47,7 +47,7 @@ export default function FeaturedProducts() {
                     <SwiperSlide key={index}>
                       <div className="pro-image">
                   <img
-                    src={`https://violet-meerkat-830212.hostingersite.com/${product.image}`}
+                    src={`https://violet-meerkat-830212.hostingersite.com/public${product.image}`}
                     alt={product.name}
                   />
                     <CountdownTimer startDate={product.start_date} endDate={product.end_date} />

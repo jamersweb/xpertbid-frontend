@@ -100,16 +100,16 @@ export default function Header() {
                             <ul className="navbar-nav dashboard-nav"
                                 id="navbarDesktop">
                                 <li className="nav-item ">
-                                    <Link className="nav-link" href="#">Dashboard</Link>
+                                    <Link className="nav-link" href="/userDashboard">Dashboard</Link>
                                 </li>
                                 <li className="nav-item ">
-                                    <Link className="nav-link" href="#">Explore</Link>
+                                    <Link className="nav-link" href="/marketplace">Explore</Link>
                                 </li>
                                 <li className="nav-item ">
-                                    <Link className="nav-link" href="#">Bidings</Link>
+                                    <Link className="nav-link" href="/mybid">Bidings</Link>
                                 </li>
                                 <li className="nav-item activemenu">
-                                    <Link className="nav-link" href="#">My Listings</Link>
+                                    <Link className="nav-link" href="/MyListings">My Listings</Link>
                                 </li>
                             </ul>
 
@@ -186,12 +186,12 @@ export default function Header() {
                                     <img src="/assets/images/wallet.svg" alt="Wallet" /> My Wallet
                                   </Link>
                                   </li>
-                                  <li>
-                                  <Link href={"/transportation"}>
+                                  {/*<li>
+                                   <Link href={"/transportation"}>
                                     <img src="/assets/images/order-box.svg" alt="Order Transportation" />{" "}
                                     Order Transportation
-                                  </Link>
-                                  </li>
+                                  </Link> 
+                                  </li>*/}
                                   <li>
                                     <Link href={"/favourites"}>
                                         <img src="/assets/images/setting-heart.svg" alt="Favorites" /> My
@@ -199,7 +199,7 @@ export default function Header() {
                                     </Link>
                                   </li>
                                   <li>
-                                    <Link href={"/listings"}>
+                                    <Link href={"/MyListings"}>
                                         <img src="/assets/images/mainListing.svg" alt="Listings" /> My
                                         Listings
                                     </Link>
@@ -210,7 +210,7 @@ export default function Header() {
                                   </Link>
                                   </li>
                                   <li>
-                                  <Link href={"invoice"}>
+                                  <Link href={"/Invoices"}>
                                     <img src="/assets/images/invoice.svg" alt="Invoices" /> Invoices
                                   </Link>
                                   </li>

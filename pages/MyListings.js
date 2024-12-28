@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ListingCard from "../components/ListingCard";
-
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 const MyListings = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,10 +28,12 @@ const MyListings = () => {
   }
 
   if (listings.length === 0) {
-    return <p>No listings found.</p>;
+   // return <p>No listings found.</p>;
   }
 
   return (
+    <>
+    <Header />
     <section className="listing">
       <div className="container-fluid">
         <div className="listing-main-heading">
@@ -41,6 +44,8 @@ const MyListings = () => {
         ))}
       </div>
     </section>
+    <Footer />
+    </>
   );
 };
 
