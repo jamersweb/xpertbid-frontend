@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+//import React, { useState } from "react";
+//import axios from "axios";
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import AddressComponent from "../components/AddressComponent";
-import PasswordLoginSettings from "../components/PasswordLoginSettings";
-import NotificationSettings from "../components/NotificationSettings";
-import IdentityVerification from "../components/IdentityVerification";
-import { useSession } from "next-auth/react";
+// import AddressComponent from "../components/AddressComponent";
+// import PasswordLoginSettings from "../components/PasswordLoginSettings";
+// import NotificationSettings from "../components/NotificationSettings";
+// import IdentityVerification from "../components/IdentityVerification";
+// import { useSession } from "next-auth/react";
 
 const AccountSettings = () => {
-   const [activeSection, setActiveSection] = useState("profile");
+   //const [activeSection, setActiveSection] = useState("profile");
 //   const [loading, setLoading] = useState(false);
 // //  const [message, setMessage] = useState("");
 //   const { data: session } = useSession();
@@ -441,7 +441,7 @@ const AccountSettings = () => {
               </div>
               <p className="mb-5">
                 Manage your notification preferences to stay updated on auction wins,
-                bids, and important updates. Customize how and when you'd like to
+                bids, and important updates. Customize how and when you would like to
                 receive alerts.
               </p>
 
@@ -479,7 +479,7 @@ const AccountSettings = () => {
               <div className="notify-setting-inner-box">
                 <h4>Bidding</h4>
                 <p>
-                  We'll remind you about items you've bid on or that you are
+                  We will remind you about items you have bid on or that you are
                   following, by email and push notifications in our app.
                 </p>
                 <div className="nofify-form-1">
@@ -492,7 +492,7 @@ const AccountSettings = () => {
                       />
                       <div className="label-and-info">
                         <label htmlFor="biding-condition-1">
-                          Let me know when I'm outbid
+                          Let me know when Im outbid
                         </label>
                       </div>
                     </div>
@@ -681,7 +681,7 @@ const AccountSettings = () => {
                           <label htmlFor="document-type">Document Type*</label>
                           <select id="document-type">
                             <option value="passport">Passport</option>
-                            <option value="driver-license">Driver's License</option>
+                            <option value="driver-license">Drivers License</option>
                             <option value="id-card">ID Card</option>
                           </select>
                         </div>
