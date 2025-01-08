@@ -86,9 +86,9 @@ export default function Header() {
                 </ul>
                
                <div className="nav-item registration-btns">
-                 <button className="loginButton login" onClick={() => handleOpenModal("signin")}>Login</button>
                  <button className="SignupButton signup" onClick={() => handleOpenModal("signup")}>Sign Up</button>
                  <Link className="nav-link sellnow" href="#">Sell Now</Link>
+                 <button className="loginButton login" onClick={() => handleOpenModal("signin")}>Login</button>
                </div>
                </>
            
