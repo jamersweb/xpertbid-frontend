@@ -38,8 +38,9 @@ export default function FeaturedProducts() {
                     spaceBetween={30}
                     loop
                     breakpoints={{
+                      360: { slidesPerView: 1 },
                       640: { slidesPerView: 1 },
-                      1024: { slidesPerView: 1 },
+                      1024: { slidesPerView: 3 },
                       1367: { slidesPerView: 3 },
                     }}
                   >
@@ -76,10 +77,10 @@ export default function FeaturedProducts() {
               <p>No products found.</p>
             )}
           </div>
-            <div className="swiper-arrows">
+            {/* <div className="swiper-arrows">
               <div className="swiper-button-prev"><i className="fa-solid fa-arrow-left"></i></div>
               <div className="swiper-button-next"><i className="fa-solid fa-arrow-right"></i></div>
-            </div>
+            </div> */}
           </div>
       </section>
     );
