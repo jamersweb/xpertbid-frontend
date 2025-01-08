@@ -1,29 +1,30 @@
 
 import { useState } from 'react';
-import { signIn } from "next-auth/react";
-
+import { signIn, useSession } from "next-auth/react";
+import axios from 'axios';
 const LoginModal = ({ isOpen, onClose }) =>  {
 
-  const [currentStep, setCurrentStep] = useState('loginStep'); // 'loginStep', 'loginStep2', ...
+  const [currentStep, setCurrentStep] = useState('loginStep'); // Steps: loginStep, loginStep2, ...
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('+1');
   const [errorMessage, setErrorMessage] = useState('');
   const [otp, setOtp] = useState('');
-  const [generatedOtp, setGeneratedOtp] = useState(null);
-  //const [otpTimeLeft, setOtpTimeLeft] = useState(60);
- // const { data: session } = useSession(); // Access session data
+  const [isLoading, setIsLoading] = useState(false);
+  const { data: session } = useSession();
  
-
-
- 
-
   const closeHandler = () => {
+    setErrorMessage('');
     onClose();
   };
 
   const handleEmailLogin = async () => {
+    if (!email || !password) {
+      setErrorMessage("Please enter both email and password.");
+      return;
+    }
+    setIsLoading(true);
     try {
       const result = await signIn("credentials", {
         email,
@@ -44,58 +45,87 @@ const LoginModal = ({ isOpen, onClose }) =>  {
     } catch (error) {
       setErrorMessage("An unexpected error occurred. Please try again.");
       console.error("Error during login:", error);
+    }finally {
+      setIsLoading(false);
     }
     
   };
 
-
   const handleContinueWithPhone = () => {
-    setCurrentStep('loginStep2');
+    setCurrentStep('phoneLogin');
   };
 
-  const handleSubmitPhone = () => {
-    // Validate phone number according to country code
-    if (!validatePhoneNumber(phoneNumber)) {
-      setErrorMessage('Invalid phone number');
-      return;
-    }
-    setErrorMessage('');
-    // Simulate validation and OTP generation
-    setCurrentStep('loginStep3');
-    setTimeout(() => {
-      setGeneratedOtp(generateOTP());
-      setCurrentStep('loginStep4');
-    }, 2000);
-  };
-
-  const handleVerifyOtp = () => {
-    if (otp === generatedOtp?.toString()) {
-      // On successful OTP verification
-      // For example, call Laravel endpoint to finalize login
-      // axios.post('/api/verify-otp', {phoneNumber, otp})
-      //   .then(...)
-      window.location.href = 'https://google.com';
-    } else {
-      setErrorMessage('Invalid OTP, please try again.');
-    }
-  };
-
-  const handleResendOtp = () => {
-    const newOtp = generateOTP();
-    setGeneratedOtp(newOtp);
-    setOtp('');
-    setErrorMessage('OTP has been resent.');
-    // Reset timer logic as needed
-  };
-
-  // Utility functions
   const validatePhoneNumber = (num) => {
-    // Simple validation: at least 10 digits
     return num.replace(/\D/g, '').length === 10;
   };
 
-  const generateOTP = () => Math.floor(1000 + Math.random() * 9000);
+  const sendOtp = async () => {
+    if (!validatePhoneNumber(phoneNumber)) {
+      setErrorMessage('Invalid phone number. Ensure it’s 11 digits long.');
+      return;
+    }
+    setIsLoading(true);
+    setErrorMessage('');
+    try {
+      const response = await axios.post('https://violet-meerkat-830212.hostingersite.com/public/api/send-otp', {
+        phone: `${countryCode}${phoneNumber}`,
+      });
+      setCurrentStep('otpStep');
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || 'Failed to send OTP.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  const verifyOtp = async () => {
+    if (!otp || otp.length !== 4) {
+      setErrorMessage('Please enter the 4-digit OTP.');
+      return;
+    }
+    setIsLoading(true);
+    setErrorMessage('');
+    try {
+      const response = await axios.post('/api/verify-otp', {
+        phone: `${countryCode}${phoneNumber}`,
+        otp,
+      });
+      // OTP verified, handle user login
+      console.log('OTP verified:', response.data.message);
+      onClose(); // Close the modal after success
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || 'Failed to verify OTP.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signIn("google", { redirect: false });
+      if (result?.error) {
+        console.error("Google Sign-In failed:", result.error);
+      } else {
+        console.log("Google Sign-In success:", result);
+        onClose(); // Close modal on success
+      }
+    } catch (error) {
+      console.error("Error during Google Sign-In:", error);
+    }
+  };
+
+  const handleAppleSignIn = async () => {
+    try {
+      const result = await signIn("apple", { redirect: false });
+      if (result?.error) {
+        console.error("Apple Sign-In failed:", result.error);
+      } else {
+        console.log("Apple Sign-In success:", result);
+        onClose(); // Close modal on success
+      }
+    } catch (error) {
+      console.error("Error during Apple Sign-In:", error);
+    }
+  };
   if (!isOpen) return null;
 
   return (
@@ -114,77 +144,57 @@ const LoginModal = ({ isOpen, onClose }) =>  {
             <button onClick={() => setCurrentStep('loginEmail')} className="loginContinueIcon">
               <img src="/assets/images/smsLogo.svg" alt="" />Continue with Email
             </button>
+            <button className="loginContinueIcon" onClick={handleGoogleSignIn}>
+              <img src="/assets/images/googleLogo.svg" alt="Google Logo" /> Sign in with Google
+            </button>
+            <button className="loginContinueIcon" onClick={handleAppleSignIn}>
+              <img src="/assets/images/appleLogo.svg" alt="Apple Logo" /> Sign in with Apple
+            </button>             
             {/* Add Google/Apple logic if needed */}
           </div>
         )}
 
-        {currentStep === 'loginStep2' && (
+        {currentStep === 'phoneLogin' && (
           <div id="loginStep2" className="login-form-step">
             <div className="d-flex justify-content-center step-heading-and-back">
               <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep')}><i className="fa-solid fa-chevron-left"></i></button>
-              <h3>Login</h3>
+              <h3>Login with Phone</h3>
             </div>
            
             <select value={countryCode} onChange={(e) => setCountryCode(e.target.value)}>
               <option value="+1">+1 USA</option>
               <option value="+44">+44 UK</option>
               <option value="+91">+91 India</option>
-              <option value="+92">+92 PK</option>
+              <option value="+92">+92 Pakistan</option>
             </select>
-            <input 
-              type="text" 
-              placeholder="Enter phone number"
+            <input
+              type="text"
+              placeholder="Enter Phone Number"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
+              aria-label="Phone number"
             />
-            {errorMessage && <p className="login-alert-message-login">{errorMessage}</p>}
-            <button onClick={handleSubmitPhone} className="form-button-1">Submit</button>
+            {errorMessage && <p className="error">{errorMessage}</p>}
+            <button onClick={sendOtp} disabled={isLoading}>
+              {isLoading ? 'Sending...' : 'Send OTP'}
+            </button>
           </div>
         )}
 
-        {currentStep === 'loginStep3' && (
-          <div id="loginStep3" className="login-form-step">
-            <div className="d-flex justify-content-center step-heading-and-back">
-              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep2')}><i className="fa-solid fa-chevron-left"></i></button>
-              <h3>Validating</h3>
-            </div>
-            <p>Validating your phone number...</p>
-          </div>
-        )}
-
-        {currentStep === 'loginStep4' && (
-          <div id="loginStep4" className="login-form-step">
-            <div className="d-flex justify-content-center step-heading-and-back">
-              <button id="backPhoneLogin" onClick={() => setCurrentStep('loginStep3')}><i className="fa-solid fa-chevron-left"></i></button>
-              <h3>Login with Phone</h3>
-            </div>
-            
-            <p className="heading-margin text-start">An OTP has been sent to your phone number.</p>
-            <div id="otp-container-login">
-              {[...Array(4)].map((_, i) => (
-                <input 
-                  key={i} 
-                  type="text" 
-                  className="otp-input-login"
-                  maxLength="1"
-                  value={otp[i] || ''}
-                  onChange={(e) => {
-                    const val = e.target.value.replace(/\D/g, '');
-                    setOtp(prev => {
-                      const arr = prev.split('');
-                      arr[i] = val;
-                      return arr.join('');
-                    });
-                  }}
-                />
-              ))}
-            </div>
-            <p>The OTP will expire in <span>{otpTimeLeft}</span> seconds.</p>
-            {errorMessage && <span className="login-alert-message-login">{errorMessage}</span>}
-            <div className="resendotplogin">
-              <button onClick={handleResendOtp} disabled={otpTimeLeft !== 0}>Resend OTP</button>
-            </div>
-            <button onClick={handleVerifyOtp} className="form-button-1">Continue</button>
+        {currentStep === 'otpStep' && (
+          <div>
+            <h3>Enter OTP</h3>
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              aria-label="OTP"
+            />
+            {errorMessage && <p className="error">{errorMessage}</p>}
+            <button onClick={verifyOtp} disabled={isLoading}>
+              {isLoading ? 'Verifying...' : 'Verify OTP'}
+            </button> 
           </div>
         )}
 

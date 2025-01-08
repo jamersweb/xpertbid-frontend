@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const PasswordLoginSettings = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -15,8 +16,29 @@ const PasswordLoginSettings = () => {
     match: false,
     notSame: true,
   });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+ const { data: session } = useSession();
+  // Fetch user details when the component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://violet-meerkat-830212.hostingersite.com/public/api/user/details",
+          {
+            headers: { Authorization: `Bearer ${session.user.token}` },
+          }
+        );
+        setPhoneNumber(response.data.phoneNumber);
+        setContactEmail(response.data.contactEmail);
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
 
-  // Handle password changes dynamically
+    fetchData();
+  }, []);
+
   const handlePasswordChange = (password) => {
     setNewPassword(password);
     setPasswordRequirements({
@@ -29,39 +51,57 @@ const PasswordLoginSettings = () => {
     });
   };
 
+  const handleConfirmPasswordChange = (password) => {
+    setConfirmPassword(password);
+    setPasswordRequirements((prev) => ({
+      ...prev,
+      match: password === newPassword,
+    }));
+  };
+
   const handleSaveChanges = async () => {
     try {
-      const payload = {
-        phoneNumber,
-        contactEmail,
-      };
-
-      await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/user/save-login", payload);
-      alert("Login information updated successfully!");
+      setLoading(true);
+      const payload = { phoneNumber, contactEmail };
+      const response = await axios.post(
+        "https://violet-meerkat-830212.hostingersite.com/public/api/user/save-login",
+        payload,
+        {
+          headers: { Authorization: `Bearer ${session.user.token}` },
+        }
+      );
+      setMessage("Login information updated successfully!");
     } catch (error) {
       console.error("Error saving login information:", error);
-      alert("Failed to update login information.");
+      setMessage("Failed to update login information.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
     if (!passwordRequirements.match || !passwordRequirements.notSame) {
-      alert("Password does not meet the requirements!");
+      setMessage("Password does not meet the requirements!");
       return;
     }
 
     try {
-      const payload = {
-        oldPassword,
-        newPassword,
-      };
-
-      await axios.post("https://violet-meerkat-830212.hostingersite.com/public/api/user/change-password", payload);
-      alert("Password changed successfully!");
+      setLoading(true);
+      const payload = { oldPassword, newPassword };
+      const response = await axios.post(
+        "https://violet-meerkat-830212.hostingersite.com/public/api/user/change-password",
+        payload,
+        {
+          headers: { Authorization: `Bearer ${session.user.token}` },
+        }
+      );
+      setMessage("Password changed successfully!");
     } catch (error) {
       console.error("Error changing password:", error);
-      alert("Failed to change password.");
+      setMessage("Failed to change password.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,8 +109,12 @@ const PasswordLoginSettings = () => {
     <div className="profile" id="password-login">
       <div className="profile-heading-and-button">
         <h3>Password & Login</h3>
-        <button className="button-style-2" onClick={handleSaveChanges}>
-          Save Changes
+        <button
+          className="button-style-2"
+          onClick={handleSaveChanges}
+          disabled={loading}
+        >
+          {loading ? "Saving..." : "Save Changes"}
         </button>
       </div>
       <div className="profile-form">
@@ -133,32 +177,56 @@ const PasswordLoginSettings = () => {
                   id="confirmPassword"
                   value={confirmPassword}
                   placeholder="Confirm your new password"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) => handleConfirmPasswordChange(e.target.value)}
                 />
               </div>
               <ul className="password-requirements">
                 <li>
-                  <i className={`fa-solid ${passwordRequirements.lowercase ? "fa-circle-check" : "fa-circle-xmark"}`}></i>{" "}
+                  <i
+                    className={`fa-solid ${
+                      passwordRequirements.lowercase ? "fa-circle-check" : "fa-circle-xmark"
+                    }`}
+                  ></i>{" "}
                   At least one lowercase letter
                 </li>
                 <li>
-                  <i className={`fa-solid ${passwordRequirements.uppercase ? "fa-circle-check" : "fa-circle-xmark"}`}></i>{" "}
+                  <i
+                    className={`fa-solid ${
+                      passwordRequirements.uppercase ? "fa-circle-check" : "fa-circle-xmark"
+                    }`}
+                  ></i>{" "}
                   At least one uppercase letter
                 </li>
                 <li>
-                  <i className={`fa-solid ${passwordRequirements.number ? "fa-circle-check" : "fa-circle-xmark"}`}></i>{" "}
+                  <i
+                    className={`fa-solid ${
+                      passwordRequirements.number ? "fa-circle-check" : "fa-circle-xmark"
+                    }`}
+                  ></i>{" "}
                   At least one number
                 </li>
                 <li>
-                  <i className={`fa-solid ${passwordRequirements.length ? "fa-circle-check" : "fa-circle-xmark"}`}></i>{" "}
+                  <i
+                    className={`fa-solid ${
+                      passwordRequirements.length ? "fa-circle-check" : "fa-circle-xmark"
+                    }`}
+                  ></i>{" "}
                   Minimum 8 characters
                 </li>
                 <li>
-                  <i className={`fa-solid ${passwordRequirements.match ? "fa-circle-check" : "fa-circle-xmark"}`}></i>{" "}
+                  <i
+                    className={`fa-solid ${
+                      passwordRequirements.match ? "fa-circle-check" : "fa-circle-xmark"
+                    }`}
+                  ></i>{" "}
                   Passwords must match
                 </li>
                 <li>
-                  <i className={`fa-solid ${passwordRequirements.notSame ? "fa-circle-check" : "fa-circle-xmark"}`}></i>{" "}
+                  <i
+                    className={`fa-solid ${
+                      passwordRequirements.notSame ? "fa-circle-check" : "fa-circle-xmark"
+                    }`}
+                  ></i>{" "}
                   New password must not be the same as the old one
                 </li>
               </ul>

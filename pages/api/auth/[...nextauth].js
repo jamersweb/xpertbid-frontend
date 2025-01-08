@@ -1,16 +1,26 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-//import axiosInstance from "../../../utils/api";
+import GoogleProvider from "next-auth/providers/google";
+import AppleProvider from "next-auth/providers/apple";
+import axios from "axios";
 
 export default NextAuth({
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    AppleProvider({
+      clientId: process.env.APPLE_CLIENT_ID,
+      clientSecret: process.env.APPLE_CLIENT_SECRET,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-       async authorize(credentials) {
+      async authorize(credentials) {
         try {
           const res = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/login", {
             method: "POST",
@@ -20,15 +30,11 @@ export default NextAuth({
             }),
             headers: { "Content-Type": "application/json" },
           });
-          
-          const data = await res.json();
-        
-          if (res.ok && data.token) {
-            
-            // Attach user details and token
-            //localStorage.setItem("token", data.token);
-            return { ...data.user, token: data.token }; // Pass token to session
 
+          const data = await res.json();
+
+          if (res.ok && data.token) {
+            return { ...data.user, token: data.token }; // Pass token to session
           }
 
           throw new Error(data.message || "Login failed");
@@ -41,18 +47,23 @@ export default NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
+      // Attach token from user after successful login
       if (user) {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.token = user.token;
+        token.token = user.token; // Laravel token
       }
-      //console.log(user.token);
       return token;
     },
     async session({ session, token }) {
-      session.user = { id: token.id, name: token.name, email: token.email,token:token.token };
-     // localStorage.setItem("token", result.data.token);
+      // Attach token and user data to session
+      session.user = {
+        id: token.id,
+        name: token.name,
+        email: token.email,
+        token: token.token,
+      };
       return session;
     },
   },
