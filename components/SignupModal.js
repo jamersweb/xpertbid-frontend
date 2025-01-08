@@ -22,7 +22,13 @@ const SignupModal = ({ isOpen, onClose }) => {
   const closeHandler = () => {
     onClose();
     setActiveStep("step1");
-    setFormData({ name: "", email: "", password: "", phone: "", countryCode: "+1" });
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      phone: "",
+      countryCode: "+1",
+    });
     setErrorMessage("");
     setSuccessMessage("");
   };
@@ -47,7 +53,9 @@ const SignupModal = ({ isOpen, onClose }) => {
           password: formData.password,
         }
       );
-      setSuccessMessage("Registration successful! Please check your email to verify your account.");
+      setSuccessMessage(
+        "Registration successful! Please check your email to verify your account."
+      );
       handleStepChange("success");
     } catch (error) {
       if (error.response?.status === 422) {
@@ -77,7 +85,9 @@ const SignupModal = ({ isOpen, onClose }) => {
           phone: `${formData.countryCode}${formData.phone}`,
         }
       );
-      setSuccessMessage("Registration successful! Please verify the OTP sent to your phone.");
+      setSuccessMessage(
+        "Registration successful! Please verify the OTP sent to your phone."
+      );
       handleStepChange("otpVerification");
     } catch (error) {
       setErrorMessage("An error occurred during phone registration.");
@@ -117,57 +127,134 @@ const SignupModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div id="SignupModal" className="modal signupModal" style={{ display: isOpen ? "flex" : "none" }}>
-      <div className="signupmodal-content">
-        <span className="close-btn" onClick={closeHandler}>
+    <div
+      id="SignupModal"
+      className="modal signupModal loginModal"
+      style={{ display: isOpen ? "flex" : "none" }}
+    >
+      <div className="loginModal-content">
+        <span id="closeLoginModal" className="close-btn" onClick={closeHandler}>
           <i className="fa-solid fa-xmark"></i>
         </span>
 
         {activeStep === "step1" && (
-          <div className="form-step active">
+          <div id="loginStep" className=" login-form-step active">
             <h3>Sign Up</h3>
-            <button onClick={handleGoogleSignUp}>
+            <button onClick={handleGoogleSignUp} className="loginContinueIcon">
               <img src="/assets/images/googleLogo.svg" alt="Google Logo" />
               Sign Up with Google
             </button>
-            <button onClick={handleAppleSignUp}>
+            <button className="loginContinueIcon" onClick={handleAppleSignUp}>
               <img src="/assets/images/appleLogo.svg" alt="Apple Logo" />
               Sign Up with Apple
             </button>
-            <button onClick={() => handleStepChange("emailSignup")}>Sign Up with Email</button>
-            <button onClick={() => handleStepChange("phoneSignup")}>Sign Up with Phone</button>
+            <button
+              className="loginContinueIcon"
+              onClick={() => handleStepChange("emailSignup")}
+            >
+              <img src="/assets/images/smsLogo.svg" alt="Email Logo" />
+              Sign Up with Email
+            </button>
+            <button
+              className="loginContinueIcon"
+              onClick={() => handleStepChange("phoneSignup")}
+            >
+              <img src="/assets/images/MobileLogo.svg" alt="phone Logo" />
+              Sign Up with Phone
+            </button>
           </div>
         )}
 
         {activeStep === "emailSignup" && (
-          <div className="form-step">
-            <h3>Sign Up with Email</h3>
-            <input type="text" id="name" placeholder="Enter your name" value={formData.name} onChange={handleInputChange} />
-            <input type="email" id="email" placeholder="Enter your email" value={formData.email} onChange={handleInputChange} />
-            <input type="password" id="password" placeholder="Enter your password" value={formData.password} onChange={handleInputChange} />
+          <div id="loginEmail" className="login-form-step">
+            <div className="d-flex justify-content-center step-heading-and-back">
+              <button
+                id="backPhoneLogin"
+                onClick={() => handleStepChange("step1")}
+              >
+                <i className="fa-solid fa-chevron-left"></i>
+              </button>
+
+              <h3>Sign Up with Email</h3>
+            </div>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              value={formData.name}
+              onChange={handleInputChange}
+            />
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleInputChange}
+            />
             {errorMessage && <p className="alert-message">{errorMessage}</p>}
-            <button onClick={registerWithEmail} disabled={isLoading}>
+            <button
+              className="form-button-1"
+              onClick={registerWithEmail}
+              disabled={isLoading}
+            >
               {isLoading ? "Registering..." : "Submit"}
             </button>
           </div>
         )}
 
         {activeStep === "phoneSignup" && (
-          <div className="form-step">
-            <h3>Sign Up with Phone</h3>
-            <input type="text" id="name" placeholder="Enter your name" value={formData.name} onChange={handleInputChange} />
+          <div id="loginStep2" className="login-form-step">
+            <div className="d-flex justify-content-center step-heading-and-back">
+              <button
+                id="backPhoneLogin"
+                onClick={() => handleStepChange("Step1")}
+              >
+                <i className="fa-solid fa-chevron-left"></i>
+              </button>
+              <h3>Sign Up with Phone</h3>
+            </div>
+
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              value={formData.name}
+              onChange={handleInputChange}
+            />
             <select
               value={formData.countryCode}
-              onChange={(e) => setFormData((prev) => ({ ...prev, countryCode: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  countryCode: e.target.value,
+                }))
+              }
             >
               <option value="+1">+1 USA</option>
               <option value="+44">+44 UK</option>
               <option value="+91">+91 India</option>
               <option value="+92">+92 PK</option>
             </select>
-            <input type="text" id="phone" placeholder="Enter phone number" value={formData.phone} onChange={handleInputChange} />
-            {errorMessage && <p className="alert-message">{errorMessage}</p>}
-            <button onClick={registerWithPhone} disabled={isLoading}>
+            <input
+              type="text"
+              id="phone"
+              placeholder="Enter phone number"
+              value={formData.phone}
+              onChange={handleInputChange}
+            />
+            {errorMessage && <p className="alert-message ">{errorMessage}</p>}
+            <button
+              className="form-button-1 "
+              onClick={registerWithPhone}
+              disabled={isLoading}
+            >
               {isLoading ? "Registering..." : "Submit"}
             </button>
           </div>
