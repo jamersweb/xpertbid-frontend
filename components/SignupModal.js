@@ -264,7 +264,9 @@ const SignupModal = ({ isOpen, onClose }) => {
           <div className="form-step">
             <h3>Registration Complete</h3>
             <p>{successMessage}</p>
-            <button onClick={closeHandler}>Close</button>
+            <button id="backPhoneLogin" onClick={closeHandler}>
+              Close
+            </button>
           </div>
         )}
       </div>

@@ -34,11 +34,10 @@ export default function Home() {
 
   return (
     <>
-      
       {loading ? (
         // Show loader while loading
         <div className="loader-container">
-          <Oval 
+          <Oval
             height={80}
             width={80}
             color="#3498db"
@@ -48,7 +47,7 @@ export default function Home() {
         </div>
       ) : (
         <>
-        <Header />
+          <Header />
           <HeroSection />
           <FeaturedProducts />
           <BrowseCategories />
@@ -56,7 +55,6 @@ export default function Home() {
           <MarketplaceSection products={products} />
           <StartSelling />
           <Footer />
-
         </>
       )}
 
