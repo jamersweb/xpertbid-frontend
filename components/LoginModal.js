@@ -204,6 +204,12 @@ const LoginModal = ({ isOpen, onClose }) => {
 
         {currentStep === "otpStep" && (
           <div>
+            <button
+                id="backPhoneLogin"
+                onClick={() => setCurrentStep("loginStep")}
+              >
+                <i className="fa-solid fa-chevron-left"></i>
+              </button>
             <h3>Enter OTP</h3>
             <input
               type="text"
