@@ -64,8 +64,8 @@ var swiperFeatured = new Swiper('.swiper-featured-product', {
     slidesPerGroup: 1,
     spaceBetween: 30,
     navigation: {
-        nextEl: '.swiper-button-next', // Unique navigation for featured product section
-        prevEl: '.swiper-button-prev', // Unique navigation for featured product section
+        nextEl: '.swiper-button-next-btn', // Unique navigation for featured product section
+        prevEl: '.swiper-button-prev-btn', // Unique navigation for featured product section
     },
     pagination: {
         el: '.swiper-pagination', // Unique pagination for featured product section

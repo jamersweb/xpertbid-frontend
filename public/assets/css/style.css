@@ -372,6 +372,7 @@ p {
     bottom: 10px;
     width: 44px;
     height: 44px;
+    margin-inline: 20px;
 }
 
 .right-section .swiper-container img {
@@ -411,8 +412,9 @@ p {
 }
 
 .right-section .swiper-arrows div {
-    width: 50% !important;
-    height: 100%;
+    width: 8% !important;
+    height: 101%;
+    font-size: larger;
 }
 
 /* <---homehero---> */
@@ -6873,14 +6875,25 @@ tbody tr {
     left: 45% !important;
     top: 92% !important;
     color: #000 !important;
-    font-size: 20px;
 }
 .swiper-button-next {
     right: 45% !important;
-    top: 94.6% !important;
+    top: 94.3% !important;
     color: #000 !important;
-    size: 2px !important;
 }
 .swiper-wrapper {
     margin-bottom: 130px;
 }
+
+
+.swi-right{
+    right: 0 !important; 
+    top: 22px !important; 
+    color: #000 !important; 
+    }
+.swi-left{
+    left: 0 !important; 
+    top: 22px !important; 
+    color: #000 !important; 
+    }
+

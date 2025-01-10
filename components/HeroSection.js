@@ -37,8 +37,8 @@ export default function HeroSection() {
                   <div className="swiper-slide"><img src="/assets/images/hero-prodcut1.jpg" alt="" /></div>
                 </div>
                 <div className="swiper-arrows">
-                  <div className="swiper-button-prev"><i className="fa-solid fa-arrow-left"></i></div>
-                  <div className="swiper-button-next"><i className="fa-solid fa-arrow-right"></i></div>
+                <div className="swiper-button-prev swi-left"><i className="fa-solid fa-arrow-left"></i></div>
+                <div className="swiper-button-next swi-right"><i className="fa-solid fa-arrow-right"></i></div>
                 </div>
               </div>
               <div className="hero-img-1">
