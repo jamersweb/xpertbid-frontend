@@ -45,23 +45,34 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      // Attach token from user after successful login
+    async jwt({ token, user, account, profile }) {
+      // Attach user data and tokens
       if (user) {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.token = user.token; // Laravel token
+        token.token = user.token || null; // Laravel token for credentials provider
       }
+
+      if (account) {
+        // Attach OAuth tokens from Google/Apple
+        token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
+        token.provider = account.provider;
+      }
+
       return token;
     },
     async session({ session, token }) {
-      // Attach token and user data to session
+      // Add token and provider details to the session
       session.user = {
         id: token.id,
         name: token.name,
         email: token.email,
-        token: token.token,
+        token: token.token, // Laravel or OAuth token
+        accessToken: token.accessToken, // Google/Apple access token
+        refreshToken: token.refreshToken, // Google/Apple refresh token
+        provider: token.provider, // OAuth provider
       };
       return session;
     },

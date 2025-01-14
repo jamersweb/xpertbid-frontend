@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const CountdownTimer = ({ startDate, endDate }) => {
   const [timeLeft, setTimeLeft] = useState({
+    days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0,
   });
   const [isActive, setIsActive] = useState(false);
 
@@ -16,29 +16,30 @@ const CountdownTimer = ({ startDate, endDate }) => {
 
       // If the current time is before the start date or after the end date
       if (now < start) {
-        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+        setTimeLeft({ days: 0, hours: 0, minutes: 0 });
         setIsActive(false);
         return;
       } else if (now >= end) {
-        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+        setTimeLeft({ days: 0, hours: 0, minutes: 0 });
         setIsActive(false);
         return;
       }
 
       setIsActive(true);
       const timeDiff = end - now; // in milliseconds
+
+      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
-      const seconds = Math.floor((timeDiff / 1000) % 60);
 
-      setTimeLeft({ hours, minutes, seconds });
+      setTimeLeft({ days, hours, minutes });
     };
 
     // Initial calculation
     calculateTimeLeft();
 
-    // Update every second
-    const timer = setInterval(calculateTimeLeft, 1000);
+    // Update every minute
+    const timer = setInterval(calculateTimeLeft, 60000); // Update every minute to save resources
 
     // Cleanup on component unmount
     return () => clearInterval(timer);
@@ -48,9 +49,9 @@ const CountdownTimer = ({ startDate, endDate }) => {
     <div className="counter">
       {isActive ? (
         <>
-          <span className="hour">{timeLeft.hours}h</span>
-          <span className="minutes">{timeLeft.minutes}m</span>
-          <span className="seconds">{timeLeft.seconds}s</span>
+          <span className="days">{timeLeft.days}d </span>
+          <span className="hours">{timeLeft.hours}h </span>
+          <span className="minutes">{timeLeft.minutes}m </span>
         </>
       ) : (
         <span>Countdown not started or has ended</span>
