@@ -20,7 +20,6 @@ const AccountSettings = () => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  console.log("Session:", session);
 
   useEffect(() => {
     const fetchProfile = async () => {

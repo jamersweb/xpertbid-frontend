@@ -87,7 +87,7 @@ export default function Header() {
                
                <div className="nav-item registration-btns">
                  <button className="SignupButton signup" onClick={() => handleOpenModal("signup")}>Sign Up</button>
-                 <Link className="nav-link sellnow" href="sell">Sell Now</Link>
+                 <Link className="nav-link sellnow" href="#">Sell Now</Link>
                  <button className="loginButton login" onClick={() => handleOpenModal("signin")}>Login</button>
                </div>
                </>
@@ -226,7 +226,7 @@ export default function Header() {
                         </div>
 
                           {/* Sell Now Button */}
-                          <Link href="/sell" className="sellnow">
+                          <Link href="/sell-now" className="sellnow">
                             Sell Now
                           </Link>
 
