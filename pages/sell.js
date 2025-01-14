@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useSession } from "next-auth/react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
 const Sell = () => {
+    const { data: session } = useSession();
+  
   const [formData, setFormData] = useState({
     title: "",
     user_id: "",
@@ -32,25 +35,48 @@ const Sell = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(null); // Add error state
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   // Fetch categories, subcategories, and users
   useEffect(() => {
+
+    const token = localStorage.getItem("authToken");
+    console.log(token);
+    
+
+    const fetchCategories = async () => {
+      try {
+        // New API request to fetch categories
+        const response = await axios.get(
+          "https://violet-meerkat-830212.hostingersite.com/public/api/get-category"
+        );
+        setCategories(response.data.categories || []); // Update categories state
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+        setError("Failed to load categories. Please try again later."); // Set error state
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+    console.log(fetchCategories);
     const fetchData = async () => {
       try {
-        const [categoryRes, subCategoryRes, userRes] = await Promise.all([
-          axios.get("http://127.0.0.1:8000/api/categories"),
-          axios.get("http://127.0.0.1:8000/api/subcategories"),
-          axios.get("http://127.0.0.1:8000/api/users"),
+        const [subCategoryRes, userRes] = await Promise.all([
+        //  axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/subcategories"),
+        //  axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/users"),
         ]);
 
-        setCategories(categoryRes.data);
-        setSubCategories(subCategoryRes.data);
-        setUsers(userRes.data);
+        //setSubCategories(subCategoryRes.data);
+        //setUsers(userRes.data);
+
+       // await fetchCategories();
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+    fetchCategories();
     fetchData();
   }, []);
 
@@ -65,7 +91,9 @@ const Sell = () => {
   const handleImageChange = (e) => {
     setFeaturedImage(e.target.files[0]);
   };
-
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
   const handleAlbumChange = (e) => {
     setAlbum(Array.from(e.target.files));
   };
@@ -88,11 +116,13 @@ const Sell = () => {
       });
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/auctions",
+        "https://violet-meerkat-830212.hostingersite.com/public/api/auctions",
         submissionData,
         {
           headers: {
+            Authorization: `Bearer ${session.user.token}`,
             "Content-Type": "multipart/form-data",
+
           },
         }
       );
@@ -127,88 +157,141 @@ const Sell = () => {
       setMessage("Failed to create auction.");
     }
   };
+  const InternationalShipping = ({ initialValue }) => {
+    const [internationalShipping, setInternationalShipping] = useState(
+      initialValue || "0" // Default value is "0" (No)
+    );
+  }
+    const handleChange = (e) => {
+      setInternationalShipping(e.target.value);
+    };
+    // Validation module for the Sell component
+const validateForm = (formData, featuredImage, album) => {
+  const errors = {};
+
+  // Title validation
+  if (!formData.title.trim()) {
+    errors.title = "Title is required.";
+  }
+
+  // User ID validation
+  if (!formData.user_id) {
+    errors.user_id = "User is required.";
+  }
+
+  // Category validation
+  if (!formData.category_id) {
+    errors.category_id = "Category is required.";
+  }
+
+  // Start Date validation
+  if (!formData.start_date) {
+    errors.start_date = "Start date is required.";
+  }
+
+  // End Date validation
+  if (!formData.end_date) {
+    errors.end_date = "End date is required.";
+  } else if (new Date(formData.end_date) < new Date(formData.start_date)) {
+    errors.end_date = "End date cannot be earlier than start date.";
+  }
+
+  // Reserve Price validation
+  if (!formData.reserve_price) {
+    errors.reserve_price = "Reserve price is required.";
+  } else if (formData.reserve_price <= 0) {
+    errors.reserve_price = "Reserve price must be greater than zero.";
+  }
+
+  // Minimum Bid validation
+  if (!formData.minimum_bid) {
+    errors.minimum_bid = "Minimum bid is required.";
+  } else if (formData.minimum_bid <= 0) {
+    errors.minimum_bid = "Minimum bid must be greater than zero.";
+  }
+
+  // Featured Image validation
+  if (!featuredImage) {
+    errors.featuredImage = "Featured image is required.";
+  }
+
+  // Album validation
+  if (album.length === 0) {
+    errors.album = "At least one album image is required.";
+  }
+
+  // Description validation
+  if (!formData.description.trim()) {
+    errors.description = "Description is required.";
+  }
+
+  return errors;
+};
+
 
   return (
     <>
     <Header />
-    <div className="container mt-5">
+    <div className="container-fluid py-5 color">
+    <div className="container  p-5 rounded color-white">
       <h2>Create Auction</h2>
       {message && <p className="alert alert-info">{message}</p>}
       <form onSubmit={handleSubmit}>
         {/* Title */}
         <div className="form-group">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
+            <label htmlFor="title">Title</label>
+            <input type="text" 
             name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            required
-          />
+             id="title" 
+            className={`form-control ${error ? "is-invalid" : ""}`}
+             value={formData.title}
+             onChange={handleInputChange}
+             required
+             />
+             {error && <div className="invalid-feedback">{error}</div>}
         </div>
-
-        {/* User, Category, Subcategory */}
-        <div className="form-row">
-          <div className="col">
-            <label htmlFor="user_id">User</label>
-            <select
-              className="form-control"
-              id="user_id"
-              name="user_id"
-              value={formData.user_id}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Select User</option>
-              {users.map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.name}
-                </option>
-              ))}
+        <div className="row">
+        <div className="col-6">
+      <div className="form-group">
+      <label htmlFor="category">Category</label>
+      {loading ? (
+        <p>Loading categories...</p>
+      ) : error ? (
+        <p className="text-danger">{error}</p>
+      ) : (
+        <select
+          id="category"
+          name="category"
+          className={`form-control   ${error ? "is-invalid" : ""}`}
+          value={selectedCategory} // Use the defined state
+          onChange={handleCategoryChange}
+          required
+        >
+          {error && <div className="invalid-feedback">{error}</div>}
+          <option value="">Select Category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
+    </div>
+    <div className="col-6">
+         <div className="form-group">
+            <label htmlFor="start_date">Conditions</label>
+            <select name="product_condition " className="form-control">
+                <option value="New">New</option>
+                <option value="Used">Used</option>
             </select>
-          </div>
-          <div className="col">
-            <label htmlFor="category_id">Category</label>
-            <select
-              className="form-control"
-              id="category_id"
-              name="category_id"
-              value={formData.category_id}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Select Category</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="col">
-            <label htmlFor="sub_category_id">Subcategory</label>
-            <select
-              className="form-control"
-              id="sub_category_id"
-              name="sub_category_id"
-              value={formData.sub_category_id}
-              onChange={handleInputChange}
-            >
-              <option value="">Select Subcategory</option>
-              {subCategories.map((subCategory) => (
-                <option key={subCategory.id} value={subCategory.id}>
-                  {subCategory.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
+            </div> 
+            </div>
+            </div>
         {/* Featured Image and Album */}
         <div className="form-row">
-          <div className="col">
+        <div className="row">
+          <div className="col-6">
             <label htmlFor="featuredImage">Featured Image</label>
             <input
               type="file"
@@ -216,8 +299,10 @@ const Sell = () => {
               id="featuredImage"
               onChange={handleImageChange}
             />
+            
           </div>
-          <div className="col">
+          
+          <div className="col-6">
             <label htmlFor="album">Album</label>
             <input
               type="file"
@@ -227,6 +312,240 @@ const Sell = () => {
               onChange={handleAlbumChange}
             />
           </div>
+          </div>
+          <div className="row">
+          <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="product_year">Product Year</label>
+            <input
+             type="text"
+             name="product_year"
+             id="product_year"
+             className="form-control"
+             onChange={handleInputChange}
+             value={formData.product_year}
+             required
+                 />
+        </div>
+        </div>
+        <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="product_location">Product Location</label>
+            <input 
+            type="text" 
+            name="product_location" 
+            id="product_location" 
+            onChange={handleInputChange}
+            className="form-control" 
+            value={formData.product_location}
+            />
+        </div>
+        </div>
+        </div>
+        <div className="row">
+<div className="col-4">
+        <div className="form-group">
+            <label htmlFor="start_date">Start Date</label>
+            <input
+             type="date"
+             name="start_date"
+             id="start_date" 
+             className="form-control"
+             value={formData.start_date}
+             onChange={handleInputChange}
+             required/>
+        </div>
+        </div>
+       
+        <div className="col-4">
+        <div className="form-group">
+            <label htmlFor="end_date">End Date</label>
+            <input 
+            type="date" 
+            name="end_date" 
+            id="end_date" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.end_date} 
+            required
+            />
+        </div>
+        </div>
+        <div className="col-4">
+        <div className="form-group">
+            <label htmlFor="live_auction_date">Live Auction Date</label>
+            <input 
+            type="date" 
+            name="live_auction_date" 
+            id="live_auction_date" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.live_auction_date} 
+            />
+        </div>
+        </div>
+        </div>
+        <div className="row">
+        <div className="col-6">
+        
+        <div className="form-group">
+            <label htmlFor="live_auction_start_time">Live Auction Start Time</label>
+            <input 
+            type="time" 
+            name="live_auction_start_time" 
+            id="live_auction_start_time" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.live_auction_start_time} 
+            />
+        </div>
+        </div>
+        <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="live_auction_end_time">Live Auction End Time</label>
+            <input 
+            type="time" 
+            name="live_auction_end_time" 
+            id="live_auction_end_time" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.live_auction_end_time} 
+            />
+        </div>
+        </div>
+        </div>
+
+        <div className="row">
+        <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="reserve_price">Reserve Price</label>
+            <input 
+            type="number" 
+            name="reserve_price" 
+            id="reserve_price" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.reserve_price} 
+            required
+            />
+        </div>
+        </div>
+        <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="minimum_bid">Minimum Bid</label>
+            <input 
+            type="number" 
+            name="minimum_bid" 
+            id="minimum_bid" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.minimum_bid}  
+            required
+            />
+        </div>
+        </div>
+        </div>
+       
+       
+        <div className="row">
+        <div className="col-4">
+        <div className="form-group">
+      <label htmlFor="is_buynow">
+      Buy Now Option?
+      </label>
+      <select
+        name="is_buynow"
+        id="is_buynow"
+        className="form-control"
+        value={formData.is_buynow}
+        onChange={handleChange}
+      >
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+    </div>
+    <div className="col-4">
+        <div className="form-group">
+            <label htmlFor="buy_now_price">Buy Now Price</label>
+            <input 
+            type="number" 
+            name="buy_now_price" 
+            id="buy_now_price" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.bid_increment}
+            />
+        </div>
+        </div>
+        <div className="col-4">
+        <div className="form-group">
+      <label htmlFor="international_shipping">
+      International Shipping Available?
+      </label>
+      <select
+        name="international_shipping"
+        id="international_shipping"
+        className="form-control"
+        value={formData.international_shipping}
+        onChange={handleChange}
+      >
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+        </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <textarea name="description" 
+            id="description" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.description}
+            rows="4" 
+            required
+            >
+            </textarea>
+        </div>
+        </div>
+        <div className="col-6" >
+        <div classname="form-group">
+            <label htmlFor="shipping_conditions">Shipping Conditions</label>
+            <textarea 
+            name="shipping_conditions" 
+            id="shipping_conditions" 
+             className="form-control"
+            onChange={handleInputChange}
+            value={formData.shipping_conditions}
+            rows="4">
+            </textarea>
+        </div>
+    </div>
+    </div>
+        
+      
+        <div classname="form-group">
+            <label htmlFor="shipping_terms">Shipping Terms</label>
+            <textarea 
+            name="shipping_terms" 
+            id="shipping_terms" 
+            className="form-control"
+            onChange={handleInputChange}
+            value={formData.shipping_terms}
+            rows="4">
+            </textarea>
+        </div>
+       
+
+
+
+
+
+
+
         </div>
 
         {/* Other Fields */}
@@ -236,223 +555,9 @@ const Sell = () => {
           Submit
         </button>
       </form>
-      <template>
-  <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
-    <input type="hidden" :value="csrfToken" name="_token" autocomplete="off" />
 
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input type="text" v-model="formData.title" id="title" class="form-control" required />
+
     </div>
-
-    <div class="form-group">
-      <label for="user_id">User</label>
-      <select v-model="formData.user_id" id="user_id" class="form-control" required>
-        <option value="">Select User</option>
-        <option v-for="user in users" :key="user.id" :value="user.id">
-          {{ user.name }}
-        </option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="category_id">Category</label>
-      <select v-model="formData.category_id" id="category_id" class="form-control" required>
-        <option value="">Select Category</option>
-        <option v-for="category in categories" :key="category.id" :value="category.id">
-          {{ category.name }}
-        </option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="sub_category_id">Sub Category</label>
-      <select v-model="formData.sub_category_id" id="sub_category_id" class="form-control">
-        <option value="">Select Sub Category</option>
-        <option v-for="subCategory in subCategories" :key="subCategory.id" :value="subCategory.id">
-          {{ subCategory.name }}
-        </option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="image">Feature Image</label>
-      <input type="file" @change="handleFileChange('image', $event)" id="image" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label for="album">Album</label>
-      <input type="file" @change="handleFileChange('album', $event)" id="album" class="form-control" multiple />
-    </div>
-
-    <div class="form-group">
-      <label for="start_date">Start Date</label>
-      <input type="date" v-model="formData.start_date" id="start_date" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-      <label for="product_year">Product Year</label>
-      <input type="text" v-model="formData.product_year" id="product_year" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label for="product_location">Product Location</label>
-      <input type="text" v-model="formData.product_location" id="product_location" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label for="product_condition">Conditions</label>
-      <select v-model="formData.product_condition" id="product_condition" class="form-control">
-        <option value="New">New</option>
-        <option value="Used">Used</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="end_date">End Date</label>
-      <input type="date" v-model="formData.end_date" id="end_date" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-      <label for="live_auction_date">Live Auction Date</label>
-      <input type="date" v-model="formData.live_auction_date" id="live_auction_date" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label for="live_auction_start_time">Live Auction Start Time</label>
-      <input type="time" v-model="formData.live_auction_start_time" id="live_auction_start_time" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label for="live_auction_end_time">Live Auction End Time</label>
-      <input type="time" v-model="formData.live_auction_end_time" id="live_auction_end_time" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label for="reserve_price">Reserve Price</label>
-      <input type="number" v-model="formData.reserve_price" id="reserve_price" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-      <label for="minimum_bid">Minimum Bid</label>
-      <input type="number" v-model="formData.minimum_bid" id="minimum_bid" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-      <label for="is_bid_increment">Bid Increment?</label>
-      <select v-model="formData.is_bid_increment" id="is_bid_increment" class="form-control">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="bid_increment">Bid Increment Value</label>
-      <input type="number" v-model="formData.bid_increment" id="bid_increment" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label for="is_buynow">Buy Now Option?</label>
-      <select v-model="formData.is_buynow" id="is_buynow" class="form-control">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="buy_now_price">Buy Now Price</label>
-      <input type="number" v-model="formData.buy_now_price" id="buy_now_price" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea v-model="formData.description" id="description" class="form-control" rows="4" required></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="international_shipping">International Shipping Available?</label>
-      <select v-model="formData.international_shipping" id="international_shipping" class="form-control">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="shipping_conditions">Shipping Conditions</label>
-      <textarea v-model="formData.shipping_conditions" id="shipping_conditions" class="form-control" rows="3"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="shipping_terms">Shipping Terms</label>
-      <textarea v-model="formData.shipping_terms" id="shipping_terms" class="form-control" rows="3"></textarea>
-    </div>
-
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Create</button>
-    </div>
-  </form>
-</template>
-
-<script>
-export default {
-  props: {
-    csrfToken: String,
-    users: Array,
-    categories: Array,
-    subCategories: Array,
-  },
-  data() {
-    return {
-      formData: {
-        title: '',
-        user_id: '',
-        category_id: '',
-        sub_category_id: '',
-        image: null,
-        album: null,
-        start_date: '',
-        product_year: '',
-        product_location: '',
-        product_condition: 'New',
-        end_date: '',
-        live_auction_date: '',
-        live_auction_start_time: '',
-        live_auction_end_time: '',
-        reserve_price: '',
-        minimum_bid: '',
-        is_bid_increment: 0,
-        bid_increment: '',
-        is_buynow: 0,
-        buy_now_price: '',
-        description: '',
-        international_shipping: 0,
-        shipping_conditions: '',
-        shipping_terms: '',
-      },
-    };
-  },
-  methods: {
-    handleFileChange(field, event) {
-      this.formData[field] = event.target.files;
-    },
-    handleSubmit() {
-      const formData = new FormData();
-      for (const key in this.formData) {
-        if (key === 'album') {
-          Array.from(this.formData.album || []).forEach(file => {
-            formData.append('album[]', file);
-          });
-        } else {
-          formData.append(key, this.formData[key]);
-        }
-      }
-
-      this.$emit('submit', formData);
-    },
-  },
-};
-</script>
-
     </div>
 
 
@@ -460,6 +565,6 @@ export default {
     <Footer />
     </>
   );
-};
+  };
 
 export default Sell;
