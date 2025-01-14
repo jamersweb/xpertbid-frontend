@@ -61,7 +61,7 @@ export default NextAuth({
         id: token.id,
         name: token.name,
         email: token.email,
-        token: token.token,
+        token: token.id,
       };
       return session;
     },
