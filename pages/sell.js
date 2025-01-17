@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Sell = () => {
     const { data: session } = useSession();
@@ -227,7 +230,10 @@ const validateForm = (formData, featuredImage, album) => {
 
 
   return (
-    <div className="container mt-5">
+    <>
+    <Header />
+    <div className="container-fluid py-5 color">
+    <div className="container  p-5 rounded color-white">
       <h2>Create Auction</h2>
       {message && <p className="alert alert-info">{message}</p>}
       <form onSubmit={handleSubmit}>
@@ -306,17 +312,250 @@ const validateForm = (formData, featuredImage, album) => {
               onChange={handleAlbumChange}
             />
           </div>
+          </div>
+          <div className="row">
+          <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="product_year">Product Year</label>
+            <input
+             type="text"
+             name="product_year"
+             id="product_year"
+             className="form-control"
+             onChange={handleInputChange}
+             value={formData.product_year}
+             required
+                 />
+        </div>
+        </div>
+        <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="product_location">Product Location</label>
+            <input 
+            type="text" 
+            name="product_location" 
+            id="product_location" 
+            onChange={handleInputChange}
+            className="form-control" 
+            value={formData.product_location}
+            />
+        </div>
+        </div>
+        </div>
+        <div className="row">
+<div className="col-4">
+        <div className="form-group">
+            <label htmlFor="start_date">Start Date</label>
+            <input
+             type="date"
+             name="start_date"
+             id="start_date" 
+             className="form-control"
+             value={formData.start_date}
+             onChange={handleInputChange}
+             required/>
+        </div>
+        </div>
+       
+        <div className="col-4">
+        <div className="form-group">
+            <label htmlFor="end_date">End Date</label>
+            <input 
+            type="date" 
+            name="end_date" 
+            id="end_date" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.end_date} 
+            required
+            />
+        </div>
+        </div>
+        <div className="col-4">
+        <div className="form-group">
+            <label htmlFor="live_auction_date">Live Auction Date</label>
+            <input 
+            type="date" 
+            name="live_auction_date" 
+            id="live_auction_date" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.live_auction_date} 
+            />
+        </div>
+        </div>
+        </div>
+        <div className="row">
+        <div className="col-6">
+        
+        <div className="form-group">
+            <label htmlFor="live_auction_start_time">Live Auction Start Time</label>
+            <input 
+            type="time" 
+            name="live_auction_start_time" 
+            id="live_auction_start_time" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.live_auction_start_time} 
+            />
+        </div>
+        </div>
+        <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="live_auction_end_time">Live Auction End Time</label>
+            <input 
+            type="time" 
+            name="live_auction_end_time" 
+            id="live_auction_end_time" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.live_auction_end_time} 
+            />
+        </div>
+        </div>
         </div>
 
-        {/* Other Fields */}
-        {/* Repeat similar patterns for other fields as required */}
+        <div className="row">
+        <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="reserve_price">Reserve Price</label>
+            <input 
+            type="number" 
+            name="reserve_price" 
+            id="reserve_price" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.reserve_price} 
+            required
+            />
+        </div>
+        </div>
+        <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="minimum_bid">Minimum Bid</label>
+            <input 
+            type="number" 
+            name="minimum_bid" 
+            id="minimum_bid" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.minimum_bid}  
+            required
+            />
+        </div>
+        </div>
+        </div>
+       
+       
+        <div className="row">
+        <div className="col-4">
+        <div className="form-group">
+      <label htmlFor="is_buynow">
+      Buy Now Option?
+      </label>
+      <select
+        name="is_buynow"
+        id="is_buynow"
+        className="form-control"
+        value={formData.is_buynow}
+        onChange={handleChange}
+      >
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+    </div>
+    <div className="col-4">
+        <div className="form-group">
+            <label htmlFor="buy_now_price">Buy Now Price</label>
+            <input 
+            type="number" 
+            name="buy_now_price" 
+            id="buy_now_price" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.bid_increment}
+            />
+        </div>
+        </div>
+        <div className="col-4">
+        <div className="form-group">
+      <label htmlFor="international_shipping">
+      International Shipping Available?
+      </label>
+      <select
+        name="international_shipping"
+        id="international_shipping"
+        className="form-control"
+        value={formData.international_shipping}
+        onChange={handleChange}
+      >
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+        </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+        <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <textarea name="description" 
+            id="description" 
+            className="form-control" 
+            onChange={handleInputChange}
+            value={formData.description}
+            rows="4" 
+            required
+            >
+            </textarea>
+        </div>
+        </div>
+        <div className="col-6" >
+        <div classname="form-group">
+            <label htmlFor="shipping_conditions">Shipping Conditions</label>
+            <textarea 
+            name="shipping_conditions" 
+            id="shipping_conditions" 
+             className="form-control"
+            onChange={handleInputChange}
+            value={formData.shipping_conditions}
+            rows="4">
+            </textarea>
+        </div>
+    </div>
+    </div>
+        
+      
+        <div classname="form-group">
+            <label htmlFor="shipping_terms">Shipping Terms</label>
+            <textarea 
+            name="shipping_terms" 
+            id="shipping_terms" 
+            className="form-control"
+            onChange={handleInputChange}
+            value={formData.shipping_terms}
+            rows="4">
+            </textarea>
+        </div>
+        </div>
 
         <button type="submit" className="btn btn-primary mt-3">
           Submit
         </button>
       </form>
+
+      
+
     </div>
+        </div>
+
+    
+        <Footer />
+    </>
   );
-  };
+};
+
+  
 
 export default Sell;

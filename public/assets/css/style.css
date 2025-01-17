@@ -276,7 +276,7 @@ h1.hero-sec {
 }
 
 .hero-section {
-    background-color: #F9F9F9;
+    
     padding: 80px 0;
     overflow-x: hidden;
 }
@@ -358,7 +358,6 @@ p {
 .swiper-slide {
     text-align: center;
     font-size: 18px;
-    background: #fff;
 
     /* Center slide text vertically */
     display: flex;
@@ -375,11 +374,13 @@ p {
     margin-inline: 20px;
 }
 
-.right-section .swiper-container img {
-    height: 275px;
-    width: 325px;
+.right-section img {
+    height: 300px !important;
+    width: 325px !important;
     border-radius: 25px;
     box-shadow: 0 29px 55px 0 #43ACE942;
+    object-fit: cover;
+    margin-bottom: 70px;
 }
 
 .right-section .swiper-slide {
@@ -549,12 +550,12 @@ p {
 
 .swiper-button-prev::after {
     content: '';
-    position: absolute;
+    /* position: absolute;
     height: 18px;
     top: 13px;
     width: 1px;
     background-color: #EDEDED;
-    right: 0;
+    right: 0; */
 }
 
 .swiper-arrows i {
@@ -6873,14 +6874,38 @@ tbody tr {
 
 .swiper-button-prev {
     left: 45% !important;
-    top: 92% !important;
+    top: 94.3% !important;
     color: #000 !important;
+    background-color: #fff !important;
+    padding-block:25px!important;
+    padding-inline:25px!important;
+    border-radius: 15px 0px 0px 15px;
+   
 }
 .swiper-button-next {
     right: 45% !important;
     top: 94.3% !important;
     color: #000 !important;
+    background-color: #fff  !important;
+    padding-block:25px!important;
+    padding-inline:25px!important;
+    border-radius: 0 15px 15px 0;
+   border-left: 2px solid #f5f5f5;
+
 }
+.hero-section .swiper-button-next{
+    top: 78% !important;
+    right: 22% !important;
+}
+.hero-section .swiper-button-prev{
+    top: 78% !important;
+    left: 67.5% !important;
+}
+.featured-product .swiper-button-prev{
+    top: 94.3% !important;
+    left: 43% !important;
+}
+
 .swiper-wrapper {
     margin-bottom: 130px;
 }
@@ -6895,5 +6920,52 @@ tbody tr {
     left: 0 !important; 
     top: 22px !important; 
     color: #000 !important; 
+    background-color: blue !important;
+    }
+    .swiper-button-next:after
+ {
+    font-size: 25px !important;
+    }
+    .swiper-button-prev:after
+ {
+    font-size: 25px !important;
+    }
+    .hero-section{
+        background-color: #f5f5f5;
     }
 
+
+    .product-main-image .swiper-button-prev{
+        top: 94.3% !important;
+        left: 26.4% !important;
+    }
+    label{
+        margin-block:10px 5px;
+
+    }
+    .btn-primary{
+        background-color:  blue !important;
+        border: 1px solid blue;
+        border-radius: 20px !important;
+        padding-inline: 50px !important;
+        margin-bottom: 20px ;
+
+    }
+    .btn-primary:hover{
+        border: 1px solid blue !important;
+        background-color: transparent !important;
+        color: #000 !important;
+
+    }
+    .color{
+        background-color: #f5f5f5;
+
+    }
+    .color-white{
+        background-color: #fff;
+
+
+    }
+    .form-control{
+        border: 1px solid black !important;
+    }
