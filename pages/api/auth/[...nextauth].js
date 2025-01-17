@@ -75,7 +75,7 @@ export default NextAuth({
               }),
             }
           );
-          console.log(user);
+          //console.log(oauthResponse);
           if (!oauthResponse.ok) {
             console.error("Laravel OAuth login failed");
            // return false; // Abort sign-in
@@ -83,8 +83,10 @@ export default NextAuth({
 
           const data = await oauthResponse.json();
           // Example response structure: { user: {...}, token: "SANCTUM_TOKEN" }
-
+          //console.log(data);
+          //console.log(data.user);
           // Attach the token to the user object, so we can store it in the JWT callback
+          user.avatar = data.user.profile_pic || null;
           user.token = data.token || null;
         }
 
@@ -107,7 +109,7 @@ export default NextAuth({
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.avatar = user.profile_pic;
+        token.avatar = user.avatar;
         token.token = user.token || null; // Laravel token
       }
 
@@ -134,7 +136,8 @@ export default NextAuth({
         accessToken: token.accessToken, // Google/Apple access token
         refreshToken: token.refreshToken, // Google/Apple refresh token
         provider: token.provider, 
-        avatar: token.profile_pic,    // "google", "apple", or undefined
+        avatar: token.avatar, 
+        // "google", "apple", or undefined
       };
       return session;
     },

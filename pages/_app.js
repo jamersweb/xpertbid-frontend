@@ -1,6 +1,6 @@
 // pages/_app.js
 //import '@/styles/globals.css' // If you have a global CSS
-// import { useEffect } from 'react';
+ import { useEffect } from 'react';
 
 //import Script from 'next/script'
 //import { SessionProvider } from "next-auth/react";
@@ -8,48 +8,10 @@
 
 
 
-// import Head from 'next/head'
-// import { SessionProvider, useSession } from "next-auth/react";
+import Head from 'next/head'
+import { SessionProvider, useSession } from "next-auth/react";
 
-// export default function App({ Component, pageProps: { session, ...pageProps } }) {
-
-//   return (
-//     <>
-      
-//       <Head>
-//         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-//         <title>ExpertBid</title>
-//        </Head>
-
-//       {/* External scripts */}
-      
-//       <SessionProvider session={session}>
-//       <AuthWrapper>
-//           <Component {...pageProps} />
-//       </AuthWrapper>
-//     </SessionProvider>
-      
-//     </>
-//   )
-// }
-// const AuthWrapper = ({ children }) => {
-//   const { data: session, status } = useSession();
-
-//   if (status === "loading") {
-//    // return <div>Loading...</div>;
-//   }
-
-//   if (!session) {
-//    // return <div>Please log in to access this page.</div>;
-//   }
-
-//   return <>{children}</>;
-// };
-
-
-import { useEffect } from 'react';
-
-const MyApp = ({ Component, pageProps }) => {
+export default function App({ Component, pageProps: { session, ...pageProps } }) {
   useEffect(() => {
     // Initialize OneSignal
     window.OneSignal = window.OneSignal || [];
@@ -63,8 +25,35 @@ const MyApp = ({ Component, pageProps }) => {
       OneSignal.showNativePrompt();
     });
   }, []);
+  return (
+    <>
+      
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ExpertBid</title>
+       </Head>
 
-  return <Component {...pageProps} />;
+      {/* External scripts */}
+      
+      <SessionProvider session={session}>
+      <AuthWrapper>
+          <Component {...pageProps} />
+      </AuthWrapper>
+    </SessionProvider>
+      
+    </>
+  )
+}
+const AuthWrapper = ({ children }) => {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+   // return <div>Loading...</div>;
+  }
+
+  if (!session) {
+   // return <div>Please log in to access this page.</div>;
+  }
+
+  return <>{children}</>;
 };
-
-export default MyApp;

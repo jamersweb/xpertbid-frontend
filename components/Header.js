@@ -169,10 +169,10 @@ console.log(session);
                         <div className="user-profile-setting-container">
                           <button className="user-profile-setting" onClick={toggleUserSettingPopup}>
                             {!session.user.avatar ? (
-                              
-                              <img src={session.user.avatar} alt="User Profile1" />
-                            ) : (
                               <img src="/assets/images/dashboard-profile.png" alt="User Profile0" />
+                              
+                            ) : (
+                              <img src={session.user.avatar} alt="User Profile1" />
                            )} 
                             <i className="fa-solid fa-chevron-down"></i>
                           </button>
