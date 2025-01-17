@@ -1,21 +1,13 @@
 import { useState } from "react";
-import { Oval } from "react-loader-spinner";
-// import  axios from 'axios';
 import TransactionHistory from "../components/transcations";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import { useSession } from "next-auth/react";
 import WalletBalance from "../components/walletDisplay";
 import AddMoneyModal from "../components/payment_method";
-// import { useRouter } from "next/router";
 const WalletPage = () => {
-  //const [amount, setAmount] = useState('');
-  //const [balance, setBalance] = useState(0);
-  //const { data: session } = useSession();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // const router = useRouter();
-  //const { status, message } = router.query;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const openModal = () => {
     //alert('sdf');
     setIsModalOpen(true);
@@ -25,17 +17,7 @@ const WalletPage = () => {
     setIsModalOpen(false);
   };
 
-  //   const fetchBalance = async () => {
-  //     const response = await axios.get('/api/wallet');
-  //     setBalance(response.data.balance);
-  //   };
-
-  //   const handleStripePayment = async () => {
-  //     const stripeToken = 'YOUR_STRIPE_TOKEN'; // Get Stripe token from client-side
-  //     await axios.post('/api/stripe-payment', { amount, stripeToken });
-  //     fetchBalance();
-  //   };
-
+  
   return (
     <>
       <Header />
@@ -149,189 +131,7 @@ const WalletPage = () => {
 
           <AddMoneyModal isOpen={isModalOpen} onClose={closeModal} />
 
-          <div id="getPaid" className="get-paid">
-            <div className="get-paid-content">
-              <button className="close-btn-get-paid" id="getPaidClose">
-                <i className="fa-solid fa-xmark"></i>
-              </button>
-              <div className="get-paid-pop-up-heading">
-                <h3>Add Money</h3>
-              </div>
-              <div className="get-paid-price">
-                <i className="fa-solid fa-dollar-sign"></i>{" "}
-                <span className="price-no">0</span>
-              </div>
-              <p className="get-paid-note">
-                Minimum amount you can add is $10.
-              </p>
-              <button className="button-style-2 w-100">
-                Add Payment Method
-              </button>
-            </div>
-          </div>
-
-          <div id="getPaid2" className="get-paid2">
-            <div className="get-paid-content2">
-              <button className="close-btn-get-paid" id="getPaidback">
-                <i className="fa-solid fa-chevron-left"></i>
-              </button>
-              <div className="get-paid-pop-up-heading">
-                <h3>Add Payment Method</h3>
-              </div>
-              <form action>
-                <div className="col-12 form-child">
-                  <label for>Select Payment Method</label>
-                  <select name id>
-                    <option value="paypal">Paypal</option>
-                    <option value="bank">Stripe</option>
-                  </select>
-                </div>
-                <div className="paypal-payment">
-                  <div className="col-12 form-child" id="paypalPayment">
-                    <label for>Paypal ID</label>
-                    <input
-                      type="text"
-                      placeholder="Enter your paypal id here"
-                    />
-                  </div>
-                </div>
-                <div className="bank-payment" id="bankPayment">
-                  <div className="col-12 form-child">
-                    <label for>Bank Name*</label>
-                    <input type="text" placeholder="Bank Name" />
-                  </div>
-                  <div className="col-12 form-child">
-                    <label for>IBAN Number*</label>
-                    <input type="text" placeholder="IBAN Number" />
-                  </div>
-                  <div className="col-12 form-child">
-                    <label for>Swift Code*</label>
-                    <input type="text" placeholder="Swift Code" />
-                  </div>
-                  <div className="col-12 form-child">
-                    <label for>Account Title*</label>
-                    <input type="text" placeholder="Account Title" />
-                  </div>
-                  <div className="col-12 form-child">
-                    <label for>Country*</label>
-                    <select name id>
-                      <option value>Pakistan</option>
-                      <option value>United States</option>
-                      <option value>United Kingdom</option>
-                    </select>
-                  </div>
-                  <div className="col-12 form-child">
-                    <label for>Branch Address*</label>
-                    <input type="text" placeholder="Branch Address" />
-                  </div>
-                </div>
-                <div className="btn-save-changes">
-                  <button className="button-style-2 w-100">Save Changes</button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <div
-            id="paymentMethodChoose"
-            className="payment-method-choose-parent"
-          >
-            <div className="payment-method-choose">
-              <button
-                className="close-payment-method-choose"
-                id="closePaymentMethodChoose"
-              >
-                <i className="fa-solid fa-chevron-left"></i>
-              </button>
-              <div className="close-payment-method-choose">
-                <h3>Get Paid</h3>
-              </div>
-              <div className="get-paid-price">
-                <i className="fa-solid fa-dollar-sign"></i>
-                <span className="price-no">0</span>
-              </div>
-              <p className="get-paid-note">
-                Minimum amount you can withdraw is $10.
-              </p>
-              <form id="paymentForm">
-                <div className="row">
-                  <div className="col-12 form-child">
-                    <label for="paymentSelect">Select Payment Method</label>
-                    <select name="paymentMethod" id="paymentSelect">
-                      <option value>-- Choose Payment Method --</option>
-                      <option value="PK64*****2724">UBL (PK64*****2724)</option>
-                      <option value="PK63*****2244">UBL (PK63*****2244)</option>
-                    </select>
-                  </div>
-                </div>
-              </form>
-              <div className="send-request-btn">
-                <button className="w-100 button-style-2" id="sendRequest">
-                  Send Request
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div id="addNewMethod" className="add-new-method-parent">
-            <div className="add-new-method">
-              <button className="close-add-new-method" id="closeAddNewMethod">
-                <i className="fa-solid fa-chevron-left"></i>
-              </button>
-              <div className="close-payment-method-choose">
-                <h3>Payment Methods</h3>
-              </div>
-              <div className="add-new-payment-method">
-                <form action>
-                  <div className="method">
-                    <div className="payment-info-img">
-                      <img src="./assets/images/bank.svg" />
-                      <span className="paymentInfo">UBL(PK64*****2724)</span>
-                    </div>
-                    <div className="method-btns">
-                      <button
-                        className="trash-payment-method"
-                        id="trash-payment-method"
-                      >
-                        <img src="./assets/images/trashred.svg" />
-                      </button>
-                      <button
-                        className="edit-payment-method"
-                        id="edit-payment-method"
-                      >
-                        <img src="./assets/images/editpen.svg" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="method">
-                    <div className="payment-info-img">
-                      <img src="./assets/images/bank.svg" />
-                      <span className="paymentInfo">UBL(PK64*****2724)</span>
-                    </div>
-                    <div className="method-btns">
-                      <button
-                        className="trash-payment-method"
-                        id="trash-payment-method"
-                      >
-                        <img src="./assets/images/trashred.svg" />
-                      </button>
-                      <button
-                        className="edit-payment-method"
-                        id="edit-payment-method"
-                      >
-                        <img src="./assets/images/editpen.svg" />
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div className="send-request-btn">
-                <button className="w-100 button-style-2" id="sendRequest">
-                  Add New Payment Method
-                </button>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </section>
 

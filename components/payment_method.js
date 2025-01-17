@@ -43,9 +43,10 @@ const closeHandler = () => {
                                  id="payment-method"
                                  value={selectedMethod}
                                  onChange={(e) => setSelectedMethod(e.target.value)}>
-                                
+                                  <option>Select</option>
+
                                  <option value="stripe">Stripe</option>
-                                 <option value="paypal">PayPal</option>
+                                 {/* <option value="paypal">PayPal</option> */}
                              </select>
                                 </div>
                             </div>
@@ -55,6 +56,7 @@ const closeHandler = () => {
                 
         
           {selectedMethod === "stripe" && (
+            
                 <StripePayment token={userToken} user={session.user.id}/>
           )}
 

@@ -231,7 +231,7 @@ console.log(session);
                         </div>
 
                           {/* Sell Now Button */}
-                          <Link href="/sell-now" className="sellnow">
+                          <Link href="/sell" className="sellnow">
                             Sell Now
                           </Link>
 
@@ -258,25 +258,19 @@ console.log(session);
                     <input className="search-box" type="search" placeholder="Search any auction listing here" aria-label="Search" />
                   </form>
                 </li>
-                <li className="mobile-child-menu"><a href="#" className="mobile-sellnow">Sell Now</a></li>
+                <li className="mobile-child-menu"><a href="/sell" className="mobile-sellnow">Sell Now</a></li>
                 <ul className="navbar-nav">
                   <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Categories
                     </a>
-                    <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="#">Action</a></li>
-                      <li><a className="dropdown-item" href="#">Another action</a></li>
-                    </ul>
+                    
                   </li>
                   <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a className="nav-link dropdown-toggle" href="/marketplace.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Marketplace
                     </a>
-                    <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="/marketplace.html">Marketplace</a></li>
-                      <li><a className="dropdown-item" href="#">Another action</a></li>
-                    </ul>
+                    
                   </li>
                 </ul>
               </ul>

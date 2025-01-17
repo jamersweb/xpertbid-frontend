@@ -82,7 +82,7 @@ const TransactionHistory = () => {
           </table>
         </div>
       )}
-      ;
+      
       <style jsx>{`
         .loader-container {
           display: flex;
