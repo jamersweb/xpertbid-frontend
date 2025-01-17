@@ -16,7 +16,7 @@ export default function Header() {
    const [isNotificationOpen, setNotificationOpen] = useState(false);
     const [isUserSettingsOpen, setUserSettingsOpen] = useState(false);
 //    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+console.log(session);
     // Handlers for toggling menus
     const toggleNotificationPopup = () => setNotificationOpen(!isNotificationOpen);
     const toggleUserSettingPopup = () => setUserSettingsOpen(!isUserSettingsOpen);
@@ -87,7 +87,7 @@ export default function Header() {
                
                <div className="nav-item registration-btns">
                  <button className="SignupButton signup" onClick={() => handleOpenModal("signup")}>Sign Up</button>
-                 <Link className="nav-link sellnow" href="#">Sell Now</Link>
+                 <Link className="nav-link sellnow" href="#">Sell</Link>
                  <button className="loginButton login" onClick={() => handleOpenModal("signin")}>Login</button>
                </div>
                </>
@@ -168,7 +168,12 @@ export default function Header() {
                         {/* User Profile Settings */}
                         <div className="user-profile-setting-container">
                           <button className="user-profile-setting" onClick={toggleUserSettingPopup}>
-                            <img src="/assets/images/dashboard-profile.png" alt="User Profile" />
+                            {!session.user.avatar ? (
+                              
+                              <img src={session.user.avatar} alt="User Profile1" />
+                            ) : (
+                              <img src="/assets/images/dashboard-profile.png" alt="User Profile0" />
+                           )} 
                             <i className="fa-solid fa-chevron-down"></i>
                           </button>
                           {isUserSettingsOpen && (
