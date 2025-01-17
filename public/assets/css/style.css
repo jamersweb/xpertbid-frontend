@@ -6969,3 +6969,8 @@ tbody tr {
     .form-control{
         border: 1px solid black !important;
     }
+
+    .user-profile-setting img{
+        width: 40px;
+    
+    }
