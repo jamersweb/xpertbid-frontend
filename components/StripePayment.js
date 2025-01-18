@@ -50,9 +50,10 @@ const CheckoutForm = ({token}) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Stripe Payment</h2>
+            <h2 className='text-start mb-3'>Stripe Payment</h2>
             <input
                 type="number"
+                className='form-control mb-3 paypalinput'
                 placeholder="Enter Amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -61,10 +62,11 @@ const CheckoutForm = ({token}) => {
             <div style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0' }}>
                 <CardElement />
             </div>
-            <button type="submit" className='submit-button' disabled={!stripe || loading}>
+            {message && <p className='text-danger text-start'>{message}</p>}
+            <button type="submit" className='submit-button btn btn-paypal bg-dark text-light px-5  text-end py-2' disabled={!stripe || loading}>
                 {loading ? 'Processing...' : 'Pay'}
             </button>
-            {message && <p>{message}</p>}
+           
         </form>
     );
 };
