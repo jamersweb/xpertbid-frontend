@@ -16,7 +16,7 @@ export default function Header() {
    const [isNotificationOpen, setNotificationOpen] = useState(false);
     const [isUserSettingsOpen, setUserSettingsOpen] = useState(false);
 //    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-console.log(session);
+//console.log(session);
     // Handlers for toggling menus
     const toggleNotificationPopup = () => setNotificationOpen(!isNotificationOpen);
     const toggleUserSettingPopup = () => setUserSettingsOpen(!isUserSettingsOpen);
@@ -49,7 +49,7 @@ console.log(session);
     }
   };
  
-
+  
   return (
     <header>
       <div className="header-inner">
@@ -176,7 +176,9 @@ console.log(session);
                            )} 
                             <i className="fa-solid fa-chevron-down"></i>
                           </button>
+                          
                           {isUserSettingsOpen && (
+                            
                             <div id="userProfileSettingPopup" className="user-profile-setting-popup">
                               <div className='user-profile-setting-content'>
                                 <ul className="user-setting-menu">

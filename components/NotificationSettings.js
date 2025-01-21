@@ -95,7 +95,7 @@ const { data: session } = useSession();
         Manage your notification preferences to stay updated on auction wins, bids, and important updates. Customize how
         and when you would like to receive alerts.
       </p>
-      {message && <p className="alert-message">{message}</p>}
+      {message && <p className="alert-message alert text-success alert-success">{message}</p>}
       <div className="notify-setting-inner-box">
         <h4>Bidding</h4>
         <div className="nofify-form-1">

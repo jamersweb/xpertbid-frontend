@@ -102,7 +102,7 @@ const IdentityVerification = () => {
         Verify your identity to enhance your account security and enable
         advanced features. Upload a valid ID document.
       </p>
-      {message && <p className="alert-message">{message}</p>}
+      {message && <p className="alert-message text-success alert alert-success">{message}</p>}
       <div className="notify-setting-inner-box">
         <h3>Verify your identity with an ID document</h3>
         <div className="front-and-back">
@@ -164,7 +164,7 @@ const IdentityVerification = () => {
               <select
                 id="issueCountry"
                 value={issueCountry}
-                onChange={(e) => setIssueCountry(e.target.value)}
+                onChange={(e) => setIssueCountry(e.target.key)}
               >
                 <option value="">Select Country</option>
               {Array.isArray(countries) &&

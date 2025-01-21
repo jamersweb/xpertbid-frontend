@@ -129,7 +129,7 @@ const AddressComponent = () => {
         Add your shipping address to ensure smooth deliveries for your auction
         wins. You can update or edit this address anytime for future purchases.
       </p>
-      {message && <p className="alert-message">{message}</p>}
+      {message && <p className="alert-message text-success alert alert-success">{message}</p>}
       <div className="profile-form">
         <div className="row">
           <div className="col-12 form-child">

@@ -47,7 +47,7 @@ export default function Filter({ categories, onFilterChange }) {
             <h2>Category</h2>
           </div>
           <form>
-            <select value={selectedCategory} onChange={handleCategoryChange}>
+            <select className=" py-2 px-2 " value={selectedCategory} onChange={handleCategoryChange}>
               <option value="">All Categories</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -90,7 +90,7 @@ export default function Filter({ categories, onFilterChange }) {
           <form>
             <div className="price-heading">
               <h2>Price</h2>
-              <select>
+              <select className="p-2">
                 <option value="USD" selected>
                   USD
                 </option>
