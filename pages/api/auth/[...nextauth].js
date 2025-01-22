@@ -6,8 +6,8 @@ import AppleProvider from "next-auth/providers/apple";
 export default NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: "971421469748-k1qicbfj8298bb9notpe8cfijcvf9t40.apps.googleusercontent.com",
+      clientSecret: "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",
     }),
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID,
