@@ -17,7 +17,7 @@ const PasswordLoginSettings = () => {
     notSame: true,
   });
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+ // const [message, setMessage] = useState("");
  const { data: session } = useSession();
   // Fetch user details when the component mounts
   useEffect(() => {
@@ -63,7 +63,7 @@ const PasswordLoginSettings = () => {
     try {
       setLoading(true);
       const payload = { phoneNumber, contactEmail };
-      const response = await axios.post(
+       await axios.post(
         "https://violet-meerkat-830212.hostingersite.com/public/api/user/save-login",
         payload,
         {
@@ -89,7 +89,7 @@ const PasswordLoginSettings = () => {
     try {
       setLoading(true);
       const payload = { oldPassword, newPassword };
-      const response = await axios.post(
+      await axios.post(
         "https://violet-meerkat-830212.hostingersite.com/public/api/user/change-password",
         payload,
         {

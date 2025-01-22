@@ -57,7 +57,7 @@ export default NextAuth({
      *   to store the user in the DB & retrieve a Sanctum token (if you want).
      * - For Credentials, we already get the token in authorize(), so no extra call needed.
      */
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       try {
         // If sign-in is via Google or Apple, call your custom Laravel endpoint to store user & get token
         if (account?.provider === "google" || account?.provider === "apple") {

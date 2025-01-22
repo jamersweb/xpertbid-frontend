@@ -45,7 +45,7 @@ const SignupModal = ({ isOpen, onClose }) => {
     }
     setIsLoading(true);
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://violet-meerkat-830212.hostingersite.com/public/api/register`,
         {
           name: formData.name,
@@ -78,7 +78,7 @@ const SignupModal = ({ isOpen, onClose }) => {
     }
     setIsLoading(true);
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/register-phone`,
         {
           name: formData.name,
@@ -89,7 +89,7 @@ const SignupModal = ({ isOpen, onClose }) => {
         "Registration successful! Please verify the OTP sent to your phone."
       );
       handleStepChange("otpVerification");
-    } catch (error) {
+    } catch {
       setErrorMessage("An error occurred during phone registration.");
     } finally {
       setIsLoading(false);
@@ -105,7 +105,7 @@ const SignupModal = ({ isOpen, onClose }) => {
         setSuccessMessage("Google Sign-Up successful!");
         handleStepChange("success");
       }
-    } catch (error) {
+    } catch {
       setErrorMessage("An error occurred during Google Sign-Up.");
     }
   };
@@ -119,7 +119,7 @@ const SignupModal = ({ isOpen, onClose }) => {
         setSuccessMessage("Apple Sign-Up successful!");
         handleStepChange("success");
       }
-    } catch (error) {
+    } catch {
       setErrorMessage("An error occurred during Apple Sign-Up.");
     }
   };

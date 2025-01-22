@@ -13,7 +13,7 @@ const AccountSettings = () => {
   const { data: session } = useSession();
 
   const [activeSection, setActiveSection] = useState(""); // Initialize activeSection state
-  const [message, setMessage] = useState("");
+  //const [message, setMessage] = useState("");
   const [profile, setProfile] = useState({
     username: "",
     phoneNumber: "",

@@ -63,7 +63,7 @@ const { data: session } = useSession();
   const saveNotificationSettings = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(
+      await axios.post(
         "https://violet-meerkat-830212.hostingersite.com/public/api/user/notifications",
         preferences,
         {

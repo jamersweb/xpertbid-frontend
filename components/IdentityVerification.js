@@ -67,7 +67,7 @@ const IdentityVerification = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post(
+       await axios.post(
         "https://violet-meerkat-830212.hostingersite.com/public/api/identity-verification",
         formData,
         {
@@ -156,7 +156,7 @@ const IdentityVerification = () => {
               >
                 <option value="Identity Card">Identity Card</option>
                 <option value="Passport">Passport</option>
-                <option value="Driver's License">Driver's License</option>
+                <option value="Drivers License">Drivers License</option>
               </select>
             </div>
             <div className="col-md-6 form-child">

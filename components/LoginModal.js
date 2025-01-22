@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import axios from "axios";
 const LoginModal = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState("loginStep"); // Steps: loginStep, loginStep2, ...
@@ -10,7 +10,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session } = useSession();
+  //const { data: session } = useSession();
 
   const closeHandler = () => {
     setErrorMessage("");
@@ -63,7 +63,7 @@ const LoginModal = ({ isOpen, onClose }) => {
     setIsLoading(true);
     setErrorMessage("");
     try {
-      const response = await axios.post(
+       await axios.post(
         "https://violet-meerkat-830212.hostingersite.com/public/api/send-otp",
         {
           phone: `${countryCode}${phoneNumber}`,

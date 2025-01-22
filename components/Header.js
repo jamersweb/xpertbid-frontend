@@ -87,7 +87,7 @@ export default function Header() {
                
                <div className="nav-item registration-btns">
                  <button className="SignupButton signup" onClick={() => handleOpenModal("signup")}>Sign Up</button>
-                 <Link className="nav-link sellnow" href="#">Sell</Link>
+                 <Link className="nav-link sellnow" href="sell">Sell</Link>
                  <button className="loginButton login" onClick={() => handleOpenModal("signin")}>Login</button>
                </div>
                </>
@@ -260,18 +260,18 @@ export default function Header() {
                     <input className="search-box" type="search" placeholder="Search any auction listing here" aria-label="Search" />
                   </form>
                 </li>
-                <li className="mobile-child-menu"><a href="/sell" className="mobile-sellnow">Sell Now</a></li>
+                <li className="mobile-child-menu"><Link href="/sell" className="mobile-sellnow">Sell Now</Link></li>
                 <ul className="navbar-nav">
                   <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <Link className="nav-link dropdown-toggle" href="/categories" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Categories
-                    </a>
+                    </Link>
                     
                   </li>
                   <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="/marketplace.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <Link className="nav-link dropdown-toggle" href="/marketplace.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Marketplace
-                    </a>
+                    </Link>
                     
                   </li>
                 </ul>

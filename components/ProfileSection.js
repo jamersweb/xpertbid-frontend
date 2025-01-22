@@ -1,13 +1,21 @@
    import React, { useState, useEffect } from "react";
    import axios from "axios";
 
-  const isFullPath = (url) => {
-    return url.startsWith("http://") || url.startsWith("https://");
+   const isFullPath = (url) => {
+    if (typeof url !== "string") return false;
+    try {
+      const parsed = new URL(url);
+      // Check that protocol is http or https
+      return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
+      // If new URL() throws, it's not a valid URL
+      return false;
+    }
   };
 
   const ProfileSection = ({ profile, setProfile, saveProfile, loading }) => {
       const [countries, setCountries] = useState([]);
-      const [message, setMessage] = useState("");
+     // const [message, setMessage] = useState("");
   
     useEffect(() => {
       const fetchData = async () => {
@@ -69,14 +77,14 @@
   <div className="profile-upload-btn">
     <input
       type="file"
-      name="image"  // Backend ke liye 'image' naam ka field
+      name="profile_pic"  // Backend ke liye 'image' naam ka field
       id="profileInput"
       accept="image/png, image/jpeg"
       style={{ display: "none" }}
       onChange={(e) =>
         setProfile((prev) => ({
           ...prev,
-          profilePicture: e.target.files[0],
+          profile_pic: e.target.files[0],
         }))
       }
     />
@@ -100,21 +108,21 @@
             <form>
               <div className="row">
                 <div className="col-md-6 form-child">
-                  <label>Username*</label>
+                  <label>Email*</label>
                   <input
                     type="text"
-                    name="username"
-                    value={profile.username}
+                    name="email"
+                    value={profile.email}
                     onChange={handleInputChange}
-                    placeholder="Enter Username"
+                    placeholder="Enter Email"
                   />
                 </div>
                 <div className="col-md-6 form-child">
                   <label>Phone Number*</label>
                   <input
                     type="text"
-                    name="phoneNumber"
-                    value={profile.phoneNumber}
+                    name="phone"
+                    value={profile.phone}
                     onChange={handleInputChange}
                     placeholder="Enter Phone Number"
                   />
@@ -123,8 +131,8 @@
                   <label>Your Full Name*</label>
                   <input
                     type="text"
-                    name="fullName"
-                    value={profile.fullName}
+                    name="name"
+                    value={profile.name}
                     onChange={handleInputChange}
                     placeholder="Enter Full Name"
                   />
@@ -132,8 +140,8 @@
                 <div className="col-md-6 form-child">
                   <label>Country*</label>
                   <select
-                    name="country"
-                    value={profile.country}
+                    name="country_id"
+                    value={profile.country_id}
                     onChange={handleInputChange}
                   >
                     <option value="">Select Country</option>
