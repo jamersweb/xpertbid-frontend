@@ -1,5 +1,5 @@
 // components/Header.js
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import { signOut,useSession } from "next-auth/react";
@@ -26,7 +26,12 @@ export default function Header() {
   const handleOpenModal = (modal) => {
     setActiveModal(modal); // Set "signup" or "signin"
   };
-
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("login") === "true") {
+      setActiveModal("signin");
+    }
+  }, []);
   const handleCloseModal = () => {
     setActiveModal(null); // Close all modals
   };
