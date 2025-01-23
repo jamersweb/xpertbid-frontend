@@ -3,7 +3,12 @@ import DashboardRecord from "../components/DashboardRecord";
 import ListingCard from "../components/ListingCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+
 const Dashboard = () => {
+  const { data: session } = useSession();
+  
   const [dashboardData, setDashboardData] = useState({
     listings: 0,
     biddings: 0,
@@ -13,12 +18,18 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/dashboard");
-        const data = await response.json();
+        const response = await axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/dashboard",
+          {
+            headers: {
+              Authorization: `Bearer ${session.user.token}`,
+            },
+          }
+        );
+        //const data = await response.json();
         setDashboardData({
-          listings: data.listings || 0,
-          biddings: data.biddings || 0,
-          wallet: data.wallet || 0,
+          listings: response.data.auction || 0,
+          biddings: response.data.bid || 0,
+          wallet: response.data.wallet || 0,
         });
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
@@ -26,22 +37,34 @@ const Dashboard = () => {
     };
 
     fetchDashboardData();
-  }, []);
+  }, [session]);
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
     const fetchListings = async () => {
+      if (!session) {
+        return; // Wait for the session to be initialized
+      }
+  
       try {
-        const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/listings");
-        const data = await response.json();
-        setListings(data.listings);
+        const response = await axios.get(
+          "https://violet-meerkat-830212.hostingersite.com/public/api/listings",
+          {
+            headers: {
+              Authorization: `Bearer ${session.user.token}`,
+            },
+          }
+        );
+        setListings(response.data.auction || []);
       } catch (error) {
         console.error("Error fetching listings:", error);
+      } finally {
+       // setLoading(false);
       }
     };
 
     fetchListings();
-  }, []);
+  }, [session]);
   return (
     <>
     <Header />

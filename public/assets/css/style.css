@@ -17,6 +17,20 @@
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
   }
+  .password-field {
+    display: flex;
+    align-items: center;
+  }
+  
+  .toggle-password {
+    margin-left: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #007bff;
+  }
+  
   .transparent-button{background-color: #fff;
     border: none transparent;}
   /* Safari */

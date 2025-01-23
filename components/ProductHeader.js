@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
+import Link from "next/link";
 const ProductHeader = ({ views, link, productId }) => {
   // Increment views on component mount
   useEffect(() => {
@@ -31,9 +32,9 @@ const ProductHeader = ({ views, link, productId }) => {
         <div className="row">
           <div className="col-md-6">
             <div className="product-back-and-head">
-              <a href="./marketplace.html">
+              <Link href="/marketplace">
                 <i className="fa-solid fa-chevron-left"></i>
-              </a>
+              </Link>
               <h3></h3>
             </div>
           </div>

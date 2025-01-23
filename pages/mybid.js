@@ -1,249 +1,95 @@
-//import React, { useState, useEffect } from "react";
-//import TabNavigation from "../components/TabNavigation";
-//import AuctionCard from "../components/AuctionCard";
+import React, { useState, useEffect } from "react";
+import TabNavigation from "../components/TabNavigation";
+import AuctionCard from "../components/AuctionCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useSession } from "next-auth/react";
+import { Oval } from "react-loader-spinner"; // Import the loader
+
 const BiddingTabs = () => {
-  //const [activeTab, setActiveTab] = useState("active");
-  //const [auctions, setAuctions] = useState([]);
+  const [activeTab, setActiveTab] = useState("active");
+  const [auctions, setAuctions] = useState([]);
+  const [loading, setLoading] = useState(false); // Add loading state
+  const { data: session } = useSession();
+  
+  const tabs = [
+    { id: "active", label: "Active" },
+    { id: "won", label: "Won Auctions" },
+    { id: "lost", label: "Lost Auctions" },
+  ];
 
-  // const tabs = [
-  //   { id: "active", label: "Active" },
-  //   { id: "won", label: "Won Auctions" },
-  //   { id: "lost", label: "Lost Auctions" },
-  // ];
+  useEffect(() => {
+    const fetchAuctions = async () => {
+      if (!session?.user?.token) return;
 
-  // useEffect(() => {
-  //   // Fetch data dynamically based on the active tab
-  //   const fetchAuctions = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `https://violet-meerkat-830212.hostingersite.com/public/api/auctions?status=${activeTab}`
-  //       );
-  //       const data = await response.json();
-  //       setAuctions(data.auctions);
-  //     } catch (error) {
-  //       console.error("Error fetching auctions:", error);
-  //     }
-  //   };
+      setLoading(true); // Show loader
+      try {
+        const response = await fetch(
+          `https://violet-meerkat-830212.hostingersite.com/public/api/auctions?status=${activeTab}`,
+          {
+            headers: {
+              Authorization: `Bearer ${session.user.token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        setAuctions(data.auctions || []);
+      } catch (error) {
+        console.error("Error fetching auctions:", error);
+      } finally {
+        setLoading(false); // Hide loader
+      }
+    };
 
-  //   fetchAuctions();
-  // }, [activeTab]);
+    fetchAuctions();
+  }, [activeTab, session]);
 
   return (
     <>
-    <Header />
-    <section className="biddings-tabs">
-            <div className="container-fluid">
-                <ul className="nav nav-tabs bid-tabs-child" id="myTab"
-                    role="tablist">
-                    <li className="nav-item col-sm-4 col-12 bid-tabs-anchor"
-                        role="presentation">
-                        <button className="nav-link active w-100"
-                            id="activeBids-tab" data-bs-toggle="tab"
-                            data-bs-target="#activeBids" type="button"
-                            role="tab" aria-controls="activeBids"
-                            aria-selected="true">Active</button>
-                    </li>
-                    <li className="nav-item col-sm-4 col-12 bid-tabs-anchor"
-                        role="presentation">
-                        <button className="nav-link w-100" id="winAuctions-tab"
-                            data-bs-toggle="tab" data-bs-target="#winAuctions"
-                            type="button" role="tab" aria-controls="winAuctions"
-                            aria-selected="false">Won Auctions</button>
-                    </li>
-                    <li className="nav-item col-sm-4 col-12 bid-tabs-anchor"
-                        role="presentation">
-                        <button className="nav-link w-100" id="lostAuctions-tab"
-                            data-bs-toggle="tab" data-bs-target="#lostAuctions"
-                            type="button" role="tab"
-                            aria-controls="lostAuctions"
-                            aria-selected="false">Lost Auctions</button>
-                    </li>
-                </ul>
-                <div className="tab-content" id="myTabContent">
-                    <div className="tab-pane fade show active" id="activeBids"
-                        role="tabpanel" aria-labelledby="activeBids-tab">
-
-                        <div className="bid-main-heading">
-                            <h2>Active Bids</h2>
-                        </div>
-
-                        <div className="row makt-parent">
-                            <div
-                                className="col-lg-4 col-md-6 mkt-child">
-                                <div className="market-card">
-                                    <div className="mkt-img">
-                                        <img
-                                            src="./assets/images/active-bid.png"
-                                            />
-                                        <div className="counter">
-                                            <span className="hour">08h</span>
-                                            <span className="minutes">09m</span>
-                                            <span className="seconds">22s</span>
-                                        </div>
-                                    </div>
-                                    <div className="mkt-body">
-                                        <div
-                                            className="mkt-pro-head">
-                                            <h3>GUNNAR
-                                                ANDER</h3>
-                                        </div>
-                                        <div className="mkt-detail">
-                                            <div
-                                                className="mkt-crt-bid">
-                                                <span
-                                                    className="crnt-bid">My
-                                                    Bid</span>
-                                                <div
-                                                    className="mkt-Mybid-price"><i
-                                                        className="fa-solid fa-dollar-sign"></i>
-                                                    <span
-                                                        className="price">175</span>
-                                                    USD</div>
-                                            </div>
-                                            <div
-                                                className="mkt-crt-bid">
-                                                <span
-                                                    className="crnt-bid">Current
-                                                    Bid</span>
-                                                <div
-                                                    className="mkt-currentBid-price"><i
-                                                        className="fa-solid fa-dollar-sign"></i>
-                                                    <span
-                                                        className="price">180</span>
-                                                    USD</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div className="tab-pane fade" id="winAuctions"
-                        role="tabpanel" aria-labelledby="activeBids-tab">
-
-                        <div className="bid-main-heading">
-                            <h2>Active Bids</h2>
-                        </div>
-
-                        <div className="row makt-parent">
-                            <div
-                                className="col-lg-4 col-md-6 mkt-child">
-                                <div className="market-card">
-                                    <div className="mkt-img">
-                                        <img
-                                            src="./assets/images/active-bid.png"
-                                            />
-                                        <div className="counter">
-                                            <span className="hour">08h</span>
-                                            <span className="minutes">09m</span>
-                                            <span className="seconds">22s</span>
-                                        </div>
-                                    </div>
-                                    <div className="mkt-body">
-                                        <div
-                                            className="mkt-pro-head">
-                                            <h3>GUNNAR
-                                                ANDER</h3>
-                                        </div>
-                                        <div className="mkt-detail">
-                                            <div
-                                                className="mkt-crt-bid">
-                                                <span
-                                                    className="crnt-bid">My
-                                                    Bid</span>
-                                                <div
-                                                    className="mkt-Mybid-price"><i
-                                                        className="fa-solid fa-dollar-sign"></i>
-                                                    <span
-                                                        className="price">175</span>
-                                                    USD</div>
-                                            </div>
-                                            <div
-                                                className="mkt-crt-bid">
-                                                <span
-                                                    className="crnt-bid">Current
-                                                    Bid</span>
-                                                <div
-                                                    className="mkt-currentBid-price"><i
-                                                        className="fa-solid fa-dollar-sign"></i>
-                                                    <span
-                                                        className="price">180</span>
-                                                    USD</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div className="tab-pane fade" id="lostAuctions"
-                        role="tabpanel" aria-labelledby="activeBids-tab">
-
-                        <div className="bid-main-heading">
-                            <h2>Active Bids</h2>
-                        </div>
-
-                        <div className="row makt-parent">
-                            <div
-                                className="col-lg-4 col-md-6 mkt-child">
-                                <div className="market-card">
-                                    <div className="mkt-img">
-                                        <img
-                                            src="./assets/images/active-bid.png"
-                                            />
-                                        <div className="counter">
-                                            <span className="hour">08h</span>
-                                            <span className="minutes">09m</span>
-                                            <span className="seconds">22s</span>
-                                        </div>
-                                    </div>
-                                    <div className="mkt-body">
-                                        <div
-                                            className="mkt-pro-head">
-                                            <h3>GUNNAR
-                                                ANDER</h3>
-                                        </div>
-                                        <div className="mkt-detail">
-                                            <div
-                                                className="mkt-crt-bid">
-                                                <span
-                                                    className="crnt-bid">My
-                                                    Bid</span>
-                                                <div
-                                                    className="mkt-Mybid-price"><i
-                                                        className="fa-solid fa-dollar-sign"></i>
-                                                    <span
-                                                        className="price">175</span>
-                                                    USD</div>
-                                            </div>
-                                            <div
-                                                className="mkt-crt-bid">
-                                                <span
-                                                    className="crnt-bid">Current
-                                                    Bid</span>
-                                                <div
-                                                    className="mkt-currentBid-price"><i
-                                                        className="fa-solid fa-dollar-sign"></i>
-                                                    <span
-                                                        className="price">180</span>
-                                                    USD</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    
+      <Header />
+      <section className="biddings-tabs">
+        <div className="container-fluid">
+          <TabNavigation tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
+          <div className="tab-content">
+            {tabs.map((tab) => (
+              <div
+                className={`tab-pane fade ${
+                  activeTab === tab.id ? "show active" : ""
+                }`}
+                id={tab.id}
+                role="tabpanel"
+                key={tab.id}
+              >
+                <div className="bid-main-heading">
+                  <h2>{tab.label}</h2>
                 </div>
-            </div>
-    </section>
-    <Footer />
+                <div className="row makt-parent">
+                  {loading ? ( // Show loader when loading
+                    <div className="loader-container">
+                      <Oval
+                        height={80}
+                        width={80}
+                        color="#4fa94d"
+                        secondaryColor="#4fa94d"
+                        ariaLabel="oval-loading"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                      />
+                    </div>
+                  ) : auctions.length > 0 ? (
+                    auctions.map((auction) => (
+                      <AuctionCard key={auction.id} auction={auction} />
+                    ))
+                  ) : (
+                    <p>No auctions found.</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <Footer />
     </>
   );
 };

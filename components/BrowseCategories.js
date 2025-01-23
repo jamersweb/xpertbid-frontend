@@ -58,7 +58,7 @@ export default function BrowseCategories() {
                         <div className="col-lg-3 col-md-6 cate-card-main" key={i}>
                           <div className="cate-card">
                             <div className="row images-portion">
-                              <div className="col-6 image-1">
+                              <div className="col-12 image-1">
                                 <img src={`/assets/${cat.image}`} alt={cat.name} />
                               </div>
                               {/* <div className="col-6 image-2">
@@ -80,12 +80,39 @@ export default function BrowseCategories() {
                       ))}
                     </div>
 
-                    <div className="row">
+                    <div className="row cate-cards-parent">
                       {categories.slice(4, 8).map((cat, i) => (
                         <div className="col-lg-3 col-md-6 cate-card-main" key={i}>
                           <div className="cate-card">
                             <div className="row images-portion">
-                              <div className="col-6 image-1">
+                              <div className="col-12 image-1">
+                                <img src={`/assets/${cat.image}`} alt={cat.name} />
+                              </div>
+                              {/* <div className="col-6 image-2">
+                                {cat.images.slice(1).map((img, idx) => (
+                                  <img src={`/assets/${cat.image}`} alt={cat.name} />
+                                ))}
+                              </div> */}
+                            </div>
+                            <div className="cate-title">
+                              <h2>
+                              <Link href={`/category/${cat.name}`}>{cat.name}</Link>
+                              </h2>
+                            </div>
+                            <div className="cate-lisitng">
+                              <span>{cat.count} Listings</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="row">
+                      {categories.slice(8, 12).map((cat, i) => (
+                        <div className="col-lg-3 col-md-6 cate-card-main" key={i}>
+                          <div className="cate-card">
+                            <div className="row images-portion">
+                              <div className="col-12 image-1">
                                 <img src={`/assets/${cat.image}`} alt={cat.name} />
                               </div>
                               {/* <div className="col-6 image-2">

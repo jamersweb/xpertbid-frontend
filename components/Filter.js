@@ -65,7 +65,7 @@ export default function Filter({ categories, onFilterChange }) {
           </div>
           <form>
             <ul className="category-list">
-              {["liveAuctions", "endingSoon", "resentListing"].map((status) => (
+              {["liveAuctions", "endingSoon", "recentListing"].map((status) => (
                 <li key={status}>
                   <label>
                     <input

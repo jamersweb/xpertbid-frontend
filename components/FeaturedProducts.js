@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import CountdownTimer from "./countdown";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules"; // Use this for Swiper >= 9.x
+import { Navigation,Autoplay } from "swiper/modules"; // Use this for Swiper >= 9.x
 
 export default function FeaturedProducts() {
   const [products, setProducts] = useState([]);
@@ -32,8 +32,12 @@ export default function FeaturedProducts() {
               {/* Repeat slides as needed */}
                 {products.length > 0 ? (
                   <Swiper
-                    modules={[Navigation]} // Ensure proper module usage
+                    modules={[Navigation,Autoplay]} // Ensure proper module usage
                     navigation
+                    autoplay={{
+                      delay: 3000, // Time between slides (in milliseconds)
+                      disableOnInteraction: false, // Continue autoplay after user interaction
+                    }}
                     slidesPerView={3}
                     spaceBetween={30}
                     loop

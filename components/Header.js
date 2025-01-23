@@ -169,10 +169,10 @@ export default function Header() {
                         <div className="user-profile-setting-container">
                           <button className="user-profile-setting" onClick={toggleUserSettingPopup}>
                             {!session.user.avatar ? (
-                              <img src="/assets/images/dashboard-profile.png" alt="User Profile0" />
+                              <img src="/assets/images/dashboard-profile.png" alt="User Profile" />
                               
                             ) : (
-                              <img src={session.user.avatar} alt="User Profile1" />
+                              <img src={`https://violet-meerkat-830212.hostingersite.com/public/${session.user.avatar}`} alt={session.user?.name} />
                            )} 
                             <i className="fa-solid fa-chevron-down"></i>
                           </button>

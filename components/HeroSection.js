@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react"; // Import Swiper components
-import { Navigation } from "swiper/modules"; // Use this for Swiper >= 9.x
+import { Navigation,Autoplay } from "swiper/modules"; // Use this for Swiper >= 9.x
 import { Oval } from "react-loader-spinner"; // Import the loader
 
 export default function HeroSection() {
@@ -32,19 +32,23 @@ export default function HeroSection() {
         <>
 
         {/* Swiper for product images */}
-        <Swiper
-              modules={[Navigation]} // Ensure proper module usage
-              navigation
-              slidesPerView={3}
-              spaceBetween={30}
-              loop
-              breakpoints={{
-                360: { slidesPerView: 1 },
-                640: { slidesPerView: 1 },
-                1024: { slidesPerView: 1 },
-                1367: { slidesPerView: 1 },
-              }}
-            >
+          <Swiper
+        modules={[Navigation, Autoplay]} // Add Autoplay module
+        navigation
+        autoplay={{
+          delay: 3000, // Time between slides (in milliseconds)
+          disableOnInteraction: false, // Continue autoplay after user interaction
+        }}
+        slidesPerView={3}
+        spaceBetween={30}
+        loop
+        breakpoints={{
+          360: { slidesPerView: 1 },
+          640: { slidesPerView: 1 },
+          1024: { slidesPerView: 1 },
+          1367: { slidesPerView: 1 },
+        }}
+      >
               {sliderData.map((slide) => (
                 <SwiperSlide key={slide.id}>
                   <div className="row">

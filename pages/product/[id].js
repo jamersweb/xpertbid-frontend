@@ -65,7 +65,7 @@ const ProductPage = () => {
         </div>
       ) : (
         <>
-      <ProductHeader views={product.views || 0} link={`http://localhost:3000/product/${product.id}`} productId={product.id}/>
+      <ProductHeader views={product.views || 0} link={`https://xpertbid.com/product/${product.id}`} productId={product.id}/>
       <section className="product-image-and-brief">
         <div className="container-fluid">
           <div className="products-brief-parent">

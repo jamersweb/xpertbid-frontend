@@ -43,6 +43,7 @@
       
       return (
         <div className="profile">
+          
           <div className="profile-heading-and-button">
             <h3>My Profile</h3>
             <button
@@ -63,7 +64,7 @@
                   src={
                     profile.profile_pic && isFullPath(profile.profile_pic)
                       ? profile.profile_pic
-                      : `https://violet-meerkat-830212.hostingersite.com/storage/app/public/${profile.profile_pic}`
+                      : `https://violet-meerkat-830212.hostingersite.com/public/${profile.profile_pic}`
                   }
                   style={{width:"150px",
                     objectFit:"contain"

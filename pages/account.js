@@ -13,7 +13,7 @@ const AccountSettings = () => {
   const { data: session } = useSession();
 
   const [activeSection, setActiveSection] = useState(""); // Initialize activeSection state
-  //const [message, setMessage] = useState("");
+ // const [message, setMessage] = useState("");
   const [profile, setProfile] = useState({
     username: "",
     phoneNumber: "",
@@ -33,7 +33,7 @@ const AccountSettings = () => {
           return;
         }
         setLoading(true);
-        const response = await axios.get(
+        await axios.get(
           "https://violet-meerkat-830212.hostingersite.com/public/api/account-settings",
           {
             headers: { Authorization: `Bearer ${session.user.token}` },
@@ -153,6 +153,7 @@ const AccountSettings = () => {
             {/* Content Section */}
             <div className="col-lg-8 user-profile">
               {activeSection === "profile" && (
+                
                 <ProfileSection
                   profile={profile}
                   setProfile={setProfile}

@@ -8,7 +8,10 @@ const ListingCard = ({ listing }) => {
           <div className="row">
             <div className="col-md-3">
               <div className="listing-img">
-                <img src={listing.image} alt={listing.title} />
+              <img
+                    src={`https://violet-meerkat-830212.hostingersite.com/public/${listing.image}`}
+                    alt={listing.title}
+                  />
               </div>
             </div>
             <div className="col-md-9">
@@ -28,8 +31,8 @@ const ListingCard = ({ listing }) => {
                   <div className="col-sm-6 bid-and-time">
                     <p className="listing-bid-end-label">End in</p>
                     <p className="listingTime">
-                      <span className="listingDate">{listing.endDate}</span> at{" "}
-                      <span className="lisitngTime">{listing.endTime}</span>
+                      <span className="listingDate">{listing.start_date}</span> at{" "}
+                      <span className="lisitngTime">{listing.end_date}</span>
                     </p>
                   </div>
                 </div>

@@ -13,7 +13,7 @@ export default function MarketplaceSection({ products }) {
           <div className="row makt-parent">
             {products.length > 0 ? (
               products.map((product) => (
-              <div className="col-lg-4 col-md-6 mkt-child" key={product.id}>
+              <div className="col-lg-3 col-md-6 col-sm-6 col-xs-6 mkt-child" key={product.id}>
                 <div className="market-card">
                   <div className="mkt-img">
                   <img

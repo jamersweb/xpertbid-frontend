@@ -11,11 +11,11 @@ const TabNavigation = ({ tabs, activeTab, onTabChange }) => {
         >
           <button
             className={`nav-link w-100 ${activeTab === tab.id ? "active" : ""}`}
-            onClick={() => onTabChange(tab.id)}
+            onClick={() => onTabChange(tab.id)} // Calls onTabChange passed from the parent
             type="button"
             role="tab"
           >
-            {tab.name}
+            {tab.label} {/* Fixed from tab.name to tab.label */}
           </button>
         </li>
       ))}

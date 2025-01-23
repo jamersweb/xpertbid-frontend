@@ -38,9 +38,10 @@ export default NextAuth({
           if (res.ok && data.token) {
             // data.token is your Laravel token (e.g. Sanctum personal access token)
             // data.user is the user object from your Laravel API
+            console.log(data.user);
+
             return { ...data.user, token: data.token };
           }
-
           throw new Error(data.message || "Login failed");
         } catch (error) {
           console.error("Authorization error:", error);
@@ -109,7 +110,7 @@ export default NextAuth({
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.avatar = user.avatar;
+        token.avatar = user.profile_pic;
         token.token = user.token || null; // Laravel token
       }
 
