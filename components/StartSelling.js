@@ -13,7 +13,7 @@ export default function StartSelling() {
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 <div className="selling-btns">
                   <Link href="/marketplace" className="exp-more">Explore More</Link>
-                  <Link href="#" className="start-sell-now">Sell Now</Link>
+                  <Link href="/sell" className="start-sell-now">Sell Now</Link>
                 </div>
               </div>
               <div className="col-md-4 start-slelling-right">
