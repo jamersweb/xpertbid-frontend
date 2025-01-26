@@ -4,8 +4,10 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WalletBalance from "../components/walletDisplay";
 import AddMoneyModal from "../components/payment_method";
-const WalletPage = () => {
+import { useSession } from "next-auth/react";
 
+const WalletPage = () => {
+  const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   const openModal = () => {
@@ -67,10 +69,8 @@ const WalletPage = () => {
               <div className="col-md-4">
                 <div className="save-cards">
                   <div className="heading">
-                    <h3>Save Cards</h3>
-                    <button className="add-new-method-btn" id="addNewMethodBtn">
-                      Add New
-                    </button>
+                    <h3>Cards</h3>
+                    
                   </div>
 
                   <div className="save-cards-info">
@@ -114,8 +114,8 @@ const WalletPage = () => {
                       <div className="row">
                         <div className="align-items-center d-flex mt-4">
                           <div className="col-6">
-                            <p className="label">card Holder</p>
-                            <p className="holder-name">Name Here</p>
+                            <p className="label">Card Holder</p>
+                            <p className="holder-name">{session?.user?.name}</p>
                           </div>
                           <div className="col-6 d-flex justify-content-end">
                             <img src="./assets/images/card-icon1.svg" />

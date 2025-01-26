@@ -38,6 +38,8 @@ const LoginModal = ({ isOpen, onClose }) => {
         //localStorage.setItem("token", session.user.token);
         setErrorMessage(""); // Clear any previous errors
         onClose(); // Close the modal on successful login
+        router.push("/dashboard");
+
       }
     } catch (error) {
       setErrorMessage("An unexpected error occurred. Please try again.");

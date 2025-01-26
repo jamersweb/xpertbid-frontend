@@ -11,12 +11,12 @@ export default function Header() {
   // ensure that is handled either here or via refs.
   // For now, we assume the JS from script.js handles it.
   const [activeModal, setActiveModal] = useState(null);
- // const [user, setUser] = useState(null);
   const { data: session } = useSession();
-   const [isNotificationOpen, setNotificationOpen] = useState(false);
-    const [isUserSettingsOpen, setUserSettingsOpen] = useState(false);
-//    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-//console.log(session);
+  const [isNotificationOpen, setNotificationOpen] = useState(false);
+  const [isUserSettingsOpen, setUserSettingsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
     // Handlers for toggling menus
     const toggleNotificationPopup = () => setNotificationOpen(!isNotificationOpen);
     const toggleUserSettingPopup = () => setUserSettingsOpen(!isUserSettingsOpen);
@@ -54,6 +54,39 @@ export default function Header() {
     }
   };
  
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.length > 2) {
+      debounceSearch(query);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const debounceSearch = (() => {
+    let timer;
+    return (query) => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        fetchSearchResults(query);
+      }, 300);
+    };
+  })();
+
+  const fetchSearchResults = async (query) => {
+    setIsSearching(true);
+    try {
+      const response = await axios.get(`https://violet-meerkat-830212.hostingersite.com/public/api/search-auctions`, {
+        params: { query },
+      });
+      setSearchResults(response.data.auctions);
+    } catch (error) {
+      console.error("Search error:", error);
+    }
+    setIsSearching(false);
+  };
   
   return (
     <header>
@@ -67,12 +100,29 @@ export default function Header() {
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse menuBar" id="navbarSupportedContent">
-               <form className="d-flex search-forms" role="search">
-                <button className="search-btn" type="submit">
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                </button>
-                <input className="search-box" type="search" placeholder="Search any auction listing here" aria-label="Search" />
-              </form> 
+            <form className="d-flex search-forms" role="search">
+              <input
+                className="search-box"
+                type="search"
+                placeholder="Search auctions"
+                value={searchQuery}
+                onChange={handleSearchChange}
+                aria-label="Search"
+              />
+              <button className="search-btn" type="submit" disabled>
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+              {isSearching && <p>Searching...</p>}
+            <ul className='search-result'>
+              {searchResults.map((auction) => (
+                <li key={auction.id}>
+                  <a href={`/product/${auction.id}`}>{auction.title}</a>
+                </li>
+              ))}
+            </ul>
+            </form>
+            
+               
               {!session ? (
                 <>
                 <ul className="navbar-nav">

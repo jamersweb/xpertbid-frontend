@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
-import Footer from '@/components/Footer';
+import Footer from "@/components/Footer";
 import { Oval } from "react-loader-spinner"; // Import the loader
 import Filter from "../components/Filter";
 import DisplayProducts from "../components/DisplayProducts";
@@ -17,18 +17,30 @@ export default function Marketplace() {
   // Fetch categories and products on component mount
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/get-category");
-      const data = await response.json();
-      setCategories(data.categories || []);
+      try {
+        const response = await fetch(
+          "https://violet-meerkat-830212.hostingersite.com/public/api/get-category"
+        );
+        const data = await response.json();
+        setCategories(data.categories || []);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      }
     };
 
     const fetchProducts = async () => {
-      const response = await fetch("https://violet-meerkat-830212.hostingersite.com/public/api/get-products");
-      const data = await response.json();
-      //console.log(data);
-      setProducts(data.product || []);
-      setLoading(false); // Set loading to false after fetching
-      setFilteredProducts(data.product || []); // Default to all products
+      try {
+        const response = await fetch(
+          "https://violet-meerkat-830212.hostingersite.com/public/api/get-products"
+        );
+        const data = await response.json();
+        setProducts(data.product || []);
+        setFilteredProducts(data.product || []); // Default to all products
+        setLoading(false); // Set loading to false after fetching
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+        setLoading(false);
+      }
     };
 
     fetchCategories();
@@ -36,16 +48,29 @@ export default function Marketplace() {
   }, []);
 
   // Handle filtering
-  const handleFilterChange = (categoryId) => {
-    if (categoryId === "") {
-      setFilteredProducts(products); // Show all products
-    } else {
-      setFilteredProducts(
-        products.filter((product) => product.category_id === parseInt(categoryId))
-      );
-    }
-    setCurrentPage(1); // Reset to first page after filtering
+  const handleFilterChange = (filters) => {
+    const { category, status, price } = filters;
+  
+    const filtered = products.filter((product) => {
+      const matchesCategory = category === "" || parseInt(product.category_id, 10) === parseInt(category, 10);
+      const matchesStatus = status.length === 0 || status.includes(product.status || "");
+      const matchesPrice = parseFloat(product.reserve_price) >= price[0] && parseFloat(product.reserve_price) <= price[1];
+  
+      console.log({
+        product,
+        matchesCategory,
+        matchesStatus,
+        matchesPrice,
+      });
+  
+      return matchesCategory && matchesStatus && matchesPrice;
+    });
+  
+    console.log("Filtered products:", filtered);
+    setFilteredProducts(filtered);
+    setCurrentPage(1); // Reset to the first page after filtering
   };
+  
 
   // Handle pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -60,25 +85,27 @@ export default function Marketplace() {
   return (
     <>
       <Header />
+      <section className="mkt-hero-section">
+            <div className="container-fluid">
+                <div className="mkt-hero-parent">
+                    <h1 className="mkt-sec">Search Online Businesses for
+                        Sale</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit, sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua.</p>
+                </div>
+            </div>
+        </section>
       <section className="marketplace-product">
         <div className="container-fluid">
           <div className="row">
-            {/* Left Column: Filter */}
             <div className="col-lg-3 mkt-left">
-              <div className="filter-parent">
-                <button className="filter">
-                  Filter Bid <i className="fa-solid fa-filter"></i>
-                </button>
-              </div>
               <Filter categories={categories} onFilterChange={handleFilterChange} />
             </div>
 
-            {/* Right Column: Products and Pagination */}
             <div className="col-lg-9 mkt-right">
               <div className="mkt-page-plc-hdig">
                 <h2>All Items</h2>
-
-                {/* Pagination */}
                 <nav aria-label="Page navigation example">
                   <ul className="pagination">
                     <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
@@ -100,9 +127,7 @@ export default function Marketplace() {
                         </button>
                       </li>
                     ))}
-                    <li
-                      className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}
-                    >
+                    <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
                       <button
                         className="page-link"
                         onClick={() => paginate(currentPage + 1)}
@@ -113,11 +138,10 @@ export default function Marketplace() {
                     </li>
                   </ul>
                 </nav>
-                </div>
-                {/* Display Products */}
-                {loading ? (
-                  <div className="loader-container">
-                  <Oval 
+              </div>
+              {loading ? (
+                <div className="loader-container">
+                  <Oval
                     height={80}
                     width={80}
                     color="#3498db"
@@ -125,19 +149,11 @@ export default function Marketplace() {
                     ariaLabel="loading-indicator"
                   />
                 </div>
-              ) : (
+              ) : filteredProducts.length > 0 ? (
                 <DisplayProducts products={currentProducts} />
-
+              ) : (
+                <p>No products match your filters. Please adjust the criteria.</p>
               )}
-
-              <style jsx>{`
-                .loader-container {
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  height: 100vh;
-                }
-              `}</style>
             </div>
           </div>
         </div>
