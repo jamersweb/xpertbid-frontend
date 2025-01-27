@@ -31,86 +31,6 @@
     color: #007bff;
   }
   
-  .search-forms {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  .search-box {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-    transition: border-color 0.3s ease;
-  }
-  
-  .search-box:focus {
-    border-color: #007bff;
-  }
-  
-  .search-btn {
-    position: absolute;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    color: #666;
-    outline: none;
-  }
-  
-  .search-btn:disabled {
-    cursor: not-allowed;
-    color: #aaa;
-  }
-  .search-result {
-    position: absolute;
-    top: calc(100% + 5px);
-    left: 0;
-    right: 0;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    background: white;
-    border-radius: 4px;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 1000;
-  }
-  
-  .search-result li {
-    padding: 10px 12px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  
-  .search-result li a {
-    text-decoration: none;
-    color: #333;
-  }
-  
-  .search-result li:hover {
-    background: #f8f9fa;
-  }
-  
-  .search-result li a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Loading Indicator */
-  .search-result p {
-    margin: 5px 0 0;
-    font-size: 14px;
-    color: #007bff;
-    text-align: center;
-  }
-
   .transparent-button{background-color: #fff;
     border: none transparent;}
   /* Safari */
@@ -153,7 +73,6 @@ a.logo {
     border-radius: 8px;
     width: 20%;
     margin-right: 40px;
-    margin-left: 0px !important;
 }
 
 .search-forms button {
@@ -572,6 +491,7 @@ p {
 .pro-image {
     margin-bottom: 10px;
     position: relative;
+    object-fit: contain;
 }
 
 .pro-image .counter {
@@ -1159,13 +1079,13 @@ h1.mkt-sec {
     margin-bottom: 0;
 }
 
-.mkt-left-parent .category-list {
+.mkt-left-parent form .category-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.mkt-left-parent .category-list label {
+.mkt-left-parent form .category-list label {
     font-size: 16px;
     font-weight: 400;
     font-family: "Inter", sans-serif;
@@ -1174,7 +1094,7 @@ h1.mkt-sec {
 }
 
 
-.mkt-left-parent .category-list input[type="checkbox"] {
+.mkt-left-parent form .category-list input[type="checkbox"] {
     height: 20px;
     width: 20px;
     margin-right: 5px;
@@ -1185,7 +1105,7 @@ h1.mkt-sec {
     cursor: pointer;
 }
 
-.mkt-left-parent .category-list input[type="checkbox"]:before {
+.mkt-left-parent form .category-list input[type="checkbox"]:before {
     content: '';
     position: absolute;
     width: 100%;
@@ -1198,13 +1118,13 @@ h1.mkt-sec {
     transition: background-color 0.2s ease-in-out;
 }
 
-.mkt-left-parent .category-list input[type="checkbox"]:checked:before {
+.mkt-left-parent form .category-list input[type="checkbox"]:checked:before {
     background-color: #43ACE9;
     /* Change to green when checked */
     border-color: #43ACE9;
 }
 
-.mkt-left-parent .category-list input[type="checkbox"]:checked:after {
+.mkt-left-parent form .category-list input[type="checkbox"]:checked:after {
     content: '';
     position: absolute;
     width: 12px;
@@ -1218,7 +1138,7 @@ h1.mkt-sec {
 }
 
 
-.mkt-left-parent .category-list li {
+.mkt-left-parent form .category-list li {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -4790,8 +4710,9 @@ tbody tr {
     padding-right: 120px;
 }
 
-.footer-child1 .logo {
+.footer-child1 .logo img{
     margin-bottom: 20px;
+    width: 230px;
 }
 
 .footer-menu ul {
@@ -4839,7 +4760,7 @@ tbody tr {
 
 }
 
-@media (max-width: 1122px) {
+@media (max-width: 992px) {
     .navbar-toggler.desktop {
         display: none !important;
     }
@@ -4926,10 +4847,10 @@ tbody tr {
         justify-content: space-between;
     }
 
-    #navMobile .navbar-collapse.menuBar,
+    /* #navMobile .navbar-collapse.menuBar,
     .sellnow {
         display: none !important;
-    }
+    } */
 
     .registration-btns {
         width: auto;
@@ -5505,6 +5426,7 @@ tbody tr {
 
     .pro-image img {
         height: 220px;
+        object-fit: contain;
     }
 
     .featured-product .swiper-container {
@@ -5603,10 +5525,10 @@ tbody tr {
         padding: 20px 8px;
     }
 
-    .footer-child1,
+    /* .footer-child1,
     .footer-child2 {
-        margin-bottom: 40px;
-    }
+        margin-bottom: 20px;
+    } */
 
     .footer-menu ul a {
         font-size: 14px;
@@ -6475,6 +6397,7 @@ tbody tr {
 
     .product-images-parent .product-main-image img {
         height: 250px;
+        object-fit: contain;
     }
 
     .swiper-product-imageAlbum img {
@@ -7077,3 +7000,74 @@ tbody tr {
     .btn-paypal{
         background-color: #000 !important;
     }
+
+/* Basic button styling */
+/* .swiper-button-prev, .swiper-button-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Button hover effect */
+  /* .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Positioning for larger screens (default) */
+  /* .swiper-button-prev {
+    left: 20px; /* Left button */
+  /* } */
+  
+  /* .swiper-button-next {
+    right: 20px; /* Right button */
+  /* } */
+  
+  /* For small screens (mobile) */
+  /* @media (max-width: 768px) {
+    .swiper-button-prev,
+    .swiper-button-next {
+      width: 30px;
+      height: 30px;
+      font-size: 14px;
+    }
+  
+    .swiper-button-prev {
+      left: 10px;
+    }
+  
+    .swiper-button-next {
+      right: 10px;
+    }
+  }
+  
+  /* For extra small devices (mobile portrait) */
+  /* @media (max-width: 480px) {
+    .swiper-button-prev,
+    .swiper-button-next {
+      width: 25px;
+      height: 25px;
+      font-size: 12px;
+    }
+  
+    .swiper-button-prev {
+      left: 5px;
+    }
+  
+    .swiper-button-next {
+      right: 5px;
+    }
+  }
+   */ 
