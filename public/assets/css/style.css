@@ -92,9 +92,10 @@ a.logo {
 
 .registration-btns {
     width: 56%;
-    justify-content: end;
-    display: flex;
-    align-items: center;
+   display: flex;
+   justify-content: end;
+   align-items: center;
+   
 }
 
 a.signup {
@@ -7071,3 +7072,23 @@ tbody tr {
     }
   }
    */ 
+   
+
+   @media (max-width: 992px) {
+    /* Yahan styles likhein jo 992px ya is se chhoti screens par lagni chahiye */
+    
+    .registration-btns {
+        width: 56%;
+       display: block;
+       justify-content: none;
+       align-items: none;
+       
+    }
+    
+  
+  
+  
+    .sellnow {
+        width: 50px;
+    }
+  }

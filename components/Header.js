@@ -92,11 +92,11 @@ export default function Header() {
     <header>
       <div className="header-inner">
         <div className="container-fluid">
-          <nav className="navbar navbar-expand-lg" id="navMobile">
+          <nav className="navbar navbar-expand-lg" id="">
             <Link className="logo" href={"/"}>
               <img src="/assets/images/header-logo.png" alt="" />
             </Link>
-            <button className="navbar-toggler desktop" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button className="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse menuBar" id="navbarSupportedContent">
@@ -142,7 +142,7 @@ export default function Header() {
                
                <div className="nav-item registration-btns">
                  <button className="SignupButton signup" onClick={() => handleOpenModal("signup")}>Sign Up</button>
-                 <Link className="nav-link sellnow" href="sell">Sell</Link>
+                 <Link className="nav-link sellnow my-3 " href="sell">Sell</Link>
                  <button className="loginButton login" onClick={() => handleOpenModal("signin")}>Login</button>
                </div>
                </>
@@ -288,12 +288,12 @@ export default function Header() {
                         </div>
 
                           {/* Sell Now Button */}
-                          <Link href="/sell" className="sellnow">
+                          <Link href="/sell" className="sellnow my-3">
                             Sell Now
                           </Link>
 
                           {/* Mobile Menu */}
-                          <i className="fa-solid fa-bars mobileMenuOpen" onClick={openMobileMenu}></i>
+                         
                       </div>
                     {/* <p>Welcome, {session.user.name}!</p>
                     <button onClick={() => handleLogout()}>Logout</button>*/}
