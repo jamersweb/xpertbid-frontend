@@ -58,6 +58,7 @@ const ProductImages = ({ albumImages }) => {
                             <img
                               src={`https://violet-meerkat-830212.hostingersite.com/public/${image}`}
                               alt={`Album Slide ${index}`}
+                              className='newimg'
                             />
                           </div>
                         </SwiperSlide>
