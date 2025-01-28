@@ -87,7 +87,6 @@ export default function Header() {
     }
     setIsSearching(false);
   };
-  
   return (
     <header>
       <div className="header-inner">

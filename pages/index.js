@@ -59,7 +59,6 @@ export default function Home() {
           <Footer />
         </>
       )}
-
       <style jsx>{`
         .loader-container {
           display: flex;
