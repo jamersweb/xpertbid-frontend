@@ -5,7 +5,7 @@ import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react"; // Import Swiper components
 import { Navigation,Autoplay } from "swiper/modules"; // Use this for Swiper >= 9.x
 import { Oval } from "react-loader-spinner"; // Import the loader
-
+// /
 export default function HeroSection() {
   const [sliderData, setSliderData] = useState([]);
 
