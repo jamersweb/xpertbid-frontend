@@ -9,6 +9,7 @@ import BrowseCategories from "@/components/BrowseCategories";
 import TopBid from "@/components/TopBid";
 import MarketplaceSection from "@/components/MarketplaceSection";
 import StartSelling from "@/components/StartSelling";
+import StepModals from "@/components/StepModals";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -52,6 +53,7 @@ export default function Home() {
           <FeaturedProducts />
           <BrowseCategories />
           <TopBid />
+          <StepModals />
           <MarketplaceSection products={products} />
           <StartSelling />
           <Footer />
