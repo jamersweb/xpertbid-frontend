@@ -92,7 +92,7 @@ export default function Header() {
     <header>
       <div className="header-inner">
         <div className="container-fluid">
-          <nav className="navbar navbar-expand-lg" id="">
+          <nav className="navbar navbar-expand-xl" id="">
             <Link className="logo" href={"/"}>
               <img src="/assets/images/header-logo.png" alt="" />
             </Link>
@@ -286,11 +286,11 @@ export default function Header() {
                             </div>
                           )}
                         </div>
-
-                          {/* Sell Now Button */}
-                          <Link href="/sell" className="sellnow my-3">
+ {/* Sell Now Button */}
+ <Link href="/sell" className="sellnow my-3">
                             Sell Now
                           </Link>
+                       
 
                           {/* Mobile Menu */}
                          
@@ -300,7 +300,7 @@ export default function Header() {
                     </> 
                   )
               }  
-                
+                  
             </div>
             
 

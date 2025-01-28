@@ -15,7 +15,7 @@ export default function Footer() {
                 </Link>
               </div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <div className="social-icons">
+              <div className="social-icons my-3">
                 <Link href="#"><i className="fa-brands fa-instagram"></i></Link>
                 <Link href="#"><i className="fa-brands fa-linkedin"></i></Link>
                 <Link href="#"><i className="fa-brands fa-facebook"></i></Link>
@@ -37,7 +37,7 @@ export default function Footer() {
             <div className="col-lg-3 col-md-4 col-sm-6 footer-child3">
               <div className="footer-menu">
                 <ul>
-                  <li><Link href={`/category/${encodeURIComponent("Furniture & Home Decor")}`}>Furniture & Home Decor</Link></li>
+                  <li className="mt-5"><Link href={`/category/${encodeURIComponent("Furniture & Home Decor")}`}>Furniture & Home Decor</Link></li>
                   <li><Link href={`/category/${encodeURIComponent("Sports")}`}>Sports</Link></li>
                   <li><Link href={`/category/${encodeURIComponent("Fashion & Accessories")}`}>Fashion & Accessories</Link></li>
                   <li><Link href={`/category/${encodeURIComponent("Industrial Equipment")}`}>Industrial Equipment</Link></li>
