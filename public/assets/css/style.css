@@ -7096,3 +7096,14 @@ tbody tr {
         width: 50px;
     }
   }
+
+  .btn-close{
+    margin: 0px !important;
+  }
+
+  .font-size{
+    font-size:13px !important;
+  }
+  .proin{
+    border: none  !important;
+  }

@@ -11,6 +11,7 @@ import MarketplaceSection from "@/components/MarketplaceSection";
 import StartSelling from "@/components/StartSelling";
 import StepModals from "@/components/StepModals";
 
+
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // State to handle loading
@@ -54,6 +55,7 @@ export default function Home() {
           <BrowseCategories />
           <TopBid />
           <StepModals />
+
           <MarketplaceSection products={products} />
           <StartSelling />
           <Footer />

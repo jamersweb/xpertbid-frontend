@@ -155,7 +155,7 @@ const SignupModal = ({ isOpen, onClose }) => {
       if (result?.error) {
         setErrorMessage("Google Sign-Up failed. Please try again.");
       } else {
-        setSuccessMessage("Google Sign-Up successful!");
+        setSuccessMessage( "Google Sign-up successful!");
         handleStepChange("success");
       }
     } catch {
@@ -353,10 +353,8 @@ const SignupModal = ({ isOpen, onClose }) => {
         {activeStep === "success" && (
           <div className="form-step">
             <h3>Registration Complete</h3>
-            <p>{successMessage}</p>
-            <button id="backPhoneLogin" onClick={closeHandler}>
-              Close
-            </button>
+          <p className="alert alert-success" style={{ fontWeight: "bold", marginTop: "10px" }}>{successMessage}</p>
+            
           </div>
         )}
       </div>
