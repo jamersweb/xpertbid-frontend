@@ -2,13 +2,30 @@ import React, { useState, useRef, useEffect } from "react";
 import SignupModal from "@/components/SignupModal";
 import LoginModal from "@/components/LoginModal";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+
 
 
 export default function MultiStepModals() {
+  const { data: session } = useSession();
+
   const [currentStep, setCurrentStep] = useState(0);
   const fileInputRef = useRef(null);
+  const [profileData, setProfileData] = useState({
+    username: "",
+    name: "",
+    email: "",
+    country_id: "",
+  });
   const [previewImage, setPreviewImage] = useState("assets/images/profile-circle.png");
-
+  useEffect(() => {
+    setProfileData({
+      username: "test_user",
+      name: "John Doe",
+      email: "test@example.com",
+      country_id: "1",
+    });
+  }, []);
   useEffect(() => {
     // Show the popups only once
     const hasSeenPopups = localStorage.getItem("hasSeenPopups");
@@ -39,7 +56,11 @@ export default function MultiStepModals() {
   const closeModal = () => setCurrentStep(0);
   const nextStep = () => setCurrentStep((prevStep) => prevStep + 1);
   const previousStep = () => setCurrentStep((prevStep) => prevStep - 1);
-  const handleSubmitProfileInfo = async () => {
+   const handleSubmitProfileInfo = async () => {
+    if (!session) {
+      alert("You must be signed in to continue.");
+      return;
+    }
     try {
       const response = await axios.post(
         "https://violet-meerkat-830212.hostingersite.com/public/api/update-profile",
@@ -119,8 +140,8 @@ export default function MultiStepModals() {
                 type="text"
                 className="form-control"
                 name="username"  // ✅ Ensure correct name="username"
-                value={profileData.username}
-                onChange={handleProfileChange}
+                value={""}
+               
                 placeholder="Enter username"
               />
             </div>
@@ -132,8 +153,8 @@ export default function MultiStepModals() {
                 type="text"
                 className="form-control"
                 name="name"  // ✅ Ensure correct name="name"
-                value={profileData.name}
-                onChange={handleProfileChange}
+                value={""}
+                
                 placeholder="Enter your full name"
               />
             </div>
@@ -145,8 +166,8 @@ export default function MultiStepModals() {
                 type="email"
                 className="form-control"
                 name="email"
-                value={profileData.email}
-                onChange={handleProfileChange}
+                value={""}
+               
                 placeholder="Enter email"
               />
             </div>
@@ -154,7 +175,7 @@ export default function MultiStepModals() {
             {/* Country Field */}
             <div className="mb-3">
               <label className="form-label">Country*</label>
-              <select className="form-select" name="country_id" value={profileData.country_id} onChange={handleProfileChange}>
+              <select className="form-select" name="country_id" value={""} >
                 <option value="">Select an option</option>
                 <option value="1">Option 1</option>
                 <option value="2">Option 2</option>
