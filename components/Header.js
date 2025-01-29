@@ -20,7 +20,7 @@ export default function Header() {
     // Handlers for toggling menus
     const toggleNotificationPopup = () => setNotificationOpen(!isNotificationOpen);
     const toggleUserSettingPopup = () => setUserSettingsOpen(!isUserSettingsOpen);
-    //const openMobileMenu = () => setMobileMenuOpen(true);
+    const openMobileMenu = () => setMobileMenuOpen(true);
     //const closeMobileMenu = () => setMobileMenuOpen(false);
 
   const handleOpenModal = (modal) => {
@@ -91,7 +91,7 @@ export default function Header() {
     <header>
       <div className="header-inner">
         <div className="container-fluid">
-          <nav className="navbar navbar-expand-xl" id="">
+          <nav className="navbar navbar-expand-lg" id="">
             <Link className="logo" href={"/"}>
               <img src="/assets/images/header-logo.png" alt="" />
             </Link>
@@ -140,7 +140,7 @@ export default function Header() {
                 </ul>
                
                <div className="nav-item registration-btns">
-                 <button className="SignupButton signup" onClick={() => handleOpenModal("signup")}>Sign Up</button>
+                 <button className="SignupButton signup" onClick={(openSignupPopup) => handleOpenModal("signup")}>Sign Up</button>
                  <Link className="nav-link sellnow my-3 " href="sell">Sell</Link>
                  <button className="loginButton login" onClick={() => handleOpenModal("signin")}>Login</button>
                </div>
@@ -162,7 +162,7 @@ export default function Header() {
                                 <li className="nav-item ">
                                     <Link className="nav-link" href="/mybid">Bidings</Link>
                                 </li>
-                                <li className="nav-item activemenu">
+                                <li className="nav-item activemenu" style={{width:"95px"}}>
                                     <Link className="nav-link" href="/MyListings">My Listings</Link>
                                 </li>
                             </ul>

@@ -152,7 +152,7 @@ a.sellnow {
     font-weight: 600;
     list-style: none;
     font-style: normal;
-    margin-left: 10px;
+   
 }
 
 button.login {
@@ -2446,9 +2446,9 @@ section.product-image-and-brief {
     border-radius: 12px;
 }
 
-.dashboard-nav {
+/* .dashboard-nav {
     align-items: center;
-}
+} */
 
 .dashboard-nav .nav-item {
     margin-right: 10px;
@@ -2493,6 +2493,7 @@ a.nav-link {
     border: 0;
     align-items: center;
     gap: 5px;
+    margin-top: 10px;
 }
 
 .bid-chart {
@@ -4982,7 +4983,15 @@ tbody tr {
         bottom: 0 !important;
         right: 45% !important;
     }
-
+    .registration-btns-dashboard {
+        width: 37%;
+        /* justify-content: end; */
+        display: flex
+    ;
+    flex-direction: column;
+         align-items: start;
+       
+    }
     .featured-product img {
         height: 275px;
     }
@@ -6710,9 +6719,9 @@ tbody tr {
         height: 100px;
     }
 
-    ul.navbar-nav {
+    /* ul.navbar-nav {
         padding: 0 25%;
-    }
+    } */
 
     .table-parent {
         overflow-x: scroll;
