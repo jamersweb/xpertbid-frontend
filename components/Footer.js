@@ -50,8 +50,8 @@ export default function Footer() {
                 <p className="foot-menu-heading"> Additional Links</p>
                 <ul>
                     <li><a>About</a></li>
-                    <li><a>privacy  Policy</a></li>
-                    <li><a>Trems And Creations </a></li>
+                    <li><a>Privacy Policy</a></li>
+                    <li><a>Terms & Conditions</a></li>
                     <li><a> Contact Us</a></li>
                 </ul>
               </div>
