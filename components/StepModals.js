@@ -39,30 +39,30 @@ export default function MultiStepModals() {
   const closeModal = () => setCurrentStep(0);
   const nextStep = () => setCurrentStep((prevStep) => prevStep + 1);
   const previousStep = () => setCurrentStep((prevStep) => prevStep - 1);
-  // const handleSubmitProfileInfo = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "https://violet-meerkat-830212.hostingersite.com/public/api/update-profile",
-  //       {
-  //         name: profileData.name,          // ✅ Full Name
-  //         email: profileData.email,        // ✅ Email
-  //         phone: profileData.phone,        // ✅ Phone Number
-  //         country_id: profileData.country_id, // ✅ Country ID
-  //       },
-  //       { headers: { "Content-Type": "application/json" } }
-  //     );
+  const handleSubmitProfileInfo = async () => {
+    try {
+      const response = await axios.post(
+        "https://violet-meerkat-830212.hostingersite.com/public/api/update-profile",
+        {
+          name: profileData.name,          // ✅ Full Name
+          email: profileData.email,        // ✅ Email
+          phone: profileData.phone,        // ✅ Phone Number
+          country_id: profileData.country_id, // ✅ Country ID
+        },
+        { headers: { "Content-Type": "application/json" } }
+      );
   
-  //     if (response.data.profile) { // ✅ Check if the profile is returned
-  //       alert("Profile Info Updated Successfully!");
-  //       nextStep(); // ✅ Move to next step only after success
-  //     } else {
-  //       alert("Failed to update profile. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating profile:", error);
-  //     alert("An error occurred. Please try again.");
-  //   }
-  // };
+      if (response.data.profile) { // ✅ Check if the profile is returned
+        alert("Profile Info Updated Successfully!");
+        nextStep(); // ✅ Move to next step only after success
+      } else {
+        alert("Failed to update profile. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
   
   
   return (
@@ -103,48 +103,76 @@ export default function MultiStepModals() {
       {/* Step 4 - Profile Info Form */}
          {/* Step 4 - Profile Info Form */}
          {currentStep === 4 && (
-        <div className="modal fade show d-block" tabIndex="-1" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-              <div className="d-block "></div>
-              <h5 className="modal-title ms-4">Create your profile</h5>
-                <button type="button" className="btn-close" onClick={closeModal}></button>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <div className="mb-3">
-                    <label className="form-label">Username*</label>
-                    <input type="text" className="form-control proin shadow" placeholder="Enter username" />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Your Name*</label>
-                    <input type="email" className="form-control proin shadow" placeholder="Enter email" />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Country*</label>
-                    <select className="form-select proin shadow">
-                      <option selected>Select an option</option>
-                      <option value="1">Option 1</option>
-                      <option value="2">Option 2</option>
-                      <option value="3">Option 3</option>
-                    </select>
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Email*</label>
-                    <input type="email" className="form-control proin shadow" placeholder="Enter email" />
-                  </div>
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button className="btn btn-dark p-3 w-100" onClick={nextStep}>
-                  Continue
-                </button>
-              </div>
-            </div>
-          </div>
+  <div className="modal fade show d-block" tabIndex="-1" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
+    <div className="modal-dialog">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title">Create your profile</h5>
+          <button type="button" className="btn-close" onClick={closeModal}></button>
         </div>
-      )}
+        <div className="modal-body">
+          <form>
+            {/* Username Field */}
+            <div className="mb-3">
+              <label className="form-label">Username*</label>
+              <input
+                type="text"
+                className="form-control"
+                name="username"  // ✅ Ensure correct name="username"
+                value={profileData.username}
+                onChange={handleProfileChange}
+                placeholder="Enter username"
+              />
+            </div>
+
+            {/* Your Name Field */}
+            <div className="mb-3">
+              <label className="form-label">Your Name*</label>
+              <input
+                type="text"
+                className="form-control"
+                name="name"  // ✅ Ensure correct name="name"
+                value={profileData.name}
+                onChange={handleProfileChange}
+                placeholder="Enter your full name"
+              />
+            </div>
+
+            {/* Email Field */}
+            <div className="mb-3">
+              <label className="form-label">Email*</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                value={profileData.email}
+                onChange={handleProfileChange}
+                placeholder="Enter email"
+              />
+            </div>
+
+            {/* Country Field */}
+            <div className="mb-3">
+              <label className="form-label">Country*</label>
+              <select className="form-select" name="country_id" value={profileData.country_id} onChange={handleProfileChange}>
+                <option value="">Select an option</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div className="modal-footer">
+          <button className="btn btn-dark p-3 w-100" onClick={handleSubmitProfileInfo}>
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
       {/* Step 5 - Profile Picture Upload */}
       {currentStep === 5 && (
         <div className="modal fade show d-block" tabIndex="-1" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
