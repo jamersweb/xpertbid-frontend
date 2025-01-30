@@ -211,7 +211,7 @@ const Sell = () => {
 
       {/* Category and Condition */}
       <div className="row">
-        <div className="col-6">
+        <div className="col-12 col-sm-6">
           <div className="form-group">
             <label htmlFor="category">Category</label>
             {loading ? (
@@ -239,7 +239,7 @@ const Sell = () => {
           </div>
         </div>
 
-        <div className="col-6">
+        <div className="col-12 col-sm-6">
           <div className="form-group">
             <label htmlFor="product_condition">Condition</label>
             <select
@@ -259,7 +259,7 @@ const Sell = () => {
       {/* Featured Image and Album */}
       <div className="form-row">
         <div className="row">
-          <div className="col-6">
+          <div className="col-12 col-sm-6">
             <label htmlFor="featuredImage">Featured Image</label>
             <input
               type="file"
@@ -268,7 +268,7 @@ const Sell = () => {
               onChange={handleImageChange}
             />
           </div>
-          <div className="col-6">
+          <div className="col-12 col-sm-6">
             <label htmlFor="album">Album</label>
             <input
               type="file"
@@ -283,7 +283,7 @@ const Sell = () => {
 
       {/* Additional Fields */}
       <div className="row">
-        <div className="col-6">
+        <div className="col-12 col-sm-6">
           <div className="form-group">
             <label htmlFor="product_year">Product Year</label>
             <input
@@ -297,7 +297,7 @@ const Sell = () => {
             />
           </div>
         </div>
-        <div className="col-6">
+        <div className="col-12 col-sm-6">
           <div className="form-group">
             <label htmlFor="product_location">Product Location</label>
             <input
@@ -314,7 +314,7 @@ const Sell = () => {
 
       {/* Date and Time Fields */}
       <div className="row">
-        <div className="col-4">
+        <div className="col-12 col-sm-4">
           <div className="form-group">
             <label htmlFor="start_date">Start Date</label>
             <input
@@ -328,7 +328,7 @@ const Sell = () => {
             />
           </div>
         </div>
-        <div className="col-4">
+        <div className="col-12 col-sm-4">
           <div className="form-group">
             <label htmlFor="end_date">End Date</label>
             <input
@@ -342,7 +342,7 @@ const Sell = () => {
             />
           </div>
         </div>
-        <div className="col-4">
+        <div className="col-12 col-sm-4">
           <div className="form-group">
             <label htmlFor="live_auction_date">Live Auction Date</label>
             <input
@@ -359,7 +359,7 @@ const Sell = () => {
 
       {/* Pricing and Shipping Options */}
       <div className="row">
-        <div className="col-6">
+        <div className="col-12 col-sm-6">
           <div className="form-group">
             <label htmlFor="reserve_price">Reserve Price</label>
             <input
@@ -373,7 +373,7 @@ const Sell = () => {
             />
           </div>
         </div>
-        <div className="col-6">
+        <div className="col-12 col-sm-6">
           <div className="form-group">
             <label htmlFor="minimum_bid">Minimum Bid</label>
             <input
@@ -390,7 +390,7 @@ const Sell = () => {
       </div>
 
       <div className="row">
-        <div className="col-4">
+        <div className="col-12 col-sm-6 col-md-4">
           <div className="form-group">
             <label htmlFor="is_buynow">Buy Now Option?</label>
             <select
@@ -405,7 +405,7 @@ const Sell = () => {
             </select>
           </div>
         </div>
-        <div className="col-4">
+        <div className="col-12 col-sm-6 col-md-4">
           <div className="form-group">
             <label htmlFor="buy_now_price">Buy Now Price</label>
             <input
@@ -418,7 +418,7 @@ const Sell = () => {
             />
           </div>
         </div>
-        <div className="col-4">
+        <div className="col-12 col-md-4">
           <div className="form-group">
             <label htmlFor="international_shipping">International Shipping Available?</label>
             <select

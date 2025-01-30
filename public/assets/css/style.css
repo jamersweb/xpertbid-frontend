@@ -132,7 +132,6 @@ button.signup {
     color: #43ACE9;
     background-color: transparent;
     text-decoration: none;
-    margin-right: 40px;
     font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -158,7 +157,7 @@ a.sellnow {
 button.login {
     text-decoration: none;
     color: #606060;
-    margin-left: 60px;
+    margin-left: 20px;
     font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -2493,7 +2492,6 @@ a.nav-link {
     border: 0;
     align-items: center;
     gap: 5px;
-    margin-top: 10px;
 }
 
 .bid-chart {
@@ -7091,7 +7089,7 @@ tbody tr {
     /* Yahan styles likhein jo 992px ya is se chhoti screens par lagni chahiye */
     
     .registration-btns {
-        width: 56%;
+       
        display: block;
        justify-content: none;
        align-items: none;
@@ -7116,3 +7114,89 @@ tbody tr {
   .proin{
     border: none  !important;
   }
+
+  form.d-flex.search-forms {
+    min-width: 225px;
+}
+
+
+/* Ensure search doesn't break the navbar */
+.search-container {
+    position: relative;
+  }
+  
+  /* Remove the default cancel (❌) icon in input */
+ 
+  
+  /* Style search input */
+  .search-box {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+  }
+  
+  /* Hide search icon when searching */
+  .search-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  /* Searching message */
+  .searching-message {
+    font-size: 14px;
+    color: gray;
+    margin-left: 10px;
+  }
+  
+  /* Search results dropdown */
+  .search-result {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1000;
+  }
+  
+  .search-result li {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .search-result li:last-child {
+    border-bottom: none;
+  }
+  
+  .search-result li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+  }
+  
+  .search-result li:hover {
+    background: #f5f5f5;
+  }
+  button.notification.p-2.rounded {
+    border: none;
+}
+
+ul#navbarDesktop {
+    text-align: center;
+}
+div#navbarSupportedContent {
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .payment-method-choose{
+     width: 370px;
+    }
+  }
+

@@ -88,14 +88,10 @@ export default function MultiStepModals() {
   
   return (
     <>
-      {/* Step 1 - Signup */}
-      {currentStep === 1 && <SignupModal isOpen={true} onClose={nextStep} />}
 
-      {/* Step 2 - Login */}
-      {currentStep === 2 && <LoginModal isOpen={true} onClose={nextStep} />}
 
       {/* Step 3 - Profile Welcome */}
-      {currentStep === 3 && (
+      {currentStep === 1 && (
         <div className="modal fade show d-block" tabIndex="-1" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
           <div className="modal-dialog">
             <div className="modal-content">
@@ -123,7 +119,7 @@ export default function MultiStepModals() {
 
       {/* Step 4 - Profile Info Form */}
          {/* Step 4 - Profile Info Form */}
-         {currentStep === 4 && (
+         {currentStep === 2 && (
   <div className="modal fade show d-block" tabIndex="-1" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
     <div className="modal-dialog">
       <div className="modal-content">
@@ -195,7 +191,7 @@ export default function MultiStepModals() {
 )}
 
       {/* Step 5 - Profile Picture Upload */}
-      {currentStep === 5 && (
+      {currentStep === 3 && (
         <div className="modal fade show d-block" tabIndex="-1" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
           <div className="modal-dialog">
             <div className="modal-content">
@@ -227,7 +223,7 @@ export default function MultiStepModals() {
       )}
 
       {/* Step 6 - Final Confirmation */}
-      {currentStep === 6 && (
+      {currentStep === 4 && (
         <div className="modal fade show d-block" tabIndex="-1" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
           <div className="modal-dialog">
             <div className="modal-content">

@@ -37,7 +37,7 @@ export default function Footer() {
             <div className="col-lg-3 col-md-4 col-sm-6 footer-child3">
               <div className="footer-menu">
                 <ul>
-                  <li className="mt-5"><Link href={`/category/${encodeURIComponent("Furniture & Home Decor")}`}>Furniture & Home Decor</Link></li>
+                  <li className=""><Link href={`/category/${encodeURIComponent("Furniture & Home Decor")}`}>Furniture & Home Decor</Link></li>
                   <li><Link href={`/category/${encodeURIComponent("Sports")}`}>Sports</Link></li>
                   <li><Link href={`/category/${encodeURIComponent("Fashion & Accessories")}`}>Fashion & Accessories</Link></li>
                   <li><Link href={`/category/${encodeURIComponent("Industrial Equipment")}`}>Industrial Equipment</Link></li>
