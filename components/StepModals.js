@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import SignupModal from "@/components/SignupModal";
-import LoginModal from "@/components/LoginModal";
+
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
