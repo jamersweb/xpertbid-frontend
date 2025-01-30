@@ -37,23 +37,23 @@ export default function Home() {
     fetchProducts();
   }, []);
 // Check if User Logged in for the First Time
-useEffect(() => {
-  if (status === "authenticated" && session?.user) {
-    if (!localStorage.getItem("hasLoggedIn")) {
-      console.log("First-time login detected!");
-      setIsFirstLogin(true);
-      localStorage.setItem("hasLoggedIn", "true"); // Store flag in localStorage
-    }
-  }
-}, [status, session]); // Run when session changes
+// useEffect(() => {
+//   if (status === "authenticated" && session?.user) {
+//     if (!localStorage.getItem("hasLoggedIn")) {
+//       console.log("First-time login detected!");
+//       setIsFirstLogin(true);
+//       localStorage.setItem("hasLoggedIn", "true"); // Store flag in localStorage
+//     }
+//   }
+// }, [status, session]); // Run when session changes
 
-if (loading) {
-  return (
-    <div className="loading-container">
-      <Oval color="#000" height={50} width={50} />
-    </div>
-  );
-}
+// if (loading) {
+//   return (
+//     <div className="loading-container">
+//       <Oval color="#000" height={50} width={50} />
+//     </div>
+//   );
+// }
   return (
     
     <>
@@ -71,7 +71,7 @@ if (loading) {
       ) : (
         <>
           <Header />
-          {isFirstLogin && <p className="welcome-message"> Welcome! This is your first login.</p>}
+          {/* {isFirstLogin && <p className="welcome-message"> Welcome! This is your first login.</p>} */}
           <HeroSection />
           <FeaturedProducts />
           <BrowseCategories />

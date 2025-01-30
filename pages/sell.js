@@ -190,8 +190,8 @@ const Sell = () => {
     <>
       <Header />
       <div className="container-fluid py-5 color">
-  <div className="container p-5 rounded color-white">
-    <h2>Create Auction</h2>
+  <div className="container p-5 rounded ">
+    <h1 className="up-listing">Upload your listings</h1>
     {message && <p className="alert alert-info">{message}</p>}
     <form onSubmit={handleSubmit}>
       {/* Title */}
