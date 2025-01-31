@@ -7157,7 +7157,7 @@ div#navbarSupportedContent {
     width: 468px;
     background-color: #fff;
     margin: 0 auto;
-    margin-block: 80px 100px;
+    margin-block: 80px 60px;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
@@ -7181,3 +7181,26 @@ div#navbarSupportedContent {
     color: #fff !important  ;
     padding: 5px 10px !important;
 } 
+.sell-head{
+display: flex;
+justify-content: space-between;
+}
+@media (max-width: 905px) {
+    .sell-head {
+      display: block !important;
+    }
+}
+/* Small devices (max-width: 576px) */
+
+@media (max-width: 576px) {
+    .album {
+       max-width: 100%;
+    }
+}
+
+/* Medium devices (min-width: 577px) and (max-width: 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+    .album {
+     width: 400px; 
+    }
+}

@@ -156,13 +156,22 @@ const Sell = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid py-5 color">
-        <div className="container">
-          <h1 className="up-listing mt-3 mb-5">Upload your listings</h1>
-          <div className="row">
-            <div className="col-md-6">
+      <div className="container-fluid  p-0  p-xl-5 color">
+       
+        <div className=" sell-head  p-4  ">
+          <h1 className="up-listing pt-3 mb-3 mb-lg-5 ps-0 ps-md-5 ">Upload your listings</h1>
+          <div className="pe-5 pt-3">
+          <button type="submit" className="btn btn-green mt-3 mx-2">
+          <i class="fa-solid fa-bolt mx-2 fs-6"></i>
+          Promoted
+                </button>
+          <button type="submit" className="btn btn-black mt-3 mx-2 d-none d-lg-inline">
+          Publish                </button>
+                </div>
+                </div>          <div className="row">
+            <div className="col-lg-6">
               {message && <p className="alert alert-info">{message}</p>}
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} className="px-4 p-sm-5" >
                 <div className="form-group">
                   <label htmlFor="title">Item Name</label>
                   <input
@@ -209,6 +218,14 @@ const Sell = () => {
                     required
                   />
                 </div>
+                <select 
+                 className="form-control"
+                >
+                  <option>Select your country</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
                 {/* Pricing and Shipping Options */}
       <div className="row">
       <div className="col-12 col-sm-6">
@@ -274,13 +291,13 @@ const Sell = () => {
           </div>
         </div>
       </div>
-                <button type="submit" className="btn btn-primary mt-3">
+                {/* <button type="submit" className="btn btn-primary mt-3">
                   Submit
-                </button>
+                </button> */}
               </form>
             </div>
 
-            <div className="col-md-6">
+            <div className="col-lg-6">
               <div className="album shadow-lg p-3 text-center">
                 <input
                   type="file"
@@ -300,13 +317,17 @@ const Sell = () => {
                   GIF, WEBP, MP4, or MP3. Max 1GB.
                 </p>
                 <button className="btn btn-secondary mt-2" onClick={() => fileInputRef.current.click()}>
-                  Upload Image
+                  Upload
                 </button>
               </div>
+              <button type="submit" className="btn btn-black mb-5 mx-2 ms-auto w-25 d-block d-lg-none">
+              Publish                </button>
             </div>
+
+          
           </div>
         </div>
-      </div>
+     
       <Footer />
     </>
   );
