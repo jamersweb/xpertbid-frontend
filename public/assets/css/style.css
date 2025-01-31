@@ -6996,9 +6996,7 @@ tbody tr {
 
 
     }
-    .form-control{
-        border: 1px solid black !important;
-    }
+  
 
     .user-profile-setting img{
         width: 40px;
@@ -7013,77 +7011,7 @@ tbody tr {
         background-color: #000 !important;
     }
 
-/* Basic button styling */
-/* .swiper-button-prev, .swiper-button-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 35px;
-    height: 35px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* Button hover effect */
-  /* .swiper-button-prev:hover,
-  .swiper-button-next:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-  
-  /* Positioning for larger screens (default) */
-  /* .swiper-button-prev {
-    left: 20px; /* Left button */
-  /* } */
-  
-  /* .swiper-button-next {
-    right: 20px; /* Right button */
-  /* } */
-  
-  /* For small screens (mobile) */
-  /* @media (max-width: 768px) {
-    .swiper-button-prev,
-    .swiper-button-next {
-      width: 30px;
-      height: 30px;
-      font-size: 14px;
-    }
-  
-    .swiper-button-prev {
-      left: 10px;
-    }
-  
-    .swiper-button-next {
-      right: 10px;
-    }
-  }
-  
-  /* For extra small devices (mobile portrait) */
-  /* @media (max-width: 480px) {
-    .swiper-button-prev,
-    .swiper-button-next {
-      width: 25px;
-      height: 25px;
-      font-size: 12px;
-    }
-  
-    .swiper-button-prev {
-      left: 5px;
-    }
-  
-    .swiper-button-next {
-      right: 5px;
-    }
-  }
-   */ 
-   
+
 
    @media (max-width: 992px) {
     /* Yahan styles likhein jo 992px ya is se chhoti screens par lagni chahiye */
@@ -7201,6 +7129,55 @@ div#navbarSupportedContent {
   }
   .up-listing{
     font-size: 50px;
-    font-weight: 900;
+    font-weight: bolder;
   }
 
+  .form-group label {
+    font-weight: 600;
+    font-size: 18px;
+}
+.form-control{
+    margin-bottom: 20px;
+    padding-block: 10px !important;
+    border: none !important;
+}
+
+.loginp{
+    font-size: 14px;
+    text-align: left;
+    color: rgb(133, 127, 127);
+}
+.logina{
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.album{
+    height: 413px;
+    width: 468px;
+    background-color: #fff;
+    margin: 0 auto;
+    margin-block: 80px 100px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.uppara{
+    font-size: 14px;
+    color: rgb(133, 127, 127);
+    margin-block: 10px;
+}
+.btn-black{
+    background-color: #000  !important;
+    color: #fff !important  ;
+    padding: 5px 10px !important;
+
+} 
+.btn-green{
+    background-color: rgb(18, 209, 142)  !important;
+    color: #fff !important  ;
+    padding: 5px 10px !important;
+} 

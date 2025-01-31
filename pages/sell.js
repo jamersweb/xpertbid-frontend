@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Header from "@/components/Header";
@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 
 const Sell = () => {
   const { data: session } = useSession();
+  const fileInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -31,14 +32,12 @@ const Sell = () => {
   });
 
   const [featuredImage, setFeaturedImage] = useState(null);
-  const [album, setAlbum] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [errorMessages, setErrorMessages] = useState({});
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  //const [selectedCategory, setSelectedCategory] = useState("");
 
-  // Fetch categories and set user_id when session is available
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -66,99 +65,69 @@ const Sell = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleImageChange = (e) => {
-    setFeaturedImage(e.target.files[0]);
+  const validateFile = (file) => {
+    const validTypes = ["image/png", "image/jpeg", "image/webp"];
+    const maxSize = 2 * 1024 * 1024; // 2MB
+
+    if (!validTypes.includes(file.type)) {
+      return "Only PNG, JPG, and WEBP files are allowed.";
+    }
+    if (file.size > maxSize) {
+      return "File size must be less than 2MB.";
+    }
+    return null;
   };
 
   const handleAlbumChange = (e) => {
-    setAlbum(Array.from(e.target.files));
-  };
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const validateForm = (formData, featuredImage, album) => {
-    const errors = {};
-
-    if (!formData.title.trim()) {
-      errors.title = "Title is required.";
-    }
-    if (!formData.user_id) {
-      errors.user_id = "User is required.";
-    }
-    if (!formData.category_id) {
-      errors.category_id = "Category is required.";
-    }
-    if (!formData.start_date) {
-      errors.start_date = "Start date is required.";
-    }
-    if (!formData.end_date) {
-      errors.end_date = "End date is required.";
-    } else if (new Date(formData.end_date) < new Date(formData.start_date)) {
-      errors.end_date = "End date cannot be earlier than start date.";
-    }
-    if (!formData.reserve_price || formData.reserve_price <= 0) {
-      errors.reserve_price = "Reserve price must be greater than zero.";
-    }
-    if (!formData.minimum_bid || formData.minimum_bid <= 0) {
-      errors.minimum_bid = "Minimum bid must be greater than zero.";
-    }
-    if (!featuredImage) {
-      errors.featuredImage = "Featured image is required.";
-    }
-    if (album.length === 0) {
-      errors.album = "At least one album image is required.";
-    }
-    if (!formData.description.trim()) {
-      errors.description = "Description is required.";
+    const error = validateFile(file);
+    if (error) {
+      setErrorMessages((prev) => ({ ...prev, featuredImage: error }));
+      return;
     }
 
-    return errors;
+    setFeaturedImage(file);
+    setErrorMessages((prev) => ({ ...prev, featuredImage: null }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = validateForm(formData, featuredImage, album);
+    let errors = {};
+    if (!formData.title.trim()) errors.title = "Title is required.";
+    if (!formData.category_id) errors.category_id = "Category is required.";
+    if (!formData.description.trim()) errors.description = "Description is required.";
+    if (!formData.minimum_bid) errors.minimum_bid = "Minimum bid is required.";
+    if (!formData.reserve_price) errors.reserve_price = "Reserve price is required.";
+    if (!formData.start_date) errors.start_date = "Start date is required.";
+    if (!formData.end_date) errors.end_date = "End date is required.";
+    if (!featuredImage) errors.featuredImage = "Featured image is required.";
+
     if (Object.keys(errors).length > 0) {
-      setError(errors);
+      setErrorMessages(errors);
       return;
     }
 
-    setError(null);
+    const submissionData = new FormData();
+    Object.keys(formData).forEach((key) => submissionData.append(key, formData[key]));
+    submissionData.append("featured_image", featuredImage);
 
     try {
-      const submissionData = new FormData();
-      Object.keys(formData).forEach((key) => {
-        submissionData.append(key, formData[key]);
-      });
-
-      if (featuredImage) {
-        submissionData.append("image", featuredImage);
-      }
-
-      album.forEach((file) => {
-        submissionData.append("album[]", file);
-      });
-
       await axios.post(
-        "https://violet-meerkat-830212.hostingersite.com/public/api/auctions_store",
+        "https://your-laravel-api.com/api/auctions_store",
         submissionData,
-        {
-          headers: {
-            Authorization: `Bearer ${session.user.token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
 
       setMessage("Auction created successfully!");
       setFormData({
         title: "",
-        user_id: session?.user.id || "",
+        user_id: "",
         category_id: "",
         sub_category_id: "",
         start_date: "",
@@ -179,9 +148,7 @@ const Sell = () => {
         shipping_terms: "",
       });
       setFeaturedImage(null);
-      setAlbum([]);
     } catch (error) {
-      console.error("Error creating auction:", error);
       setMessage("Failed to create auction.");
     }
   };
@@ -190,108 +157,70 @@ const Sell = () => {
     <>
       <Header />
       <div className="container-fluid py-5 color">
-  <div className="container p-5 rounded ">
-    <h1 className="up-listing">Upload your listings</h1>
-    {message && <p className="alert alert-info">{message}</p>}
-    <form onSubmit={handleSubmit}>
-      {/* Title */}
-      <div className="form-group">
-        <label htmlFor="title">Title</label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          className={`form-control ${error?.title ? "is-invalid" : ""}`}
-          value={formData.title}
-          onChange={handleInputChange}
-          required
-        />
-        {error?.title && <div className="invalid-feedback">{error.title}</div>}
-      </div>
+        <div className="container">
+          <h1 className="up-listing mt-3 mb-5">Upload your listings</h1>
+          <div className="row">
+            <div className="col-md-6">
+              {message && <p className="alert alert-info">{message}</p>}
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="title">Item Name</label>
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    placeholder="Enter your title here"
+                    className="form-control"
+                    value={formData.title}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                
 
-      {/* Category and Condition */}
+                <div className="form-group">
+                  <label htmlFor="category">Select Category</label>
+                  <select
+                    id="category"
+                    name="category_id"
+                    className="form-control"
+                    value={formData.category_id}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select your category</option>
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Item Description</label>
+                  <textarea
+                    name="description"
+                    id="description"
+                    placeholder="Please write something about your item here"
+                    className="form-control"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    rows="4"
+                    required
+                  />
+                </div>
+                {/* Pricing and Shipping Options */}
       <div className="row">
-        <div className="col-12 col-sm-6">
+      <div className="col-12 col-sm-6">
           <div className="form-group">
-            <label htmlFor="category">Category</label>
-            {loading ? (
-              <p>Loading categories...</p>
-            ) : error ? (
-              <p className="text-danger">{error}</p>
-            ) : (
-              <select
-                id="category"
-                name="category_id"
-                className={`form-control ${error?.category_id ? "is-invalid" : ""}`}
-                value={formData.category_id}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Select Category</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            )}
-            {error?.category_id && <div className="invalid-feedback">{error.category_id}</div>}
-          </div>
-        </div>
-
-        <div className="col-12 col-sm-6">
-          <div className="form-group">
-            <label htmlFor="product_condition">Condition</label>
-            <select
-              name="product_condition"
-              id="product_condition"
-              className="form-control"
-              value={formData.product_condition || "New"} // Default value
-              onChange={handleInputChange}
-            >
-              <option value="New">New</option>
-              <option value="Used">Used</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Featured Image and Album */}
-      <div className="form-row">
-        <div className="row">
-          <div className="col-12 col-sm-6">
-            <label htmlFor="featuredImage">Featured Image</label>
+            <label htmlFor="minimum_bid">Minimum Price</label>
             <input
-              type="file"
+              type="number"
+              placeholder="00"
+              name="minimum_bid"
+              id="minimum_bid"
               className="form-control"
-              id="featuredImage"
-              onChange={handleImageChange}
-            />
-          </div>
-          <div className="col-12 col-sm-6">
-            <label htmlFor="album">Album</label>
-            <input
-              type="file"
-              className="form-control"
-              id="album"
-              multiple
-              onChange={handleAlbumChange}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Additional Fields */}
-      <div className="row">
-        <div className="col-12 col-sm-6">
-          <div className="form-group">
-            <label htmlFor="product_year">Product Year</label>
-            <input
-              type="text"
-              name="product_year"
-              id="product_year"
-              className="form-control"
-              value={formData.product_year}
+              value={formData.minimum_bid}
               onChange={handleInputChange}
               required
             />
@@ -299,22 +228,24 @@ const Sell = () => {
         </div>
         <div className="col-12 col-sm-6">
           <div className="form-group">
-            <label htmlFor="product_location">Product Location</label>
+            <label htmlFor="reserve_price">Starting Bid Price</label>
             <input
-              type="text"
-              name="product_location"
-              id="product_location"
+              type="number"
+              placeholder="00 $"
+              name="reserve_price"
+              id="reserve_price"
               className="form-control"
-              value={formData.product_location}
+              value={formData.reserve_price}
               onChange={handleInputChange}
+              required
             />
           </div>
         </div>
+       
       </div>
-
-      {/* Date and Time Fields */}
-      <div className="row">
-        <div className="col-12 col-sm-4">
+ {/* Date and Time Fields */}
+ <div className="row">
+        <div className="col-md-6">
           <div className="form-group">
             <label htmlFor="start_date">Start Date</label>
             <input
@@ -328,7 +259,7 @@ const Sell = () => {
             />
           </div>
         </div>
-        <div className="col-12 col-sm-4">
+        <div className="col-md-6">
           <div className="form-group">
             <label htmlFor="end_date">End Date</label>
             <input
@@ -342,142 +273,40 @@ const Sell = () => {
             />
           </div>
         </div>
-        <div className="col-12 col-sm-4">
-          <div className="form-group">
-            <label htmlFor="live_auction_date">Live Auction Date</label>
-            <input
-              type="date"
-              name="live_auction_date"
-              id="live_auction_date"
-              className="form-control"
-              value={formData.live_auction_date}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
       </div>
+                <button type="submit" className="btn btn-primary mt-3">
+                  Submit
+                </button>
+              </form>
+            </div>
 
-      {/* Pricing and Shipping Options */}
-      <div className="row">
-        <div className="col-12 col-sm-6">
-          <div className="form-group">
-            <label htmlFor="reserve_price">Reserve Price</label>
-            <input
-              type="number"
-              name="reserve_price"
-              id="reserve_price"
-              className="form-control"
-              value={formData.reserve_price}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        </div>
-        <div className="col-12 col-sm-6">
-          <div className="form-group">
-            <label htmlFor="minimum_bid">Minimum Bid</label>
-            <input
-              type="number"
-              name="minimum_bid"
-              id="minimum_bid"
-              className="form-control"
-              value={formData.minimum_bid}
-              onChange={handleInputChange}
-              required
-            />
+            <div className="col-md-6">
+              <div className="album shadow-lg p-3 text-center">
+                <input
+                  type="file"
+                  id="album"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  onChange={handleAlbumChange}
+                />
+                <img
+                  src={featuredImage ? URL.createObjectURL(featuredImage) : "assets/images/upload.png"}
+                  alt="Uploaded Image"
+                  className="rounded"
+                  style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                />
+                  <p className="px-5 pt-3  pb-1 uppara">
+                  You can upload multiple images, and they should be in PNG,
+                  GIF, WEBP, MP4, or MP3. Max 1GB.
+                </p>
+                <button className="btn btn-secondary mt-2" onClick={() => fileInputRef.current.click()}>
+                  Upload Image
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="row">
-        <div className="col-12 col-sm-6 col-md-4">
-          <div className="form-group">
-            <label htmlFor="is_buynow">Buy Now Option?</label>
-            <select
-              name="is_buynow"
-              id="is_buynow"
-              className="form-control"
-              value={formData.is_buynow}
-              onChange={handleInputChange}
-            >
-              <option value="0">No</option>
-              <option value="1">Yes</option>
-            </select>
-          </div>
-        </div>
-        <div className="col-12 col-sm-6 col-md-4">
-          <div className="form-group">
-            <label htmlFor="buy_now_price">Buy Now Price</label>
-            <input
-              type="number"
-              name="buy_now_price"
-              id="buy_now_price"
-              className="form-control"
-              value={formData.buy_now_price}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <div className="col-12 col-md-4">
-          <div className="form-group">
-            <label htmlFor="international_shipping">International Shipping Available?</label>
-            <select
-              name="international_shipping"
-              id="international_shipping"
-              className="form-control"
-              value={formData.international_shipping}
-              onChange={handleInputChange}
-            >
-              <option value="0">No</option>
-              <option value="1">Yes</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Description and Shipping Terms */}
-      <div className="form-group">
-        <label htmlFor="description">Description</label>
-        <textarea
-          name="description"
-          id="description"
-          className="form-control"
-          value={formData.description}
-          onChange={handleInputChange}
-          rows="4"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="shipping_conditions">Shipping Conditions</label>
-        <textarea
-          name="shipping_conditions"
-          id="shipping_conditions"
-          className="form-control"
-          value={formData.shipping_conditions}
-          onChange={handleInputChange}
-          rows="4"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="shipping_terms">Shipping Terms</label>
-        <textarea
-          name="shipping_terms"
-          id="shipping_terms"
-          className="form-control"
-          value={formData.shipping_terms}
-          onChange={handleInputChange}
-          rows="4"
-        />
-      </div>
-
-      <button type="submit" className="btn btn-primary mt-3">
-        Submit
-      </button>
-    </form>
-  </div>
-</div>
-
       <Footer />
     </>
   );

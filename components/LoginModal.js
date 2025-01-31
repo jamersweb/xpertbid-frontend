@@ -161,6 +161,7 @@ const LoginModal = ({ isOpen, onClose }) => {
               <img src="/assets/images/appleLogo.svg" alt="Apple Logo" /> Sign
               in with Apple
             </button>
+            <p className="loginp mt-3"> By continue, I agree to ExpertBid <a className="logina">Terms of service</a> and  <a className="logina">privacy policy.</a></p>
             {/* Add Google/Apple logic if needed */}
           </div>
         )}
@@ -194,6 +195,9 @@ const LoginModal = ({ isOpen, onClose }) => {
               aria-label="Phone number"
             />
             {errorMessage && <p className="error">{errorMessage}</p>}
+            <br></br>
+            <p className="loginp mt-2 mb-4">We will call or text you to send a verification code on your phone number to
+            confirm it’s you. Standard rates apply. </p>
             <button
               className="form-button-1"
               onClick={sendOtp}
@@ -201,6 +205,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             >
               {isLoading ? "Sending..." : "Send OTP"}
             </button>
+          
           </div>
         )}
 
