@@ -52,8 +52,9 @@ const PopupSequence = ({ onComplete }) => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Add balance to wallet</h5>
-                <button type="button" className="btn-close" aria-label="Close"></button>
+                <div></div>
+                <h5 className="modal-title ms-4">Add balance to wallet</h5>
+                <button type="button" className="btn-close" onClick={handleRedirectToWallet} aria-label="Close"></button>
               </div>
               <div className="modal-body px-4">
                 <p className="text-center d-block p-4" style={{ fontSize: "72px", fontWeight: "bold", color: "#212529", margin: "20px" }}>$0</p>

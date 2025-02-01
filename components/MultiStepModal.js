@@ -117,8 +117,9 @@ const MultiStepModal = ({ isOpen, onClose }) => {
     <div className="modal show d-block" tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content py-3 px-4">
-          <div className="modal-header ps-5">
+          <div className="modal-header ps-5"><div></div>
             <h5 className="modal-title">
+              
               {currentStep === 1 && "Get Paid"}
               {currentStep === 2 && "Select Payment Method"}
               {currentStep === 3 && "Add Payment Method Details"}
@@ -132,15 +133,15 @@ const MultiStepModal = ({ isOpen, onClose }) => {
           {/* Step 1: Get Paid */}
           {currentStep === 1 && (
             <div className="modal-body text-center">
-              <h1>$</h1>
+              <h1 className="my-3">$0</h1>
               <input
                 type="number"
-                className="form-control"
+                className="form-control shadow-lg my-4"
                 placeholder="Enter amount"
                 value={amount}
                 onChange={handleAmountChange}
               />
-              <p className="mb-5 mt-3">Minimum amount you can withdraw is $10.</p>
+              <p className="mb-5 mt-3 uppara">Minimum amount you can withdraw is $10.</p>
               <button className="btn btn-dark w-100 py-3" onClick={() => setCurrentStep(2)}>
                 Add Payment Method
               </button>
@@ -152,7 +153,7 @@ const MultiStepModal = ({ isOpen, onClose }) => {
             <div className="modal-body">
               <label className="fw-bold">Select Payment Method</label>
               <select
-                className="form-select form-control shadow shadow-lg"
+                className="form-select form-control  shadow-lg"
                 name="paymentMethod"
                 value={formData.paymentMethod}
                 onChange={handleInputChange}
@@ -172,7 +173,7 @@ const MultiStepModal = ({ isOpen, onClose }) => {
               <label className="fw-bold">Bank Name</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control  shadow-lg"
                 name="bankName"
                 value={formData.bankName}
                 onChange={handleInputChange}
@@ -180,7 +181,7 @@ const MultiStepModal = ({ isOpen, onClose }) => {
               <label className="fw-bold">IBAN Number</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control  shadow-lg"
                 name="ibanNumber"
                 value={formData.ibanNumber}
                 onChange={handleInputChange}
@@ -195,10 +196,10 @@ const MultiStepModal = ({ isOpen, onClose }) => {
           {currentStep === 4 && (
             <div className="modal-body">
               <div className="modal-body text-center">
-              <h1>$</h1>
+              <h1>$0</h1>
               <input
                 type="number"
-                className="form-control"
+                className="form-control   shadow-lg"
                 placeholder="Enter amount"
                 value={amount}
                 onChange={handleAmountChange}
@@ -209,7 +210,7 @@ const MultiStepModal = ({ isOpen, onClose }) => {
             <label>Select Payment Method</label>
 
               <select
-  className="form-select"
+  className="form-select  shadow-lg mb-4"
   value={selectedPaymentMethod ? selectedPaymentMethod.id : ""}
   onChange={(e) => {
     const selectedId = parseInt(e.target.value);

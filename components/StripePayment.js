@@ -52,7 +52,7 @@ const CheckoutForm = ({token}) => {
         <form onSubmit={handleSubmit}>
             <input
                 type="number"
-                className='form-control mb-3 paypalinput'
+                className='form-control mb-3 paypalinput shadow-lg my-4'
                 placeholder="Enter Amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
