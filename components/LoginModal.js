@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import axios from "axios";
 const LoginModal = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState("loginStep"); // Steps: loginStep, loginStep2, ...
@@ -11,7 +12,8 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   //const { data: session } = useSession();
-
+  const router = useRouter();
+9
   const closeHandler = () => {
     setErrorMessage("");
     onClose();
@@ -38,7 +40,7 @@ const LoginModal = ({ isOpen, onClose }) => {
         //localStorage.setItem("token", session.user.token);
         setErrorMessage(""); // Clear any previous errors
         onClose(); // Close the modal on successful login
-        router.push("/dashboard");
+        router.push("/userDashboard");
 
       }
     } catch (error) {

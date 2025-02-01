@@ -9,13 +9,12 @@ import BrowseCategories from "@/components/BrowseCategories";
 import TopBid from "@/components/TopBid";
 import MarketplaceSection from "@/components/MarketplaceSection";
 import StartSelling from "@/components/StartSelling";
-import StepModals from "@/components/StepModals";
-import { useSession } from "next-auth/react"; // Assuming you're using NextAuth.js
+//import { useSession } from "next-auth/react"; // Assuming you're using NextAuth.js
 // import PopupSequence from "../components/PopupSequence";
 
 
 export default function Home() {
-  const { data: session, status } = useSession(); // Get user session
+  //const { data: session, status } = useSession(); // Get user session
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // State to handle loading
   const [isFirstLogin, setIsFirstLogin] = useState(false);
@@ -37,16 +36,7 @@ export default function Home() {
 
     fetchProducts();
   }, []);
-// Check if User Logged in for the First Time
-// useEffect(() => {
-//   if (status === "authenticated" && session?.user) {
-//     if (!localStorage.getItem("hasLoggedIn")) {
-//       console.log("First-time login detected!");
-//       setIsFirstLogin(true);
-//       localStorage.setItem("hasLoggedIn", "true"); // Store flag in localStorage
-//     }
-//   }
-// }, [status, session]); // Run when session changes
+
 
 // if (loading) {
 //   return (
@@ -77,7 +67,7 @@ export default function Home() {
           <FeaturedProducts />
           <BrowseCategories />
           <TopBid />
-          <StepModals />
+          
           {/* <PopupSequence /> */}
 
           <MarketplaceSection products={products} />

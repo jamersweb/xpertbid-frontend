@@ -6,20 +6,24 @@ import { useRouter } from "next/router";
 const SignupModal = ({ isOpen, onClose }) => {
   const [activeStep, setActiveStep] = useState("step1");
   const [formData, setFormData] = useState({
-    name: "",
+    
     email: "",
     password: "",
-    confirmPassword: "",
     phone: "",
     countryCode: "+1",
   });
+  const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false); // Toggle password visibility
-  const router = useRouter();
   const [verificationCode, setVerificationCode] = useState("");
-
+  const [passwordStrength, setPasswordStrength] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+  });
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
@@ -28,12 +32,17 @@ const SignupModal = ({ isOpen, onClose }) => {
     onClose();
     setActiveStep("step1");
     setFormData({
-      name: "",
+     
       email: "",
       password: "",
-      confirmPassword: "",
       phone: "",
       countryCode: "+1",
+    });
+    setPasswordStrength({
+      length: false,
+      uppercase: false,
+      lowercase: false,
+      number: false,
     });
     setErrorMessage("");
     setVerificationCode("");
@@ -43,25 +52,30 @@ const SignupModal = ({ isOpen, onClose }) => {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [id]: value }));
+    if (id === "password") {
+      setPasswordStrength({
+        length: value.length >= 8,
+        uppercase: /[A-Z]/.test(value),
+        lowercase: /[a-z]/.test(value),
+        number: /[0-9]/.test(value),
+      });
+    }
   };
 
   const registerWithEmail = async () => {
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+    if ( !formData.email || !formData.password) {
       setErrorMessage("All fields are required.");
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Passwords do not match.");
-      return;
-    }
+   
 
     setIsLoading(true);
     try {
       await axios.post(
         `https://violet-meerkat-830212.hostingersite.com/public/api/register`,
         {
-          name: formData.name,
+          
           email: formData.email,
           password: formData.password,
         }
@@ -97,7 +111,7 @@ const SignupModal = ({ isOpen, onClose }) => {
       });
 
       // Redirect to the dashboard
-      router.push("/dashboard");
+      router.push("/userDashboard");
     } catch (error) {
       setErrorMessage("Invalid verification code. Please try again.");
       console.log(error);
@@ -229,13 +243,13 @@ const SignupModal = ({ isOpen, onClose }) => {
               </button>
               <h3>Sign Up with Email</h3>
             </div>
-            <input
+            {/* <input
               type="text"
               id="name"
               placeholder="Enter your name"
               value={formData.name}
               onChange={handleInputChange}
-            />
+            /> */}
             <input
               type="email"
               id="email"
@@ -259,13 +273,20 @@ const SignupModal = ({ isOpen, onClose }) => {
                 {passwordVisible ? "Hide" : "Show"}
               </button>
             </div>
-            <input
+            {/* <input
               type={passwordVisible ? "text" : "password"}
               id="confirmPassword"
               placeholder="Retype your password"
               value={formData.confirmPassword}
               onChange={handleInputChange}
-            />
+            /> */}
+            {/* Password Strength Indicators */}
+            <div className="password-strength">
+              <p className={passwordStrength.length ? "valid" : "invalid"}>✔ Minimum 8 characters</p>
+              <p className={passwordStrength.uppercase ? "valid" : "invalid"}>✔ At least one uppercase letter</p>
+              <p className={passwordStrength.lowercase ? "valid" : "invalid"}>✔ At least one lowercase letter</p>
+              <p className={passwordStrength.number ? "valid" : "invalid"}>✔ At least one number</p>
+            </div>
             {errorMessage && <p className="alert-message">{errorMessage}</p>}
             <button
               className="form-button-1"
@@ -358,6 +379,19 @@ const SignupModal = ({ isOpen, onClose }) => {
           </div>
         )}
       </div>
+      {/* CSS for styling the strength indicators */}
+      <style jsx>{`
+        .password-strength p {
+          font-size: 14px;
+          margin: 5px 0;
+        }
+        .valid {
+          color: green;
+        }
+        .invalid {
+          color: red;
+        }
+      `}</style>
     </div>
   );
 };

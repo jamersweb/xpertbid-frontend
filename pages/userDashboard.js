@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import DashboardRecord from "../components/DashboardRecord";
 import ListingCard from "../components/ListingCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useSession } from "next-auth/react";
 import axios from "axios";
+import StepModals from "@/components/StepModals";
 
 const Dashboard = () => {
-  const { data: session } = useSession();
-  
+  const { data: session,status  } = useSession();
+  const [isFirstLogin, setIsFirstLogin] = useState(false);
   const [dashboardData, setDashboardData] = useState({
     listings: 0,
     biddings: 0,
     wallet: 0,
   });
-
-  useEffect(() => {
+// Check if User Logged in for the First Time
+useEffect(() => {
+  if (status === "authenticated" && session?.user) {
+    if (!localStorage.getItem("hasLoggedIn")) {
+      console.log("First-time login detected!");
+      setIsFirstLogin(true);
+      localStorage.setItem("hasLoggedIn", "true"); // Store flag in localStorage
+    }
+  }else{
+    console.log(status,'working');
+  }
+}, [status, session]); // Run when session changes
+  useEffect((session) => {
+    if (!session?.user?.token) {
+      return; // If there's no token, do nothing yet
+    }
     const fetchDashboardData = async () => {
       try {
         const response = await axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/dashboard",
@@ -68,6 +83,7 @@ const Dashboard = () => {
   return (
     <>
     <Header />
+    <StepModals />
     <section className="dashboard-records">
       <div className="container-fluid">
         <div className="row">
