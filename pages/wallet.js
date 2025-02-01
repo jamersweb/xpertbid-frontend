@@ -1,16 +1,39 @@
-import { useState, useEffect } from "react";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { useState , useEffect } from "react";
 import TransactionHistory from "../components/transcations";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WalletBalance from "../components/walletDisplay";
-import AddMoneyModal from "../components/payment_method";
-import PopupSequence from "../components/PopupSequence"; // Import Popup Component
+import MultiStepModal from "../components/MultiStepModal"; // Import MultiStepModal
+import AddMoneyModal from "../components/payment_method"; // Import AddMoneyModal
 import { useSession } from "next-auth/react";
+import PopupSequence from "../components/PopupSequence"; // Import Popup Component
+
+  
 
 const WalletPage = () => {
   const { data: session } = useSession();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMultiStepModalOpen, setIsMultiStepModalOpen] = useState(false); // State for MultiStepModal
+  const [isAddMoneyModalOpen, setIsAddMoneyModalOpen] = useState(false); // State for AddMoneyModal
   const [showPopup, setShowPopup] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // Check if user has seen popups before
@@ -20,11 +43,26 @@ const WalletPage = () => {
       setShowPopup(true); // Show popups if not seen before
     }
   }, []);
+  
 
+ 
   const handlePopupClose = () => {
     setShowPopup(false);
     localStorage.setItem("popupShown", "true"); // Mark as shown in localStorage
   };
+
+  const openMultiStepModal = () => {
+    setIsAddMoneyModalOpen(false); // Ensure AddMoneyModal is closed
+    setIsMultiStepModalOpen(true); // Open MultiStepModal
+  };
+
+  const openAddMoneyModal = () => {
+    setIsMultiStepModalOpen(false); // Ensure MultiStepModal is closed
+    setIsAddMoneyModalOpen(true); // Open AddMoneyModal
+  };
+
+  const closeMultiStepModal = () => setIsMultiStepModalOpen(false); // Close MultiStepModal
+  const closeAddMoneyModal = () => setIsAddMoneyModalOpen(false); // Close AddMoneyModal
 
   return (
     <>
@@ -54,10 +92,12 @@ const WalletPage = () => {
                   <button className="payment-methods" id="openPaymentMethod">
                     Payment Methods
                   </button>
-                  <button className="button-style-3" onClick={() => setIsModalOpen(true)}>
+                  <button className="button-style-3" onClick={openAddMoneyModal}>
                     Add Money
                   </button>
-                  <button className="button-style-2">Get Paid</button>
+                  <button className="button-style-2" onClick={openMultiStepModal}>
+                    Get Paid
+                  </button>
                 </div>
               </div>
             </div>
@@ -69,6 +109,7 @@ const WalletPage = () => {
                 <div className="transections">
                   <h3 className="heading">Recent Transactions</h3>
                 </div>
+
                 <div className="table-parent">
                   <TransactionHistory />
                 </div>
@@ -77,7 +118,9 @@ const WalletPage = () => {
                 <div className="save-cards">
                   <div className="heading">
                     <h3>Cards</h3>
+                    
                   </div>
+
                   <div className="save-cards-info">
                     <div className="card-img-bar">
                       <img
@@ -134,11 +177,16 @@ const WalletPage = () => {
             </div>
           </div>
 
-          <AddMoneyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
       </section>
 
       <Footer />
+
+      {/* AddMoneyModal */}
+      <AddMoneyModal isOpen={isAddMoneyModalOpen} onClose={closeAddMoneyModal} />
+
+      {/* MultiStepModal */}
+      <MultiStepModal isOpen={isMultiStepModalOpen} onClose={closeMultiStepModal} />
     </>
   );
 };

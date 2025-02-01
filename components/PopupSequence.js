@@ -51,34 +51,34 @@ const PopupSequence = ({ onComplete }) => {
                 <h5 className="modal-title">Add balance to wallet</h5>
                 <button type="button" className="btn-close" aria-label="Close"></button>
               </div>
-              <div className="modal-body">
-                <p style={{ fontSize: "72px", fontWeight: "bold", color: "#212529", margin: 0 }}>$0</p>
-                <p style={{ color: "#6c757d", fontSize: "14px", marginBottom: "24px" }}>
+              <div className="modal-body px-4">
+                <p className="text-center d-block p-4" style={{ fontSize: "72px", fontWeight: "bold", color: "#212529", margin: "20px" }}>$0</p>
+                <p className="text-center px-4" style={{ color: "#6c757d", fontSize: "14px", marginBlock: "24px" }}>
                   Enter amount. We recommend you to add minimum $100 to your wallet.
                 </p>
                 <div className="modal-input">
-                  <label  htmlFor="name">Card Holder Name*</label>
+                  <label  htmlFor="name" className="fw-bold">Card Holder Name*</label>
                   <input type="name"
-                  className="shadow-lg p-2"
+                  className="shadow-lg p-3 form-control"
                   placeholder="Enter full name here"
                   />
-                  <label  htmlFor="number">Card Number*</label>
+                  <label  htmlFor="number" className="fw-bold">Card Number*</label>
                   <input type="number"
-                  className="shadow-lg p-2"
+                  className="shadow-lg p-3 form-control"
                   placeholder="000 000 000 000 000"
                   />
                   <div className="row">
                   <div className="col-6">
-                  <label  htmlFor="date">Expiry Date*</label>
+                  <label  htmlFor="date" className="fw-bold">Expiry Date*</label>
                   <input type="date"
-                  className="shadow-lg p-2"
+                  className="shadow-lg p-3  form-control"
                   placeholder="20/12"
                   />
                   </div>
                   <div className="col-6">
-                  <label  htmlFor="number">CVV*</label>
+                  <label  htmlFor="number" className="fw-bold">CVV*</label>
                   <input type="number"
-                  className="shadow-lg p-2"
+                  className="shadow-lg p-3 form-control"
                   placeholder="000"
                   />
                   </div>
@@ -86,7 +86,7 @@ const PopupSequence = ({ onComplete }) => {
                 </div>
                 <button
                   type="button"
-                  className="btn btn-dark"
+                  className="btn btn-dark my-4 p-3"
                   onClick={handleNext}
                   style={{ fontSize: "16px", fontWeight: "bold", borderRadius: "8px", width: "100%" }}
                 >
@@ -103,13 +103,22 @@ const PopupSequence = ({ onComplete }) => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-body text-center">
+                <img 
+                src="assets/images/Blue-1.png"
+                />
                 <h3 style={{ fontWeight: "bold", fontSize: "24px", marginBottom: "8px", color: "#212529" }}>
                   Save Card Details
                 </h3>
-                <button className="btn btn-dark" onClick={handleRedirectToWallet} style={{ width: "100%", fontSize: "16px" }}>
+                <p className="px-4 my-4" style={{
+                  color:"rgb(133, 127, 127)",
+                  fontSize:"14px"
+                }}>
+                Would you like save this card information for later use? We never share your personal information and payments are encrypted.
+                </p>
+                <button className="btn btn-dark mt-4 py-3" onClick={handleRedirectToWallet} style={{ width: "100%", fontSize: "16px" }}>
                   Save
                 </button>
-                <button className="btn mt-3" onClick={handleRedirectToWallet} style={{ width: "100%", fontSize: "16px" }}>
+                <button className="btn mt-3 py-3" onClick={handleRedirectToWallet} style={{ width: "100%", fontSize: "16px" }}>
                   Not Now
                 </button>
               </div>
