@@ -7211,3 +7211,26 @@ justify-content: space-between;
     justify-content: center;
     align-items: center;
 }
+.choice-card {
+    min-width: 200px !important;
+    background-color: #ffff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+.down-arrow img{
+    margin-left: -2px;
+  }
+  .down-arrow{
+    width: 30px;
+    height: 30px;
+    background-color:#EDEDED;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    border: none;
+   
+  }

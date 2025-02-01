@@ -106,7 +106,6 @@ export default function MultiStepModals() {
         },
         {
           headers: {
-            
             Authorization: `Bearer ${session.user.token}`,
           },
         }
@@ -124,6 +123,10 @@ export default function MultiStepModals() {
     }
   };
 
+  const handleCardClick = (type) => {
+    console.log(`${type} selected`);
+  };
+
   return (
     <>
       {/* Step 1 - Profile Welcome */}
@@ -132,16 +135,16 @@ export default function MultiStepModals() {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Create your profile</h5>
+                <h5 className="modal-title ms-4">Create your profile</h5>
                 <button type="button" className="btn-close" onClick={closeModal}></button>
               </div>
               <div className="modal-body text-center">
                 <img src="assets/images/Group-1.png" className="my-4" alt="" />
                 <h3>Welcome to ExpertBid</h3>
-                <p>Pick an image that shows your face. This picture won’t be public.</p>
+                <p className="uppara px-5">Pick an image that shows your face. This picture won’t be public.</p>
               </div>
               <div className="modal-footer">
-                <button className="btn btn-dark w-100" onClick={nextStep}>
+                <button className="btn btn-dark w-100 py-3" onClick={nextStep}>
                   Start exploring!
                 </button>
               </div>
@@ -150,13 +153,83 @@ export default function MultiStepModals() {
         </div>
       )}
 
-      {/* Step 2 - Profile Info Form */}
+      {/* Step 2 - Individual or Business Owner Selection */}
       {currentStep === 2 && (
         <div className="modal fade show d-block" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
+                <button
+                  className="down-arrow "
+                  type="button"
+                  onClick={previousStep}
+                  aria-label="Back"
+                >
+                  <img
+                    src="assets/images/arrow-down.png"
+                    alt="Back"
+                    className="ms-1"
+                  />
+                </button>
                 <h5 className="modal-title">Create your profile</h5>
+                <span>Step 1/3</span>
+              </div>
+              <div className="modal-body">
+                <h3 className="fw-bloder my-3">How you would like to continue?</h3>
+                <p className="uppara my-4 mb-5" >
+                  This will help us to understand your identity. Both users have
+                  the same features, but profile creation has different fields.
+                </p>
+                <div className="d-flex justify-content-center gap-3 mx-auto">
+                  {/* Individual Card */}
+                  <div
+                    className="choice-card shadow-lg text-center"
+                    onClick={() => handleCardClick("Individual")}
+                  >
+                    <img
+                      src="assets/images/individual.png"
+                      style={{width:"50px" , objectFit:"none"}}
+                      alt="Individual"
+                      className="img-fluid mx-auto my-3"
+                    />
+                    <span>I am an individual</span>
+                  </div>
+                  {/* Business Owner Card */}
+                  <div
+                    className="choice-card shadow-lg text-center"
+                    onClick={() => handleCardClick("Business Owner")}
+                  >
+                    <img
+                      src="assets/images/business-icon.png"
+                      alt="Business Owner"
+                      style={{width:"50px" , objectFit:"none"}}
+                      className="img-fluid mx-auto my-3"
+                    />
+                    <span>I am a business owner</span>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-dark w-100 py-3" onClick={nextStep}>
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Remaining steps have been incremented (Step 3, Step 4, Step 5) */}
+      {/* Add your existing step logic here for steps 3, 4, and 5 */}
+
+      {/* Step 3 - Profile Info Form */}
+      {currentStep === 3 && (
+        <div className="modal fade show d-block" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <div></div>
+                <h5 className="modal-title ms-4">Create your profile</h5>
                 <button type="button" className="btn-close" onClick={closeModal}></button>
               </div>
               <div className="modal-body">
@@ -165,7 +238,7 @@ export default function MultiStepModals() {
                     <label className="form-label">Username*</label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control shadow-lg"
                       name="username"
                       value={profileData.username}
                       onChange={handleInputChange}
@@ -177,7 +250,7 @@ export default function MultiStepModals() {
                     <label className="form-label">Your Name*</label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control shadow-lg"
                       name="name"
                       value={profileData.name}
                       onChange={handleInputChange}
@@ -191,7 +264,7 @@ export default function MultiStepModals() {
                       name="country_id"
                       value={profileData.country_id}
                       onChange={handleInputChange}
-                      className="form-control"
+                      className="form-control shadow-lg"
                     >
                       <option value="">Select Country</option>
                       {countries.map((country) => (
@@ -204,7 +277,7 @@ export default function MultiStepModals() {
                 </form>
               </div>
               <div className="modal-footer">
-                <button className="btn btn-dark w-100" onClick={handleSubmitProfileInfo}>
+                <button className="btn btn-dark w-100 py-3" onClick={handleSubmitProfileInfo}>
                   Continue
                 </button>
               </div>
@@ -212,14 +285,15 @@ export default function MultiStepModals() {
           </div>
         </div>
       )}
-
-      {/* Step 3 - Profile Picture Upload */}
-      {currentStep === 3 && (
+         {/* Step 4 - Profile Picture Upload */}
+         {currentStep === 4 && (
         <div className="modal fade show d-block" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Upload Profile Picture</h5>
+                <div></div>
+                <h5 className="modal-title ms-4">Upload Profile Picture</h5>
+
                 <button type="button" className="btn-close" onClick={closeModal}></button>
               </div>
               <div className="modal-body text-center">
@@ -228,14 +302,43 @@ export default function MultiStepModals() {
                   src={previewImage}
                   alt="Profile"
                   className="my-4 rounded-circle"
-                  style={{ width: "150px", cursor: "pointer" }}
+                  style={{ width: "150px", height:"150px" , objectFit:"cover" ,  cursor: "pointer" }}
                   onClick={handleImageClick}
                 />
-                <h3>Add a profile picture</h3>
+                <h3 className="my-3">Add a profile picture</h3>
+                <p className="px-4 uppara">Pick an image that shows your face. Your picture won’t be
+                public, we will keep this for our record.</p>
               </div>
               <div className="modal-footer">
-                <button className="btn btn-dark w-100" onClick={nextStep}>
+                <button className="btn btn-dark w-100 py-3" onClick={nextStep}>
                   Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+         )}
+           {/* Step 5 - Final Confirmation */}
+      {currentStep === 5 && (
+        <div className="modal fade show d-block" tabIndex="-1" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+              <div className="d-block "></div>
+                <h5 className="modal-title ms-4">Profile Setup Complete</h5>
+                <button type="button" className="btn-close" onClick={closeModal}></button>
+              </div>
+              <div className="modal-body text-center">
+                <img src={previewImage} alt="Profile" className="my-4 rounded-circle" style={{ width: "150px", height: "150px" }} />
+                <h3>Looking good!</h3>
+                <p className="my-4 font-size ">This photo will be added to your profile.</p>
+              </div>
+              <div className="modal-footer text-start justify-content-start "  style={{border : "none"}}>
+                <button className="btn mx-1 px-5 py-3" style={{width: "47%" , color : "black", border : "2px solid black" }} onClick={previousStep}>
+                  Change photo
+                </button>
+                <button className="btn btn-dark mx-1  px-5 py-3" style={{width: "47%", border:"2px solid black"}} onClick={closeModal}>
+                  Done
                 </button>
               </div>
             </div>
@@ -243,5 +346,6 @@ export default function MultiStepModals() {
         </div>
       )}
     </>
+    
   );
 }

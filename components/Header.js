@@ -348,7 +348,7 @@ export default function Header() {
                                 {/* Add more notifications here */}
                               </div>
                               <div className="notification-footer">
-                                <Link href={"/notifications"}>
+                                <Link href={"/NotificationSettings"}>
                                   See All Notifications
                                 </Link>
                               </div>

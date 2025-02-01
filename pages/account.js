@@ -33,7 +33,7 @@ const AccountSettings = () => {
           return;
         }
         setLoading(true);
-        await axios.get(
+        const response = await axios.get(
           "https://violet-meerkat-830212.hostingersite.com/public/api/account-settings",
           {
             headers: { Authorization: `Bearer ${session.user.token}` },
