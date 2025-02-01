@@ -7204,3 +7204,10 @@ justify-content: space-between;
      width: 400px; 
     }
 }
+.modal-body.text-center {
+    display: flex
+;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,28 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TransactionHistory from "../components/transcations";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WalletBalance from "../components/walletDisplay";
 import AddMoneyModal from "../components/payment_method";
+import PopupSequence from "../components/PopupSequence"; // Import Popup Component
 import { useSession } from "next-auth/react";
 
 const WalletPage = () => {
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  const openModal = () => {
-    //alert('sdf');
-    setIsModalOpen(true);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    // Check if user has seen popups before
+    const popupShown = localStorage.getItem("popupShown");
+
+    if (!popupShown) {
+      setShowPopup(true); // Show popups if not seen before
+    }
+  }, []);
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    localStorage.setItem("popupShown", "true"); // Mark as shown in localStorage
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  
   return (
     <>
       <Header />
+
+      {showPopup && <PopupSequence onComplete={handlePopupClose} />} {/* Show Popup Only Once */}
+
       <section className="data-wallet">
         <div className="container-fluid">
           <h1 className="main-heading">My Wallet</h1>
@@ -45,10 +54,9 @@ const WalletPage = () => {
                   <button className="payment-methods" id="openPaymentMethod">
                     Payment Methods
                   </button>
-                  <button className="button-style-3" onClick={openModal}>
+                  <button className="button-style-3" onClick={() => setIsModalOpen(true)}>
                     Add Money
                   </button>
-
                   <button className="button-style-2">Get Paid</button>
                 </div>
               </div>
@@ -61,7 +69,6 @@ const WalletPage = () => {
                 <div className="transections">
                   <h3 className="heading">Recent Transactions</h3>
                 </div>
-
                 <div className="table-parent">
                   <TransactionHistory />
                 </div>
@@ -70,9 +77,7 @@ const WalletPage = () => {
                 <div className="save-cards">
                   <div className="heading">
                     <h3>Cards</h3>
-                    
                   </div>
-
                   <div className="save-cards-info">
                     <div className="card-img-bar">
                       <img
@@ -129,16 +134,10 @@ const WalletPage = () => {
             </div>
           </div>
 
-          <AddMoneyModal isOpen={isModalOpen} onClose={closeModal} />
-
-          
+          <AddMoneyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
       </section>
 
-      {/* <StripePayment />
-
-
-            <Paypal /> */}
       <Footer />
     </>
   );

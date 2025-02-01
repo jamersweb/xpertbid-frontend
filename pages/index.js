@@ -11,7 +11,7 @@ import MarketplaceSection from "@/components/MarketplaceSection";
 import StartSelling from "@/components/StartSelling";
 import StepModals from "@/components/StepModals";
 import { useSession } from "next-auth/react"; // Assuming you're using NextAuth.js
-import PopupSequence from "../components/PopupSequence";
+// import PopupSequence from "../components/PopupSequence";
 
 
 export default function Home() {
@@ -78,7 +78,7 @@ export default function Home() {
           <BrowseCategories />
           <TopBid />
           <StepModals />
-          <PopupSequence />
+          {/* <PopupSequence /> */}
 
           <MarketplaceSection products={products} />
           <StartSelling />

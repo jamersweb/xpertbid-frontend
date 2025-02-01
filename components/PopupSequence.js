@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-const PopupSequence = () => {
+const PopupSequence = ({ onComplete }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const router = useRouter();
 
@@ -12,6 +12,7 @@ const PopupSequence = () => {
   };
 
   const handleRedirectToWallet = () => {
+    onComplete(); // Call function to update WalletPage state and set localStorage
     router.push("/wallet"); // Redirect to wallet page
   };
 
@@ -22,11 +23,7 @@ const PopupSequence = () => {
           <div className="modal-dialog modal-fullscreen">
             <div className="modal-content">
               <div className="modal-body text-center">
-                <img
-                  src="/assets/images/Blue.png"
-                  alt="Thumbs Up"
-                  style={{ width: "180px", marginBottom: "16px" }}
-                />
+                <img src="/assets/images/Blue.png" alt="Thumbs Up" style={{ width: "180px", marginBottom: "16px" }} />
                 <h3 style={{ fontWeight: "bolder", fontSize: "24px", marginBottom: "18px", color: "#212529" }}>
                   Setup a wallet
                 </h3>
@@ -59,33 +56,32 @@ const PopupSequence = () => {
                 <p style={{ color: "#6c757d", fontSize: "14px", marginBottom: "24px" }}>
                   Enter amount. We recommend you to add minimum $100 to your wallet.
                 </p>
-                <div className="mb-3">
-                  <label className="form-label">Card Holder Name*</label>
-                  <input type="text" className="form-control" placeholder="Enter full name here" />
-                </div>
-                <div className="mb-3 position-relative">
-                  <label className="form-label">Card Number*</label>
-                  <input type="text" className="form-control" placeholder="000 000 000 000 000" />
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
-                    alt="Visa Logo"
-                    style={{
-                      width: "40px",
-                      position: "absolute",
-                      top: "50%",
-                      right: "16px",
-                      transform: "translateY(-50%)",
-                    }}
+                <div className="modal-input">
+                  <label  htmlFor="name">Card Holder Name*</label>
+                  <input type="name"
+                  className="shadow-lg p-2"
+                  placeholder="Enter full name here"
                   />
-                </div>
-                <div className="row">
-                  <div className="col-6 mb-3">
-                    <label className="form-label">Expiry Date*</label>
-                    <input type="text" className="form-control" placeholder="MM/YY" />
+                  <label  htmlFor="number">Card Number*</label>
+                  <input type="number"
+                  className="shadow-lg p-2"
+                  placeholder="000 000 000 000 000"
+                  />
+                  <div className="row">
+                  <div className="col-6">
+                  <label  htmlFor="date">Expiry Date*</label>
+                  <input type="date"
+                  className="shadow-lg p-2"
+                  placeholder="20/12"
+                  />
                   </div>
-                  <div className="col-6 mb-3">
-                    <label className="form-label">CVV*</label>
-                    <input type="text" className="form-control" placeholder="000" />
+                  <div className="col-6">
+                  <label  htmlFor="number">CVV*</label>
+                  <input type="number"
+                  className="shadow-lg p-2"
+                  placeholder="000"
+                  />
+                  </div>
                   </div>
                 </div>
                 <button
@@ -107,30 +103,13 @@ const PopupSequence = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-body text-center">
-                <img
-                  src="/assets/images/Master-Card.png"
-                  alt="Thumbs Up"
-                  style={{ width: "180px", marginBottom: "16px" }}
-                />
                 <h3 style={{ fontWeight: "bold", fontSize: "24px", marginBottom: "8px", color: "#212529" }}>
                   Save Card Details
                 </h3>
-                <p style={{ fontSize: "14px", color: "#6c757d", marginBottom: "24px" }}>
-                  Would you like to save this card information for later use? We never share your personal information
-                  and payments are encrypted.
-                </p>
-                <button
-                  className="btn btn-dark"
-                  onClick={handleRedirectToWallet}
-                  style={{ width: "100%", padding: "12px", fontSize: "16px", fontWeight: "bold", borderRadius: "8px" }}
-                >
+                <button className="btn btn-dark" onClick={handleRedirectToWallet} style={{ width: "100%", fontSize: "16px" }}>
                   Save
                 </button>
-                <button
-                  className="btn mt-3"
-                  onClick={handleRedirectToWallet}
-                  style={{ color: "#6c757d", width: "100%", fontSize: "16px" }}
-                >
+                <button className="btn mt-3" onClick={handleRedirectToWallet} style={{ width: "100%", fontSize: "16px" }}>
                   Not Now
                 </button>
               </div>
