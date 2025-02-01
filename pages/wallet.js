@@ -1,21 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useState , useEffect } from "react";
 import TransactionHistory from "../components/transcations";
 import Header from "../components/Header";

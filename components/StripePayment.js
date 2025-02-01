@@ -50,7 +50,6 @@ const CheckoutForm = ({token}) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2 className='text-start mb-3'>Stripe Payment</h2>
             <input
                 type="number"
                 className='form-control mb-3 paypalinput'

@@ -10,6 +10,7 @@ const WalletBalance = () => {
       //console.log('ra',getCsrfToken());
       //console.log('get',getSession());
       //console.log('session',session.user.token);
+      if (session?.user) {
       try {
         const response = await axios.get("https://violet-meerkat-830212.hostingersite.com/public/api/wallet", {
           headers: { Authorization: `Bearer ${session.user.token}`,'Cache-Control': 'no-store' },
@@ -17,7 +18,7 @@ const WalletBalance = () => {
         setBalance(response.data.balance);
       } catch (error) {
         console.error("Error fetching wallet balance", error);
-      }
+      }}
     };
 
     fetchBalance();

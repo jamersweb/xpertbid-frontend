@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import StripePayment from '../components/StripePayment';
 
 const PopupSequence = ({ onComplete }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const router = useRouter();
+  const { data: session } = useSession();
+  const userToken = session?.user?.token;
 
   const handleNext = () => {
     if (currentStep < 3) {
@@ -56,34 +60,8 @@ const PopupSequence = ({ onComplete }) => {
                 <p className="text-center px-4" style={{ color: "#6c757d", fontSize: "14px", marginBlock: "24px" }}>
                   Enter amount. We recommend you to add minimum $100 to your wallet.
                 </p>
-                <div className="modal-input">
-                  <label  htmlFor="name" className="fw-bold">Card Holder Name*</label>
-                  <input type="name"
-                  className="shadow-lg p-3 form-control"
-                  placeholder="Enter full name here"
-                  />
-                  <label  htmlFor="number" className="fw-bold">Card Number*</label>
-                  <input type="number"
-                  className="shadow-lg p-3 form-control"
-                  placeholder="000 000 000 000 000"
-                  />
-                  <div className="row">
-                  <div className="col-6">
-                  <label  htmlFor="date" className="fw-bold">Expiry Date*</label>
-                  <input type="date"
-                  className="shadow-lg p-3  form-control"
-                  placeholder="20/12"
-                  />
-                  </div>
-                  <div className="col-6">
-                  <label  htmlFor="number" className="fw-bold">CVV*</label>
-                  <input type="number"
-                  className="shadow-lg p-3 form-control"
-                  placeholder="000"
-                  />
-                  </div>
-                  </div>
-                </div>
+                <StripePayment token={userToken} user={session.user.id}/>
+
                 <button
                   type="button"
                   className="btn btn-dark my-4 p-3"

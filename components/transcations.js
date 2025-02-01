@@ -21,20 +21,22 @@ const TransactionHistory = () => {
   useEffect(() => {
     //console.log(session);
     const fetchTransactions = async () => {
-      try {
-        const response = await axios.get(
-          "https://violet-meerkat-830212.hostingersite.com/public/api/wallet/transactions",
-          {
-            headers: {
-              Authorization: `Bearer ${session.user.token}`,
-            },
-          }
-        );
-        setTransactions(response.data);
-      } catch (error) {
-        console.error("Error fetching transactions", error);
-      } finally {
-        setLoading(false);
+      if (session?.user) {
+        try {
+          const response = await axios.get(
+            "https://violet-meerkat-830212.hostingersite.com/public/api/wallet/transactions",
+            {
+              headers: {
+                Authorization: `Bearer ${session.user.token}`,
+              },
+            }
+          );
+          setTransactions(response.data);
+        } catch (error) {
+          console.error("Error fetching transactions", error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
 
