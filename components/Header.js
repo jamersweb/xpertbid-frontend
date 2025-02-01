@@ -6,7 +6,6 @@ import { signOut,useSession } from "next-auth/react";
 import Link from 'next/link';
 import axios from "axios";
 import WalletBalance from '../components/walletDisplay'
-import PopupSequence from './PopupSequence';
 export default function Header() {
   // If any JS is needed (like openMobileMenu, closeMobileMenu), 
   // ensure that is handled either here or via refs.

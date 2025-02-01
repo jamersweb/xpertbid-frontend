@@ -17,7 +17,6 @@ export default function Home() {
   //const { data: session, status } = useSession(); // Get user session
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // State to handle loading
-  const [isFirstLogin, setIsFirstLogin] = useState(false);
   
   useEffect(() => {
     const fetchProducts = async () => {
@@ -68,7 +67,6 @@ export default function Home() {
           <BrowseCategories />
           <TopBid />
           
-          {/* <PopupSequence /> */}
 
           <MarketplaceSection products={products} />
           <StartSelling />

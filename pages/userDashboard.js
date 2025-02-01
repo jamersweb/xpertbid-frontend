@@ -5,7 +5,7 @@ import ListingCard from "../components/ListingCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from "axios";
-import StepModals from "@/components/StepModals";
+import StepModals from "../components/StepModals";
 
 const Dashboard = () => {
   const { data: session,status  } = useSession();
@@ -19,7 +19,7 @@ const Dashboard = () => {
 useEffect(() => {
   if (status === "authenticated" && session?.user) {
     if (!localStorage.getItem("hasLoggedIn")) {
-      console.log("First-time login detected!");
+      console.log("First-time login detected!",isFirstLogin);
       setIsFirstLogin(true);
       localStorage.setItem("hasLoggedIn", "true"); // Store flag in localStorage
     }
@@ -27,7 +27,8 @@ useEffect(() => {
     console.log(status,'working');
   }
 }, [status, session]); // Run when session changes
-  useEffect((session) => {
+  
+useEffect((session) => {
     if (!session?.user?.token) {
       return; // If there's no token, do nothing yet
     }
@@ -53,6 +54,7 @@ useEffect(() => {
 
     fetchDashboardData();
   }, [session]);
+
   const [listings, setListings] = useState([]);
 
   useEffect(() => {

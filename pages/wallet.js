@@ -15,7 +15,7 @@ const WalletPage = () => {
   const [isMultiStepModalOpen, setIsMultiStepModalOpen] = useState(false); // State for MultiStepModal
   const [isAddMoneyModalOpen, setIsAddMoneyModalOpen] = useState(false); // State for AddMoneyModal
   const [showPopup, setShowPopup] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  //const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // Check if user has seen popups before

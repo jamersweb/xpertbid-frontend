@@ -102,6 +102,7 @@ const MultiStepModal = ({ isOpen, onClose }) => {
           },
         }
       );
+      console.log(response);
       alert("Payment request sent successfully!");
       setCurrentStep(5);
     } catch (error) {
@@ -213,8 +214,8 @@ const MultiStepModal = ({ isOpen, onClose }) => {
   className="form-select  shadow-lg mb-4"
   value={selectedPaymentMethod ? selectedPaymentMethod.id : ""}
   onChange={(e) => {
-    const selectedId = parseInt(e.target.value);
-    const selectedMethod = paymentMethods.find((pm) => pm.id === selectedId);
+    //const selectedId = parseInt(e.target.value);
+    //const selectedMethod = paymentMethods.find((pm) => pm.id === selectedId);
     setSelectedPaymentMethod(e.target.value);
   }}
 >

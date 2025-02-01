@@ -4,9 +4,11 @@ import { useSession } from "next-auth/react";
 
 export default function MultiStepModals() {
   const { data: session } = useSession();
-  const [countries, setCountries] = useState([]);
-  const [currentStep, setCurrentStep] = useState(0);
   const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [previewImage, setPreviewImage] = useState("assets/images/profile-circle.png");
+  const [countries, setCountries] = useState([]);
 
   const [profileData, setProfileData] = useState({
     username: "",
@@ -14,11 +16,9 @@ export default function MultiStepModals() {
     email: "",
     phone: "",
     country_id: "",
+    user_type: "",
   });
 
-  const [previewImage, setPreviewImage] = useState("assets/images/profile-circle.png");
-
-  // Fetch countries from API
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -34,7 +34,7 @@ export default function MultiStepModals() {
     fetchCountries();
   }, []);
 
-  // Load user profile dynamically from session
+
   useEffect(() => {
     if (session?.user) {
       setProfileData({
@@ -43,6 +43,7 @@ export default function MultiStepModals() {
         email: session.user.email || "",
         phone: session.user.phone || "",
         country_id: session.user.country_id || "",
+        user_type: session.user.user_type || "",
       });
 
       if (session.user.profile_pic) {
@@ -51,15 +52,31 @@ export default function MultiStepModals() {
     }
   }, [session]);
 
-  // Show popups only once
+  const handleCardClick = (type) => {
+    setProfileData((prev) => ({
+      ...prev,
+      user_type: type === "Individual" ? "individual" : "business",
+    }));
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => setPreviewImage(e.target.result);
+      reader.readAsDataURL(file);
+      setSelectedFile(file); // Store the file in state
+    }
+  };
   useEffect(() => {
     if (!localStorage.getItem("hasSeenPopups")) {
       setCurrentStep(1);
       localStorage.setItem("hasSeenPopups", "true");
     }
   }, []);
-
-  // Handle input changes
+  
+  // Close modal
+  const closeModal = () => setCurrentStep(0);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prev) => ({
@@ -67,28 +84,10 @@ export default function MultiStepModals() {
       [name]: value,
     }));
   };
-
-  // Handle image selection
-  const handleImageClick = () => fileInputRef.current.click();
-
-  // Handle image preview update
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => setPreviewImage(e.target.result);
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Close modal
-  const closeModal = () => setCurrentStep(0);
-
+  
   // Modal navigation
   const nextStep = () => setCurrentStep((prevStep) => prevStep + 1);
   const previousStep = () => setCurrentStep((prevStep) => prevStep - 1);
-
-  // Submit profile info
   const handleSubmitProfileInfo = async () => {
     if (!session) {
       alert("You must be signed in to continue.");
@@ -96,24 +95,32 @@ export default function MultiStepModals() {
     }
 
     try {
+      const formData = new FormData();
+      formData.append("name", profileData.name);
+      formData.append("email", profileData.email);
+      formData.append("phone", profileData.phone);
+      formData.append("country_id", profileData.country_id);
+      formData.append("user_type", profileData.user_type);
+
+      // Append profile picture if selected
+      if (selectedFile) {
+        formData.append("profile_pic", selectedFile);
+      }
+
       const response = await axios.post(
         "https://violet-meerkat-830212.hostingersite.com/public/api/user/update",
-        {
-          name: profileData.name,
-          email: profileData.email,
-          phone: profileData.phone,
-          country_id: profileData.country_id,
-        },
+        formData,
         {
           headers: {
             Authorization: `Bearer ${session.user.token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
 
       if (response.data.profile) {
         alert("Profile Info Updated Successfully!");
-        nextStep();
+        closeModal();
       } else {
         alert("Failed to update profile. Please try again.");
       }
@@ -122,11 +129,6 @@ export default function MultiStepModals() {
       alert("An error occurred while updating the profile. Please try again.");
     }
   };
-
-  const handleCardClick = (type) => {
-    console.log(`${type} selected`);
-  };
-
   return (
     <>
       {/* Step 1 - Profile Welcome */}
@@ -155,68 +157,38 @@ export default function MultiStepModals() {
 
       {/* Step 2 - Individual or Business Owner Selection */}
       {currentStep === 2 && (
-        <div className="modal fade show d-block" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  className="down-arrow "
-                  type="button"
-                  onClick={previousStep}
-                  aria-label="Back"
-                >
-                  <img
-                    src="assets/images/arrow-down.png"
-                    alt="Back"
-                    className="ms-1"
-                  />
-                </button>
-                <h5 className="modal-title">Create your profile</h5>
-                <span>Step 1/3</span>
-              </div>
-              <div className="modal-body">
-                <h3 className="fw-bloder my-3">How you would like to continue?</h3>
-                <p className="uppara my-4 mb-5" >
-                  This will help us to understand your identity. Both users have
-                  the same features, but profile creation has different fields.
-                </p>
-                <div className="d-flex justify-content-center gap-3 mx-auto">
-                  {/* Individual Card */}
-                  <div
-                    className="choice-card shadow-lg text-center"
-                    onClick={() => handleCardClick("Individual")}
-                  >
-                    <img
-                      src="assets/images/individual.png"
-                      style={{width:"50px" , objectFit:"none"}}
-                      alt="Individual"
-                      className="img-fluid mx-auto my-3"
-                    />
-                    <span>I am an individual</span>
-                  </div>
-                  {/* Business Owner Card */}
-                  <div
-                    className="choice-card shadow-lg text-center"
-                    onClick={() => handleCardClick("Business Owner")}
-                  >
-                    <img
-                      src="assets/images/business-icon.png"
-                      alt="Business Owner"
-                      style={{width:"50px" , objectFit:"none"}}
-                      className="img-fluid mx-auto my-3"
-                    />
-                    <span>I am a business owner</span>
-                  </div>
+        <div className="modal fade show d-block">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Create your profile</h5>
+            </div>
+            <div className="modal-body">
+              <h3 className="fw-bold my-3">How would you like to continue?</h3>
+              <div className="d-flex justify-content-center gap-3 mx-auto">
+                {/* Individual Card */}
+                <div   className={`choice-card shadow-lg text-center ${profileData.user_type === "Individual" ? "selected-card" : ""}`}
+ onClick={() => handleCardClick("Individual")}>
+                  <img src="assets/images/individual.png" alt="Individual" className="img-fluid mx-auto my-3" />
+                  <span>I am an individual</span>
                 </div>
+                {/* Business Owner Card */}
+                <div   className={`choice-card shadow-lg text-center ${profileData.user_type === "business" ? "selected-card" : ""}`}
+ onClick={() => handleCardClick("Business Owner")}>
+                  <img src="assets/images/business-icon.png" alt="Business Owner" className="img-fluid mx-auto my-3" />
+                  <span>I am a business owner</span>
+                </div>
+                
               </div>
-              <div className="modal-footer">
+            </div>
+            <div className="modal-footer">
                 <button className="btn btn-dark w-100 py-3" onClick={nextStep}>
                   Continue
                 </button>
-              </div>
             </div>
           </div>
         </div>
+      </div>
       )}
 
       {/* Remaining steps have been incremented (Step 3, Step 4, Step 5) */}
@@ -277,7 +249,7 @@ export default function MultiStepModals() {
                 </form>
               </div>
               <div className="modal-footer">
-                <button className="btn btn-dark w-100 py-3" onClick={handleSubmitProfileInfo}>
+                <button className="btn btn-dark w-100 py-3" onClick={nextStep}>
                   Continue
                 </button>
               </div>
@@ -297,14 +269,15 @@ export default function MultiStepModals() {
                 <button type="button" className="btn-close" onClick={closeModal}></button>
               </div>
               <div className="modal-body text-center">
-                <input type="file" ref={fileInputRef} className="d-none" onChange={handleFileChange} accept="image/*" />
-                <img
-                  src={previewImage}
-                  alt="Profile"
-                  className="my-4 rounded-circle"
-                  style={{ width: "150px", height:"150px" , objectFit:"cover" ,  cursor: "pointer" }}
-                  onClick={handleImageClick}
-                />
+              <input type="file" ref={fileInputRef} className="d-none" onChange={handleFileChange} accept="image/*" />
+              <img
+                src={previewImage}
+                alt="Profile"
+                className="my-4 rounded-circle"
+                style={{ width: "150px", height: "150px", cursor: "pointer" }}
+                onClick={() => fileInputRef.current.click()}
+              />
+
                 <h3 className="my-3">Add a profile picture</h3>
                 <p className="px-4 uppara">Pick an image that shows your face. Your picture won’t be
                 public, we will keep this for our record.</p>
@@ -337,7 +310,7 @@ export default function MultiStepModals() {
                 <button className="btn mx-1 px-5 py-3" style={{width: "47%" , color : "black", border : "2px solid black" }} onClick={previousStep}>
                   Change photo
                 </button>
-                <button className="btn btn-dark mx-1  px-5 py-3" style={{width: "47%", border:"2px solid black"}} onClick={closeModal}>
+                <button className="btn btn-dark mx-1  px-5 py-3" style={{width: "47%", border:"2px solid black"}} onClick={handleSubmitProfileInfo}>
                   Done
                 </button>
               </div>

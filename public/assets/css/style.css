@@ -1226,7 +1226,12 @@ input#priceRange {
     margin-top: -5px;
     /* Center the thumb on the track */
 }
-
+.selected-card {
+    border: 3px solid #000; /* Change border color as needed */
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+  }
+  
 #priceRange::-moz-range-track {
     width: 100%;
     height: 8px;

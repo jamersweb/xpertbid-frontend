@@ -13,7 +13,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   //const { data: session } = useSession();
   const router = useRouter();
-9
+
   const closeHandler = () => {
     setErrorMessage("");
     onClose();
